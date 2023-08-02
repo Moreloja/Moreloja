@@ -9,4 +9,4 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./artist.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ArtistComponent {}
+export default class ArtistComponent {}
