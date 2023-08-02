@@ -1,1 +1,5 @@
-<p>songs works!</p>
+<h2>Last Songs</h2>
+
+<div *ngFor="let song of (songs$ | async).songs">
+    {{song | json}}
+</div>
