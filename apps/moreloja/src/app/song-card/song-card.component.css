@@ -1,0 +1,18 @@
+.main-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border: 1px solid #eee;
+}
+
+.cover-image {
+    
+}
+
+.info-container {
+  flex: auto;
+}
+
+.timestamp-container {
+
+}

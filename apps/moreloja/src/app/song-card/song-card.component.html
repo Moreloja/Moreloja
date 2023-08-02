@@ -1,0 +1,24 @@
+<div class="main-container">
+  <div>
+    <img
+      class="cover-image"
+      src="https://ia801709.us.archive.org/0/items/mbid-01c30eb4-fb19-478e-91a7-ca70fb97ab3f/mbid-01c30eb4-fb19-478e-91a7-ca70fb97ab3f-27539158688_thumb250.jpg"
+    />
+  </div>
+
+  <div class="info-container">
+    <div>
+      {{ song.Name }}
+    </div>
+    <div>
+      {{ song.run_time }}
+    </div>
+    <div>
+      <a routerLink="/artist/{{ song.Artist }}">{{ song.Artist }}</a>
+    </div>
+  </div>
+
+  <div class="timestamp-container">
+    <div>{{ song.timestamp | date : 'short' }}</div>
+  </div>
+</div>

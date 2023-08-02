@@ -4,11 +4,13 @@ import { Observable } from 'rxjs';
 
 import { SongsService } from '@moreloja/services/songs';
 
+import { SongCardComponent } from '../song-card/song-card.component';
+
 
 @Component({
   selector: 'moreloja-songs',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SongCardComponent],
   templateUrl: './songs.component.html',
   styleUrls: ['./songs.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
