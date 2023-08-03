@@ -5,12 +5,25 @@
   border: 1px solid #eee;
 }
 
+.cover-container {
+  display: flex;
+}
+
 .cover-image {
     
 }
 
 .info-container {
   flex: auto;
+}
+
+.song-runtime-container {
+  display: flex;
+}
+
+.runtime {
+  margin-left: 0.5rem;
+  color:darkgrey;
 }
 
 .timestamp-container {

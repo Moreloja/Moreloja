@@ -1,5 +1,5 @@
 <div class="main-container">
-  <div>
+  <div class="cover-container">
     <img
       class="cover-image"
       src="https://ia801709.us.archive.org/0/items/mbid-01c30eb4-fb19-478e-91a7-ca70fb97ab3f/mbid-01c30eb4-fb19-478e-91a7-ca70fb97ab3f-27539158688_thumb250.jpg"
@@ -7,11 +7,20 @@
   </div>
 
   <div class="info-container">
-    <div>
-      {{ song.Name }}
+    <div class="song-runtime-container">
+      <div>
+        <!-- <a routerLink="/song/{{ song.TODOMusicbrainzId }}</a> -->
+        <a
+          routerLink="/song/{{ song.Artist }}/{{ song.Album }}/{{ song.Name }}"
+          >{{ song.Name }}</a
+        >
+      </div>
+      <div class="runtime">
+        {{ song.run_time }}
+      </div>
     </div>
     <div>
-      {{ song.run_time }}
+      {{ song.Album }}
     </div>
     <div>
       <a routerLink="/artist/{{ song.Artist }}">{{ song.Artist }}</a>
@@ -19,6 +28,7 @@
   </div>
 
   <div class="timestamp-container">
+    <div>{{ song.timestamp | stringToDate | timeAgo }}</div>
     <div>{{ song.timestamp | date : 'short' }}</div>
   </div>
 </div>
