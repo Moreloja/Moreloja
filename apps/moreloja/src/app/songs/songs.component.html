@@ -1,5 +1,7 @@
 <h2>Last Songs</h2>
 
-<div *ngFor="let song of (songs$ | async).songs">
+<div *ngIf="songs$ | async as songs">
+  <div *ngFor="let song of songs.songs">
     <moreloja-song-card [song]="song"></moreloja-song-card>
+  </div>
 </div>
