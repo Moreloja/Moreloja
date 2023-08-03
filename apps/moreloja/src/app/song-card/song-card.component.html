@@ -28,7 +28,8 @@
   </div>
 
   <div class="timestamp-container">
-    <div>{{ song.timestamp | stringToDate | timeAgo }}</div>
-    <div>{{ song.timestamp | date : 'short' }}</div>
+    <div title="{{ song.timestamp | date : 'short' }}">
+      {{ song.timestamp | stringToDate | timeAgo }}
+    </div>
   </div>
 </div>
