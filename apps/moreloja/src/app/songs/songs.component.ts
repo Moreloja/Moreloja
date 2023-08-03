@@ -21,7 +21,6 @@ export default class SongsComponent implements OnInit {
   private songsService = inject(SongsService);
 
   ngOnInit(): void {
-    console.log("loading songs");
     this.songs$ = this.songsService.getAllSongs()
   }
 }

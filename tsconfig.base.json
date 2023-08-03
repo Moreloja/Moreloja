@@ -15,6 +15,15 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@moreloja/api/data-access-dtos": [
+        "libs/api/data-access-dtos/src/index.ts"
+      ],
+      "@moreloja/api/data-access-models": [
+        "libs/api/data-access-models/src/index.ts"
+      ],
+      "@moreloja/api/data-access-services": [
+        "libs/api/data-access-services/src/index.ts"
+      ],
       "@moreloja/services/albums": ["libs/services/albums/src/index.ts"],
       "@moreloja/services/artists": ["libs/services/artists/src/index.ts"],
       "@moreloja/services/songs": ["libs/services/songs/src/index.ts"]
