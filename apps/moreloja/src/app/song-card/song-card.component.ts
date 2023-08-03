@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -11,7 +11,14 @@ import { StringToDatePipe, TimeAgoPipe } from '../pipes';
   templateUrl: './song-card.component.html',
   styleUrls: ['./song-card.component.css'],
 })
-export class SongCardComponent {
+export class SongCardComponent implements OnInit {
+  
   @Input()
   song!: any;
+
+  coverUrl!: string;
+
+  ngOnInit(): void {
+    this.coverUrl = `https://coverartarchive.org/release/${this.song.Provider_musicbrainzalbum}/front-250`;
+  }
 }
