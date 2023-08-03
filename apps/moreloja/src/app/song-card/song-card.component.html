@@ -13,7 +13,7 @@
         >
       </div>
       <div class="runtime">
-        {{ song.run_time }}
+        {{ song.run_time * 1000 | date:'mm:ss' }}
       </div>
     </div>
     <div>
