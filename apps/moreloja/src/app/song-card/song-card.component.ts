@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
+import { SongDto } from '@moreloja/api/data-access-dtos';
+
 import { StringToDatePipe, TimeAgoPipe } from '../pipes';
 
 @Component({
@@ -14,7 +16,7 @@ import { StringToDatePipe, TimeAgoPipe } from '../pipes';
 export class SongCardComponent implements OnInit {
   
   @Input()
-  song!: any;
+  song!: SongDto;
 
   coverUrl!: string;
 

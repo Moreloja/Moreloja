@@ -22,6 +22,7 @@ export class SongsService {
         Name: song.Name ?? '',
         timestamp: song.timestamp ?? '',
         Provider_musicbrainzalbum: song.Provider_musicbrainzalbum ?? '',
+        Provider_musicbrainzalbumartist: song.Provider_musicbrainzalbumartist ?? '',
         run_time: song.run_time ?? 0,
       })),
     };

@@ -5,6 +5,7 @@ export class SongDto {
     public Name: string,
     public timestamp: string,
     public Provider_musicbrainzalbum: string,
+    public Provider_musicbrainzalbumartist: string,
     public run_time: number
   ) {}
 }

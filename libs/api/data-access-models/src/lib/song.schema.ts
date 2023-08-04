@@ -21,6 +21,9 @@ export class Song {
     public Provider_musicbrainzalbum?: string
 
     @Prop()
+    public Provider_musicbrainzalbumartist?: string
+
+    @Prop()
     public run_time?: number
 }
 
