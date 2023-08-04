@@ -1,20 +1,34 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Input, OnInit, inject } from '@angular/core';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { Observable } from 'rxjs';
+
+import { GetArtistResponseDto } from '@moreloja/api/data-access-dtos';
+import { ArtistsService } from '@moreloja/services/artists';
+
+import { SongCardComponent } from '../song-card/song-card.component';
 
 @Component({
   selector: 'moreloja-artist',
   standalone: true,
-  imports: [CommonModule],
+  imports: [AsyncPipe, NgFor, NgIf, SongCardComponent],
   templateUrl: './artist.component.html',
   styleUrls: ['./artist.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class ArtistComponent {
+export default class ArtistComponent implements OnInit {
 
-  _artistName!: string;
+  private mbidAlbumArtist!: string;
   
+  artist$!: Observable<GetArtistResponseDto>;
+
   @Input()
-  set artistName(artistName: string) {
-    this._artistName = artistName;
+  set mbidAlbumArtistInput(mbidAlbumArtist: string) {
+    this.mbidAlbumArtist = mbidAlbumArtist;
+  }
+
+  private artistsService = inject(ArtistsService);
+
+  ngOnInit(): void {
+    this.artist$ = this.artistsService.getArtist(this.mbidAlbumArtist);
   }
 }

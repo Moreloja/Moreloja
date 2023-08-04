@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { SongDto } from '@moreloja/api/data-access-dtos';
@@ -9,7 +9,7 @@ import { StringToDatePipe, TimeAgoPipe } from '../pipes';
 @Component({
   selector: 'moreloja-song-card',
   standalone: true,
-  imports: [CommonModule, RouterModule, StringToDatePipe, TimeAgoPipe],
+  imports: [DatePipe, RouterModule, StringToDatePipe, TimeAgoPipe],
   templateUrl: './song-card.component.html',
   styleUrls: ['./song-card.component.css'],
 })

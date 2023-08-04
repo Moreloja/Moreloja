@@ -1,3 +1,20 @@
-<p>artist works!</p>
+<div *ngIf="artist$ | async as artist">
+  <h2>{{ artist.name }}</h2>
 
-{{_artistName}}
+  <div>
+    <h3>Albums</h3>
+    <div *ngFor="let album of artist.albums">TODO AlbumCard</div>
+  </div>
+
+  <div>
+    <h3>Top Songs</h3>
+    <div>TODO</div>
+  </div>
+
+  <div>
+    <h3>Last Songs</h3>
+    <div *ngFor="let song of artist.songs">
+      <moreloja-song-card [song]="song"></moreloja-song-card>
+    </div>
+  </div>
+</div>

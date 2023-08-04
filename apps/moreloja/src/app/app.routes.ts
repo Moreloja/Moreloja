@@ -10,7 +10,7 @@ export const appRoutes: Route[] = [
         loadComponent: () => import('./albums/albums.component')
     },
     {
-        path: 'artist/:artistName',
+        path: 'artist/:mbidAlbumArtistInput',
         loadComponent: () => import('./artist/artist.component')
     },
     {
