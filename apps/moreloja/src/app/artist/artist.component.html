@@ -12,7 +12,14 @@
 
   <div>
     <h3>Top Songs</h3>
-    <div>TODO</div>
+    <div class="top-songs-container">
+      <div *ngFor="let song of artist.topSongs">
+        <moreloja-top-song-card
+          [topSong]="song"
+          [maxPlayCount]="artist.topSongs[0].playCount"
+        ></moreloja-top-song-card>
+      </div>
+    </div>
   </div>
 
   <div>

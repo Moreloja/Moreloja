@@ -1,0 +1,18 @@
+<div class="main-container">
+  <img class="cover-image" src="{{ coverUrl }}" />
+
+  <div>{{ topSong.Name }}</div>
+
+  <div class="play-count-bar-container">
+    <div>
+      {{ topSong.playCount }}
+    </div>
+
+    <div class="play-count-bar">
+      <div
+        class="play-count-bar-fill"
+        [style.width]="getPlayCountBarWidth(topSong.playCount)"
+      ></div>
+    </div>
+  </div>
+</div>

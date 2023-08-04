@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { Observable } from 'rxjs';
 
@@ -7,19 +13,26 @@ import { ArtistsService } from '@moreloja/services/artists';
 
 import { AlbumCardComponent } from '../album-card/album-card.component';
 import { SongCardComponent } from '../song-card/song-card.component';
+import { TopSongCardComponent } from '../top-song-card/top-song-card.component';
 
 @Component({
   selector: 'moreloja-artist',
   standalone: true,
-  imports: [AsyncPipe, NgFor, NgIf, AlbumCardComponent, SongCardComponent],
+  imports: [
+    AsyncPipe,
+    NgFor,
+    NgIf,
+    AlbumCardComponent,
+    SongCardComponent,
+    TopSongCardComponent,
+  ],
   templateUrl: './artist.component.html',
   styleUrls: ['./artist.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class ArtistComponent implements OnInit {
-
   private mbidAlbumArtist!: string;
-  
+
   artist$!: Observable<GetArtistResponseDto>;
 
   @Input()
