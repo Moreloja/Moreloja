@@ -1,11 +1,16 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 
 import { AppController } from './app.controller';
-import { SongsService } from './songs.service';
+import { SongsModule } from './songs/songs.module';
 
 @Module({
-  imports: [],
+  imports: [
+    // TODO Make configurable with environment variables
+    MongooseModule.forRoot('mongodb://localhost:27017/webhooks'),
+    SongsModule,
+  ],
   controllers: [AppController],
-  providers: [SongsService],
+  providers: [],
 })
 export class AppModule {}
