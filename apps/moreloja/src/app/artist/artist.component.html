@@ -3,7 +3,11 @@
 
   <div>
     <h3>Albums</h3>
-    <div *ngFor="let album of artist.albums">TODO AlbumCard</div>
+    <div class="album-container">
+      <div *ngFor="let album of artist.albums">
+        <moreloja-album-card [album]="album"></moreloja-album-card>
+      </div>
+    </div>
   </div>
 
   <div>

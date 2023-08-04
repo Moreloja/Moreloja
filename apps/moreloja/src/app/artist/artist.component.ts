@@ -5,12 +5,13 @@ import { Observable } from 'rxjs';
 import { GetArtistResponseDto } from '@moreloja/api/data-access-dtos';
 import { ArtistsService } from '@moreloja/services/artists';
 
+import { AlbumCardComponent } from '../album-card/album-card.component';
 import { SongCardComponent } from '../song-card/song-card.component';
 
 @Component({
   selector: 'moreloja-artist',
   standalone: true,
-  imports: [AsyncPipe, NgFor, NgIf, SongCardComponent],
+  imports: [AsyncPipe, NgFor, NgIf, AlbumCardComponent, SongCardComponent],
   templateUrl: './artist.component.html',
   styleUrls: ['./artist.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

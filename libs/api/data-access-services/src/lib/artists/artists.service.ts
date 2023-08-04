@@ -2,7 +2,7 @@ import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 
-import { GetArtistResponseDto, SongDto } from '@moreloja/api/data-access-dtos';
+import { AlbumDto, GetArtistResponseDto, SongDto } from '@moreloja/api/data-access-dtos';
 import { Song } from '@moreloja/api/data-access-models';
 
 @Injectable()
@@ -16,9 +16,26 @@ export class ArtistsService {
       .limit(10)
       .exec();
 
+    let artistName = '';
+    if (songs.length) {
+      artistName = songs[0].Artist ?? 'Unknown Artist';
+    }
+
+    const distinctAlbums = await this.songModel.aggregate([
+        { $match: { Provider_musicbrainzalbumartist: mbidAlbumArtist } },
+        { $group: { _id: '$Album', Provider_musicbrainzalbum: { $first: '$Provider_musicbrainzalbum' } } },
+        { $project: { _id: 0, Album: '$_id', Provider_musicbrainzalbum: 1 } },
+      ]);
+
     return new GetArtistResponseDto(
-      "TODO Name",
-      [],
+      artistName,
+      distinctAlbums.map(
+        (album) =>
+          new AlbumDto(
+            album.Album ?? '',
+            album.Provider_musicbrainzalbum ?? ''
+          )
+      ),
       songs.map(
         (song) =>
           new SongDto(
