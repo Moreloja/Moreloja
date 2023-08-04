@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { Observable } from 'rxjs';
 
@@ -6,7 +11,6 @@ import { SongsService } from '@moreloja/services/songs';
 import { GetAllSongsResponseDto } from '@moreloja/api/data-access-dtos';
 
 import { SongCardComponent } from '../song-card/song-card.component';
-
 
 @Component({
   selector: 'moreloja-songs',
@@ -17,11 +21,11 @@ import { SongCardComponent } from '../song-card/song-card.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class SongsComponent implements OnInit {
-  songs$!: Observable<GetAllSongsResponseDto>
-  
+  songs$!: Observable<GetAllSongsResponseDto>;
+
   private songsService = inject(SongsService);
 
   ngOnInit(): void {
-    this.songs$ = this.songsService.getAllSongs()
+    this.songs$ = this.songsService.getAllSongs();
   }
 }

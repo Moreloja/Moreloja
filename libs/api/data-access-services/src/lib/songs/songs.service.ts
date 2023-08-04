@@ -10,7 +10,11 @@ export class SongsService {
   constructor(@InjectModel(Song.name) private songModel: Model<Song>) {}
 
   async getAllSongs(): Promise<GetAllSongsResponseDto> {
-    const songs = await this.songModel.find().exec();
+    const songs = await this.songModel
+      .find()
+      .sort({ timestamp: -1 }) // Sort by timestamp in descending order
+      .limit(10)
+      .exec();
     return {
       songs: songs.map((song) => ({
         Album: song.Album ?? '',
@@ -20,6 +24,6 @@ export class SongsService {
         Provider_musicbrainzalbum: song.Provider_musicbrainzalbum ?? '',
         run_time: song.run_time ?? 0,
       })),
-    }
+    };
   }
 }
