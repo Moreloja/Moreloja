@@ -1,5 +1,5 @@
 <div class="main-container">
-  <div class="cover-container">
+  <div *ngIf="coverUrl$ | async as coverUrl" class="cover-container">
     <img class="cover-image" src="{{ coverUrl }}" />
   </div>
 

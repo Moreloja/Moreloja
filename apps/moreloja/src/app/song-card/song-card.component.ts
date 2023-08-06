@@ -1,26 +1,38 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { Component, Input, OnInit, inject } from '@angular/core';
+import { AsyncPipe, DatePipe, NgIf } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { SongDto } from '@moreloja/api/data-access-dtos';
+import { AlbumsService } from '@moreloja/services/albums';
 
 import { StringToDatePipe, TimeAgoPipe } from '../pipes';
 
 @Component({
   selector: 'moreloja-song-card',
   standalone: true,
-  imports: [DatePipe, RouterModule, StringToDatePipe, TimeAgoPipe],
+  imports: [
+    AsyncPipe,
+    DatePipe,
+    NgIf,
+    RouterModule,
+    StringToDatePipe,
+    TimeAgoPipe,
+  ],
   templateUrl: './song-card.component.html',
   styleUrls: ['./song-card.component.css'],
 })
 export class SongCardComponent implements OnInit {
-  
   @Input()
   song!: SongDto;
 
-  coverUrl!: string;
+  coverUrl$!: Observable<string>;
+
+  private albumsService = inject(AlbumsService);
 
   ngOnInit(): void {
-    this.coverUrl = `https://coverartarchive.org/release/${this.song.Provider_musicbrainzalbum}/front-250`;
+    this.coverUrl$ = this.albumsService.getAlbumCover(
+      this.song.Provider_musicbrainzalbum
+    );
   }
 }

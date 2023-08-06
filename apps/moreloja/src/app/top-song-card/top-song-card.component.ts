@@ -1,13 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { NgFor } from '@angular/common';
+import { Component, Input, OnInit, inject } from '@angular/core';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { TopSongDto } from '@moreloja/api/data-access-dtos';
+import { AlbumsService } from '@moreloja/services/albums';
 
 @Component({
   selector: 'moreloja-top-song-card',
   standalone: true,
-  imports: [NgFor, RouterModule],
+  imports: [AsyncPipe, NgFor, NgIf, RouterModule],
   templateUrl: './top-song-card.component.html',
   styleUrls: ['./top-song-card.component.css'],
 })
@@ -19,10 +21,14 @@ export class TopSongCardComponent implements OnInit {
   @Input()
   maxPlayCount!: number;
 
-  coverUrl!: string;
+  coverUrl$!: Observable<string>;
+
+  private albumsService = inject(AlbumsService);
 
   ngOnInit(): void {
-    this.coverUrl = `https://coverartarchive.org/release/${this.topSong.Provider_musicbrainzalbum}/front-250`;
+    this.coverUrl$ = this.albumsService.getAlbumCover(
+      this.topSong.Provider_musicbrainzalbum
+    );
   }
 
   getPlayCountBarWidth(playCount: number): string {

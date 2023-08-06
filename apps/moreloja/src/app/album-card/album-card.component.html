@@ -1,1 +1,6 @@
-<img class="cover-image" src="{{ coverUrl }}" alt="{{ album.Album }}" />
+<img
+  *ngIf="coverUrl$ | async as coverUrl"
+  class="cover-image"
+  src="{{ coverUrl }}"
+  alt="{{ album.Album }}"
+/>
