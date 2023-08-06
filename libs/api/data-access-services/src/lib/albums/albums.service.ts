@@ -2,12 +2,20 @@ import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 
-import { GetAlbumResponseDto, SongDto, TopSongDto } from '@moreloja/api/data-access-dtos';
+import {
+  GetAlbumResponseDto,
+  SongDto,
+  TopSongDto,
+} from '@moreloja/api/data-access-dtos';
 import { Song } from '@moreloja/api/data-access-models';
+import { SongRepository } from '@moreloja/api/data-access-repositories';
 
 @Injectable()
 export class AlbumsService {
-  constructor(@InjectModel(Song.name) private songModel: Model<Song>) {}
+  constructor(
+    @InjectModel(Song.name) private songModel: Model<Song>,
+    private songRepository: SongRepository
+  ) {}
 
   async getAlbum(mbidAlbum: string): Promise<GetAlbumResponseDto> {
     const albumFilter = {
@@ -25,36 +33,7 @@ export class AlbumsService {
       albumName = songs[0].Album ?? 'Unknown Album';
     }
 
-    // TODO This is nearly the same as in artists.service.ts
-    // Create new project for a repository with db methods
-    // Difference is that this has a different match filter and no limit
-    const topSongs = await this.songModel.aggregate([
-      { $match: albumFilter },
-      // Group by musicbrainztrack to get play count for each song
-      {
-        $group: {
-          _id: '$Provider_musicbrainztrack',
-          Album: { $first: '$Album' },
-          Name: { $first: '$Name' },
-          Provider_musicbrainzalbum: { $first: '$Provider_musicbrainzalbum' },
-          run_time: { $first: '$run_time' },
-          playCount: { $sum: 1 },
-        },
-      },
-      // Sort by play count in descending order
-      { $sort: { playCount: -1 } },
-      {
-        $project: {
-          _id: 0,
-          Album: 1,
-          Name: 1,
-          Provider_musicbrainzalbum: 1,
-          Provider_musicbrainztrack: '$_id',
-          run_time: 1,
-          playCount: 1,
-        },
-      },
-    ]);
+    const topSongs = await this.songRepository.getTopSongs(albumFilter);
 
     return new GetAlbumResponseDto(
       albumName,
@@ -66,7 +45,7 @@ export class AlbumsService {
             song.Provider_musicbrainzalbum ?? '',
             song.Provider_musicbrainztrack ?? '',
             song.run_time ?? 0,
-            song.playCount ?? 0,
+            song.playCount ?? 0
           )
       ),
       songs.map(

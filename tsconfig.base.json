@@ -21,6 +21,9 @@
       "@moreloja/api/data-access-models": [
         "libs/api/data-access-models/src/index.ts"
       ],
+      "@moreloja/api/data-access-repositories": [
+        "libs/api/data-access-repositories/src/index.ts"
+      ],
       "@moreloja/api/data-access-services": [
         "libs/api/data-access-services/src/index.ts"
       ],

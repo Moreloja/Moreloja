@@ -13,14 +13,18 @@
         >
       </div>
       <div class="runtime">
-        {{ song.run_time * 1000 | date:'mm:ss' }}
+        {{ song.run_time * 1000 | date : 'mm:ss' }}
       </div>
     </div>
     <div>
-      {{ song.Album }}
+      <a routerLink="/album/{{ song.Provider_musicbrainzalbum }}">
+        {{ song.Album }}
+      </a>
     </div>
     <div>
-      <a routerLink="/artist/{{ song.Provider_musicbrainzalbumartist }}">{{ song.Artist }}</a>
+      <a routerLink="/artist/{{ song.Provider_musicbrainzalbumartist }}">{{
+        song.Artist
+      }}</a>
     </div>
   </div>
 
