@@ -1,7 +1,10 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { GetImageResponseDto } from '@moreloja/api/data-access-dtos';
+import {
+  GetAlbumResponseDto,
+  GetImageResponseDto,
+} from '@moreloja/api/data-access-dtos';
 import { Observable, map } from 'rxjs';
 
 @Injectable({
@@ -9,6 +12,10 @@ import { Observable, map } from 'rxjs';
 })
 export class AlbumsService {
   private http = inject(HttpClient);
+
+  getAlbum(mbidAlbum: string): Observable<GetAlbumResponseDto> {
+    return this.http.get<GetAlbumResponseDto>(`/api/album/${mbidAlbum}`);
+  }
 
   getAlbumCover(musicbrainzalbum: string): Observable<string> {
     return this.http

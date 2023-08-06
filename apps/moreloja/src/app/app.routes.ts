@@ -2,7 +2,7 @@ import { Route } from '@angular/router';
 
 export const appRoutes: Route[] = [
     {
-        path: 'album',
+        path: 'album/:mbidAlbumInput',
         loadComponent: () => import('./album/album.component')
     },
     {
