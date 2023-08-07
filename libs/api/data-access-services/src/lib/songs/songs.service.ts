@@ -1,23 +1,17 @@
-import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
 
 import {
   GetAllSongsResponseDto,
   SongDto,
 } from '@moreloja/api/data-access-dtos';
-import { Song } from '@moreloja/api/data-access-models';
+import { SongRepository } from '@moreloja/api/data-access-repositories';
 
 @Injectable()
 export class SongsService {
-  constructor(@InjectModel(Song.name) private songModel: Model<Song>) {}
+  constructor(private songRepository: SongRepository) {}
 
   async getAllSongs(): Promise<GetAllSongsResponseDto> {
-    const songs = await this.songModel
-      .find()
-      .sort({ timestamp: -1 }) // Sort by timestamp in descending order
-      .limit(10)
-      .exec();
+    const songs = await this.songRepository.findLimitedSongs({}, 10);
     return new GetAllSongsResponseDto(
       songs.map(
         (song) =>

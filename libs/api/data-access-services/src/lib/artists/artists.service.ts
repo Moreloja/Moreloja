@@ -40,7 +40,8 @@ export class ArtistsService {
       artistName,
       distinctAlbums.map(
         (album) =>
-          new AlbumDto(album.Album ?? '', album.Provider_musicbrainzalbum ?? '')
+          new AlbumDto(album.Album ?? '', album.Provider_musicbrainzalbum ?? '', 
+            album.Year ?? '')
       ),
       topSongs.map(
         (song) =>

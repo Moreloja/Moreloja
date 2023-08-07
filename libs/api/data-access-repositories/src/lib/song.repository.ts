@@ -18,16 +18,27 @@ export class SongRepository {
 
   async getDistinctAlbums(
     albumArtistFilter: any
-  ): Promise<{ Provider_musicbrainzalbum: string; Album: string }[]> {
+  ): Promise<
+    { Provider_musicbrainzalbum: string; Album: string; Year: number }[]
+  > {
     return await this.songModel.aggregate([
       { $match: albumArtistFilter },
       {
         $group: {
           _id: '$Provider_musicbrainzalbum',
           Album: { $first: '$Album' },
+          Year: { $first: '$Year' },
         },
       },
-      { $project: { _id: 0, Provider_musicbrainzalbum: '$_id', Album: 1 } },
+      { $sort: { Year: -1 } },
+      {
+        $project: {
+          _id: 0,
+          Provider_musicbrainzalbum: '$_id',
+          Album: 1,
+          Year: 1,
+        },
+      },
     ]);
   }
 

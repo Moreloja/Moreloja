@@ -33,6 +33,9 @@ export class Song {
   public Provider_musicbrainztrack?: string;
 
   @Prop()
+  public Year?: number;
+
+  @Prop()
   public run_time?: number;
 }
 
