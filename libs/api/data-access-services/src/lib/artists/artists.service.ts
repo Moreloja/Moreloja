@@ -62,6 +62,7 @@ export class ArtistsService {
             song.timestamp ?? '',
             song.Provider_musicbrainzalbum ?? '',
             song.Provider_musicbrainzalbumartist ?? '',
+            song.Provider_musicbrainztrack ?? '',
             song.run_time ?? 0
           )
       )

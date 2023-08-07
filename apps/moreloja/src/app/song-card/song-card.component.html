@@ -2,15 +2,13 @@
   <div *ngIf="coverUrl$ | async as coverUrl" class="cover-container">
     <img class="cover-image" src="{{ coverUrl }}" />
   </div>
-
+  
   <div class="info-container">
     <div class="song-runtime-container">
       <div>
-        <!-- <a routerLink="/song/{{ song.TODOMusicbrainzId }}</a> -->
-        <a
-          routerLink="/song/{{ song.Artist }}/{{ song.Album }}/{{ song.Name }}"
-          >{{ song.Name }}</a
-        >
+        <a routerLink="/song/{{ song.Provider_musicbrainztrack }}">{{
+          song.Name
+        }}</a>
       </div>
       <div class="runtime">
         {{ song.run_time * 1000 | date : 'mm:ss' }}
