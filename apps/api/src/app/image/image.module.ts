@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
 import { HttpModule } from '@nestjs/axios';
 
-import { Image, ImageSchema } from '@moreloja/api/data-access-models';
 import { ImageService } from '@moreloja/api/data-access-services';
+import { DataAccessRepositoriesModule } from '@moreloja/api/data-access-repositories';
 
 import { ImageController } from './image.controller';
+
 
 @Module({
   imports: [
     HttpModule,
-    MongooseModule.forFeature([{ name: Image.name, schema: ImageSchema }]),
+    DataAccessRepositoriesModule
   ],
   controllers: [ImageController],
   providers: [ImageService],
