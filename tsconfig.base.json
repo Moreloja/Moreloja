@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@moreloja/api/configurations": ["libs/api/configurations/src/index.ts"],
       "@moreloja/api/data-access-dtos": [
         "libs/api/data-access-dtos/src/index.ts"
       ],

@@ -8,7 +8,10 @@ import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app/app.module';
 
-import { AppConfiguration, appConfiguration } from './app/configuration';
+import {
+  AppConfiguration,
+  appConfiguration,
+} from '@moreloja/api/configurations';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

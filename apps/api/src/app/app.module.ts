@@ -2,21 +2,23 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 
-import { AlbumsModule } from './albums/albums.module';
-import { ArtistsModule } from './artists/artists.module';
-import { ImageModule } from './image/image.module';
-import { SongsModule } from './songs/songs.module';
 import {
   MongoConfiguration,
   appConfiguration,
   mongoConfiguration,
-} from './configuration';
+  pictrsConfiguration,
+} from '@moreloja/api/configurations';
+
+import { AlbumsModule } from './albums/albums.module';
+import { ArtistsModule } from './artists/artists.module';
+import { ImageModule } from './image/image.module';
+import { SongsModule } from './songs/songs.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [appConfiguration, mongoConfiguration],
+      load: [appConfiguration, mongoConfiguration, pictrsConfiguration],
     }),
     AlbumsModule,
     ArtistsModule,

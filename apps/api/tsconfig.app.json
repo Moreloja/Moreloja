@@ -16,5 +16,5 @@
   "include": [
     "src/**/*.ts",
     "../../libs/api/data-access-services/src/lib/songs/songs.service.ts"
-  ]
+, "../../libs/api/configurations/src/lib/app.configuration.ts"  ]
 }

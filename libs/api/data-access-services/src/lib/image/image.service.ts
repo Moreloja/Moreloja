@@ -8,12 +8,12 @@ import {
   UploadImageResponseDto,
 } from '@moreloja/api/data-access-dtos';
 import { ImageRepository } from '@moreloja/api/data-access-repositories';
+import { InjectPictrsConfig, PictrsConfiguration } from '@moreloja/api/configurations';
 
 @Injectable()
 export class ImageService {
-  private apiURL = 'http://localhost:8080'; // TODO Make config environment variable
-
   constructor(
+    @InjectPictrsConfig() private readonly pictrsConfiguration: PictrsConfiguration,
     private readonly httpService: HttpService,
     private readonly imageRepository: ImageRepository
   ) {}
@@ -22,7 +22,7 @@ export class ImageService {
     // TODO Use same host as this nestjs to build image url
     // this means that pict-rs does not have to be publicly available
     // and can stay internal
-    const url = this.apiURL + '/image/original/';
+    const url = this.pictrsConfiguration.domain + '/image/original/';
     // Get image from db
     const existingImage = await this.imageRepository.getImageByMusicBrainzAlbum(
       musicbrainzalbum
@@ -80,9 +80,13 @@ export class ImageService {
 
     const response = await firstValueFrom(
       this.httpService
-        .post<UploadImageResponseDto>(this.apiURL + '/image', formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        })
+        .post<UploadImageResponseDto>(
+          this.pictrsConfiguration.domain + '/image',
+          formData,
+          {
+            headers: { 'Content-Type': 'multipart/form-data' },
+          }
+        )
         .pipe(
           catchError((error: AxiosError) => {
             console.error('An error occurred:', error.message);
