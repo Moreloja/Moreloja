@@ -8,14 +8,16 @@ import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app/app.module';
 
+import { AppConfiguration, appConfiguration } from './app/configuration';
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const appConfig = app.get<AppConfiguration>(appConfiguration.KEY);
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
-  const port = process.env.PORT || 3000;
-  await app.listen(port);
+  await app.listen(appConfig.port);
   Logger.log(
-    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
+    `🚀 Application is running on: ${appConfig.domain}/${globalPrefix}`
   );
 }
 
