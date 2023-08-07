@@ -1,8 +1,12 @@
-<h1>
-    Moreloja
-</h1>
+<h1>Moreloja</h1>
 
-<a routerLink="/songs" routerLinkActive="active">Songs</a>
-<a routerLink="/artists" routerLinkActive="active">Artists</a>
+<nav>
+  <ul>
+    <li><a routerLink="/">Home</a></li>
+    <li><a routerLink="/songs" routerLinkActive="active">Songs</a></li>
+    <li><a routerLink="/artists" routerLinkActive="active">Artists</a></li>
+    <li><a routerLink="/albums" routerLinkActive="active">Albums</a></li>
+  </ul>
+</nav>
 
 <router-outlet></router-outlet>
