@@ -19,10 +19,7 @@ export class ImageService {
   ) {}
 
   async getAlbumCover(musicbrainzalbum: string): Promise<GetImageResponseDto> {
-    // TODO Use same host as this nestjs to build image url
-    // this means that pict-rs does not have to be publicly available
-    // and can stay internal
-    const url = this.pictrsConfiguration.domain + '/image/original/';
+    const url = '/api/image/original/';
     // Get image from db
     const existingImage = await this.imageRepository.getImageByMusicBrainzAlbum(
       musicbrainzalbum
@@ -45,7 +42,7 @@ export class ImageService {
     }
   }
 
-  async getAlbumCoverFromMusicBrainz(musicbrainzalbum: string): Promise<Blob> {
+  private async getAlbumCoverFromMusicBrainz(musicbrainzalbum: string): Promise<ArrayBuffer> {
     const response = await firstValueFrom(
       this.httpService
         .get(
@@ -74,7 +71,7 @@ export class ImageService {
     );
   }
 
-  async uploadImage(image: Blob): Promise<UploadImageResponseDto> {
+  private async uploadImage(image: ArrayBuffer): Promise<UploadImageResponseDto> {
     const formData = new FormData();
     formData.append('images[]', new File([image], 'image.jpg'));
 
