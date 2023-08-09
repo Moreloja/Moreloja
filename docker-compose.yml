@@ -1,0 +1,67 @@
+networks:
+  moreloja-network:
+    external: false
+
+volumes:
+  mongodb-data:
+  pictrs-data:
+
+services:
+  moreloja:
+    image: moreloja
+    restart: unless-stopped
+    container_name: moreloja
+    build:
+      context: ./
+      dockerfile: ./apps/moreloja/Dockerfile
+    ports:
+      - 4200:80
+    environment:
+      # This will be set in nginx.conf to proxy the /api path to moreloja-api container
+      API_HOST: moreloja-api
+      API_PORT: 3000
+    depends_on:
+      - moreloja-api
+    networks:
+      - moreloja-network
+
+  moreloja-api:
+    image: moreloja-api
+    restart: unless-stopped
+    container_name: moreloja-api
+    build:
+      context: ./
+      dockerfile: ./apps/api/Dockerfile
+    # ports:
+    #   - 3000:3000
+    environment:
+      MORELOJA_MONGO_URI: mongodb://mongodb:27017
+      MORELOJA_MONGO_DB_NAME: moreloja
+      PICTRS_PROTOCOL: http
+      PICTRS_HOST: pictrs
+      PICTRS_PORT: 8080
+    depends_on:
+      - mongodb
+      - pictrs
+    networks:
+      - moreloja-network
+
+  mongodb:
+    image: mongo
+    restart: unless-stopped
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - moreloja-network
+
+  pictrs:
+    image: asonix/pictrs:0.4
+    restart: unless-stopped
+    environment:
+      - PICTRS__MEDIA__FORMAT=webp
+      # Will be renamed to this:
+      # - PICTRS__MEDIA__IMAGE__FORMAT=webp
+    volumes:
+      - pictrs-data:/mnt
+    networks:
+      - moreloja-network

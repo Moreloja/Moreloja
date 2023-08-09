@@ -11,10 +11,28 @@
 
 ### Docker
 
-Here is an example `docker-compose.yml`:
+See [docker-compose.yml](docker-compose.yml) for an example.
 
-``` yml
-TODO
+#### Build Docker images
+
+Run the following:
+
+``` bash
+docker compose build
+```
+
+#### Start Docker images
+
+Run the following:
+
+``` bash
+docker compose up -d
+```
+
+Inspect the logs with:
+
+``` bash
+docker compose logs
 ```
 
 ## Development
