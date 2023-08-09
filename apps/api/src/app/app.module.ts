@@ -1,4 +1,4 @@
-import { Module, MiddlewareConsumer, NestModule, RequestMethod } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 
@@ -13,8 +13,6 @@ import { AlbumsModule } from './albums/albums.module';
 import { ArtistsModule } from './artists/artists.module';
 import { ImageModule } from './image/image.module';
 import { SongsModule } from './songs/songs.module';
-
-import { ProxyMiddleware } from './middleware/proxy.middleware';
 
 @Module({
   imports: [
@@ -39,10 +37,4 @@ import { ProxyMiddleware } from './middleware/proxy.middleware';
   controllers: [],
   providers: [],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(ProxyMiddleware)
-      .forRoutes({ path: 'image/original/*', method: RequestMethod.GET });
-  }
-}
+export class AppModule {}

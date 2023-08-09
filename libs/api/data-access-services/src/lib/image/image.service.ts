@@ -19,7 +19,7 @@ export class ImageService {
   ) {}
 
   async getAlbumCover(musicbrainzalbum: string): Promise<GetImageResponseDto> {
-    const url = '/api/image/original/';
+    const url = '/pictrs/image/original/';
     // Get image from db
     const existingImage = await this.imageRepository.getImageByMusicBrainzAlbum(
       musicbrainzalbum

@@ -20,8 +20,12 @@ services:
       # This will be set in nginx.conf to proxy the /api path to moreloja-api container
       API_HOST: moreloja-api
       API_PORT: 3000
+      PICTRS_PROTOCOL: http
+      PICTRS_HOST: pictrs
+      PICTRS_PORT: 8080
     depends_on:
       - moreloja-api
+      - pictrs
     networks:
       - moreloja-network
 
