@@ -8,12 +8,16 @@ import {
   UploadImageResponseDto,
 } from '@moreloja/api/data-access-dtos';
 import { ImageRepository } from '@moreloja/api/data-access-repositories';
-import { InjectPictrsConfig, PictrsConfiguration } from '@moreloja/api/configurations';
+import {
+  InjectPictrsConfig,
+  PictrsConfiguration,
+} from '@moreloja/api/configurations';
 
 @Injectable()
 export class ImageService {
   constructor(
-    @InjectPictrsConfig() private readonly pictrsConfiguration: PictrsConfiguration,
+    @InjectPictrsConfig()
+    private readonly pictrsConfiguration: PictrsConfiguration,
     private readonly httpService: HttpService,
     private readonly imageRepository: ImageRepository
   ) {}
@@ -29,9 +33,8 @@ export class ImageService {
     }
     try {
       // Else Get image from coverart api
-      const image = await this.getAlbumCoverFromMusicBrainz(musicbrainzalbum);
-      // If image found uplaod it
-      const response = await this.uploadImage(image);
+      const coverUrl = this.getCoverUrl(musicbrainzalbum);
+      const response = await this.getUploadImage(coverUrl);
       // Add db entry for uploaded image
       this.saveUploadedImageMetadata(musicbrainzalbum, response);
       return new GetImageResponseDto(url + response.files[0].file);
@@ -41,25 +44,6 @@ export class ImageService {
         url + '2d8649a6-96ff-48d5-a133-36da61261edd.webp'
       );
     }
-  }
-
-  private async getAlbumCoverFromMusicBrainz(musicbrainzalbum: string): Promise<ArrayBuffer> {
-    const response = await firstValueFrom(
-      this.httpService
-        .get(
-          `https://coverartarchive.org/release/${musicbrainzalbum}/front-250`,
-          {
-            responseType: 'arraybuffer',
-          }
-        )
-        .pipe(
-          catchError((error: AxiosError) => {
-            console.error('Image not found on coverartarchive:', error.message);
-            throw 'Image not found on coverartarchive!';
-          })
-        )
-    );
-    return response.data;
   }
 
   private async saveUploadedImageMetadata(
@@ -72,25 +56,23 @@ export class ImageService {
     );
   }
 
-  private async uploadImage(image: ArrayBuffer): Promise<UploadImageResponseDto> {
-    const formData = new FormData();
-    formData.append('images[]', new File([image], 'image.jpg'));
+  private getCoverUrl(musicbrainzalbum: string): string {
+    return `https://coverartarchive.org/release/${musicbrainzalbum}/front-250`;
+  }
+
+  private async getUploadImage(
+    coverUrl: string
+  ): Promise<UploadImageResponseDto> {
+    console.log("Loading cover for: " + coverUrl);
+    const pictrsImageDownloadUrl = `${this.pictrsConfiguration.domain}/image/download?url=${coverUrl}&backgrounded=false`;
 
     const response = await firstValueFrom(
-      this.httpService
-        .post<UploadImageResponseDto>(
-          this.pictrsConfiguration.domain + '/image',
-          formData,
-          {
-            headers: { 'Content-Type': 'multipart/form-data' },
-          }
-        )
-        .pipe(
-          catchError((error: AxiosError) => {
-            console.error('An error occurred:', error.message);
-            throw 'An error happened!';
-          })
-        )
+      this.httpService.get<UploadImageResponseDto>(pictrsImageDownloadUrl).pipe(
+        catchError((error: AxiosError) => {
+          console.error('An error occurred:', error.message);
+          throw 'An error happened in method getUploadImage!';
+        })
+      )
     );
 
     return response.data;
