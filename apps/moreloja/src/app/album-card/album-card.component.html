@@ -2,6 +2,7 @@
   <img
     *ngIf="coverUrl$ | async as coverUrl"
     class="cover-image"
+    loading="lazy"
     src="{{ coverUrl }}"
     alt="{{ album.Album }}"
   />

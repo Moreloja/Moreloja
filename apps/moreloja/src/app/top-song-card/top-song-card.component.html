@@ -1,5 +1,10 @@
 <div class="main-container">
-  <img *ngIf="coverUrl$ | async as coverUrl" class="cover-image" src="{{ coverUrl }}" />
+  <img
+    *ngIf="coverUrl$ | async as coverUrl"
+    class="cover-image"
+    loading="lazy"
+    src="{{ coverUrl }}"
+  />
 
   <div>{{ topSong.Name }}</div>
 

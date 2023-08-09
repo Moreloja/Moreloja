@@ -37,6 +37,7 @@ export class ImageService {
       return new GetImageResponseDto(url + response.files[0].file);
     } catch (error) {
       return new GetImageResponseDto(
+        // TODO Use static image instead
         url + '2d8649a6-96ff-48d5-a133-36da61261edd.webp'
       );
     }
