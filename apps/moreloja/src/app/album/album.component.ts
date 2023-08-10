@@ -5,8 +5,8 @@ import {
   OnInit,
   inject,
 } from '@angular/core';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
-import { Observable } from 'rxjs';
+import { AsyncPipe, JsonPipe, NgFor, NgIf } from '@angular/common';
+import { Observable, Subject, map, merge, of, switchMap } from 'rxjs';
 
 import { AlbumsService } from '@moreloja/services/albums';
 import { GetAlbumResponseDto } from '@moreloja/api/data-access-dtos';
@@ -17,7 +17,14 @@ import { TopSongCardComponent } from '../top-song-card/top-song-card.component';
 @Component({
   selector: 'moreloja-album',
   standalone: true,
-  imports: [AsyncPipe, NgFor, NgIf, SongCardComponent, TopSongCardComponent],
+  imports: [
+    AsyncPipe,
+    JsonPipe,
+    NgFor,
+    NgIf,
+    SongCardComponent,
+    TopSongCardComponent,
+  ],
   templateUrl: './album.component.html',
   styleUrls: ['./album.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,6 +34,7 @@ export default class AlbumComponent implements OnInit {
 
   album$!: Observable<GetAlbumResponseDto>;
   coverUrl$!: Observable<string>;
+  private selectedFile$ = new Subject<File>();
 
   @Input()
   set mbidAlbumInput(mbidAlbum: string) {
@@ -37,8 +45,22 @@ export default class AlbumComponent implements OnInit {
 
   ngOnInit(): void {
     this.album$ = this.albumsService.getAlbum(this.mbidAlbum);
-    this.coverUrl$ = this.albumsService.getAlbumCover(
-      this.mbidAlbum
+    this.coverUrl$ = merge(
+      this.albumsService.getAlbumCover(this.mbidAlbum),
+      this.selectedFile$.pipe(
+        switchMap((file) =>
+          this.albumsService.setAlbumCover(this.mbidAlbum, file)
+        )
+      )
     );
+  }
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const selectedFiles = input.files;
+
+    if (selectedFiles && selectedFiles.length > 0) {
+      this.selectedFile$.next(selectedFiles[0]);
+    }
   }
 }

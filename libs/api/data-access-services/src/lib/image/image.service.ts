@@ -1,7 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
-import { catchError, firstValueFrom } from 'rxjs';
+import { catchError, firstValueFrom, timeout } from 'rxjs';
 import { AxiosError } from 'axios';
+
+// This is a hack to make Multer available in the Express namespace
+// See https://github.com/DefinitelyTyped/DefinitelyTyped/issues/47780
+import 'multer';
 
 import {
   GetImageResponseDto,
@@ -23,34 +27,62 @@ export class ImageService {
   ) {}
 
   async getAlbumCover(musicbrainzalbum: string): Promise<GetImageResponseDto> {
-    const url = '/pictrs/image/original/';
     // Get image from db
     const existingImage = await this.imageRepository.getImageByMusicBrainzAlbum(
       musicbrainzalbum
     );
     if (existingImage) {
-      return new GetImageResponseDto(url + existingImage);
+      return new GetImageResponseDto(existingImage);
     }
     try {
       // Else Get image from coverart api
       const coverUrl = this.getCoverUrl(musicbrainzalbum);
       const response = await this.getUploadImage(coverUrl);
       // Add db entry for uploaded image
-      this.saveUploadedImageMetadata(musicbrainzalbum, response);
-      return new GetImageResponseDto(url + response.files[0].file);
+      this.saveOrUpdateImageMetadata(musicbrainzalbum, response);
+      return new GetImageResponseDto(response.files[0].file);
     } catch (error) {
+      // TODO Maybe throw error instead.
+      // Placeholder image is already set before calling this method.
       return new GetImageResponseDto(
         // TODO Use static image instead
-        url + '2d8649a6-96ff-48d5-a133-36da61261edd.webp'
+        '2d8649a6-96ff-48d5-a133-36da61261edd.webp'
       );
     }
   }
 
-  private async saveUploadedImageMetadata(
+  async setAlbumCover(
+    musicbrainzalbum: string,
+    image: Express.Multer.File
+  ): Promise<GetImageResponseDto> {
+    const formData = new FormData();
+    const blob = new Blob([image.buffer], {
+      type: image.mimetype,
+    });
+    formData.append('images[]', blob, image.originalname);
+    const response = await firstValueFrom(
+      this.httpService
+        .post<UploadImageResponseDto>(
+          this.pictrsConfiguration.domain + '/image',
+          formData
+        )
+        .pipe(
+          catchError((error: AxiosError) => {
+            console.error('An error occurred:', error.message);
+            throw 'An error happened while setting album cover!';
+          })
+        )
+    );
+
+    this.saveOrUpdateImageMetadata(musicbrainzalbum, response.data);
+    return new GetImageResponseDto(response.data.files[0].file);
+  }
+
+  private async saveOrUpdateImageMetadata(
     musicbrainzalbum: string,
     response: UploadImageResponseDto
   ) {
-    this.imageRepository.saveUploadedImageMetadata(
+    this.imageRepository.saveOrUpdateImageMetadata(
       musicbrainzalbum,
       response.files[0].file
     );
@@ -63,11 +95,12 @@ export class ImageService {
   private async getUploadImage(
     coverUrl: string
   ): Promise<UploadImageResponseDto> {
-    console.log("Loading cover for: " + coverUrl);
+    console.log('Loading cover for: ' + coverUrl);
     const pictrsImageDownloadUrl = `${this.pictrsConfiguration.domain}/image/download?url=${coverUrl}&backgrounded=false`;
 
     const response = await firstValueFrom(
       this.httpService.get<UploadImageResponseDto>(pictrsImageDownloadUrl).pipe(
+        timeout(5000),
         catchError((error: AxiosError) => {
           console.error('An error occurred:', error.message);
           throw 'An error happened in method getUploadImage!';

@@ -23,17 +23,15 @@ export class ImageRepository {
     }
   }
 
-  async saveUploadedImageMetadata(musicbrainzalbum: string, image: string): Promise<void> {
-    const newImage = new this.imageModel({
-      musicbrainzid: musicbrainzalbum,
-      image,
-    });
-
-    try {
-      await newImage.save();
-    } catch (error) {
-      // Happens if image already exists. Not saving again.
-      console.debug('Image already exists. Not saving again.');
-    }
+  async saveOrUpdateImageMetadata(
+    musicbrainzalbum: string,
+    image: string
+  ): Promise<void> {
+    const filter = { musicbrainzid: musicbrainzalbum };
+    const updateOperation = {
+      $set: { image: image },
+    };
+    const options = { upsert: true };
+    await this.imageModel.updateOne(filter, updateOperation, options);
   }
 }

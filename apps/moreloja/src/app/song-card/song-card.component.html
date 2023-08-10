@@ -1,6 +1,10 @@
 <div class="main-container">
   <div *ngIf="coverUrl$ | async as coverUrl" class="cover-container">
-    <img class="cover-image" loading="lazy" src="{{ coverUrl }}" />
+    <img
+      class="cover-image"
+      loading="lazy"
+      src="pictrs/image/process.webp?src={{ coverUrl }}&resize=100"
+    />
   </div>
 
   <div class="info-container">
