@@ -1,5 +1,14 @@
 <div *ngIf="album$ | async as album">
-  <h2>{{ album.name }}</h2>
+  <div class="album-title">
+    <h2>{{ album.name }}</h2>
+    <div>
+      <a href="https://musicbrainz.org/release/{{ mbidAlbumInput }}" target="_blank">
+        <img
+          src="https://musicbrainz.org/static/images/favicons/favicon-32x32.png"
+        />
+      </a>
+    </div>
+  </div>
 
   <div>
     <input

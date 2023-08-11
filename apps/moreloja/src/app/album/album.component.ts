@@ -40,6 +40,9 @@ export default class AlbumComponent implements OnInit {
   set mbidAlbumInput(mbidAlbum: string) {
     this.mbidAlbum = mbidAlbum;
   }
+  get mbidAlbumInput(): string {
+    return this.mbidAlbum;
+  }
 
   private albumsService = inject(AlbumsService);
 
