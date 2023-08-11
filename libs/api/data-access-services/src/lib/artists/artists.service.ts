@@ -16,35 +16,44 @@ export class ArtistsService {
     const artistFilter = {
       Provider_musicbrainzartist: mbidAlbumArtist,
     };
-    
+
     const albumArtistFilter = {
       Provider_musicbrainzalbumartist: mbidAlbumArtist,
     };
 
-    const songs = await this.songRepository.findLimitedSongs(
-      artistFilter,
-      10
-    );
+    const songs = await this.songRepository.findLimitedSongs(artistFilter, 10);
 
     const artistName = await this.songRepository.findArtistName(
       mbidAlbumArtist
-    )
-
-    const topSongs = await this.songRepository.getTopSongs(
-      artistFilter,
-      10
     );
+
+    const topSongs = await this.songRepository.getTopSongs(artistFilter, 10);
 
     const distinctAlbums = await this.songRepository.getDistinctAlbums(
       albumArtistFilter
+    );
+
+    const appearsOnDistinctAlbums = await this.songRepository.getDistinctAlbums(
+      artistFilter
     );
 
     return new GetArtistResponseDto(
       artistName,
       distinctAlbums.map(
         (album) =>
-          new AlbumDto(album.Album ?? '', album.Provider_musicbrainzalbum ?? '', 
-            album.Year ?? '')
+          new AlbumDto(
+            album.Album ?? '',
+            album.Provider_musicbrainzalbum ?? '',
+            album.Year ?? ''
+          )
+      ),
+      appearsOnDistinctAlbums.map(
+        (album) =>
+          new AlbumDto(
+            album.Album ?? '',
+            album.Provider_musicbrainzalbum ?? '',
+            album.Year ?? ''
+          )
       ),
       topSongs.map(
         (song) =>

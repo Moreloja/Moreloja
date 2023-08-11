@@ -5,6 +5,7 @@ export class GetArtistResponseDto {
   constructor(
     public name: string,
     public albums: AlbumDto[],
+    public appearsOnAlbums: AlbumDto[],
     public topSongs: TopSongDto[],
     public songs: SongDto[]
   ) {}

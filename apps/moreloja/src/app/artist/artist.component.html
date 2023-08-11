@@ -11,6 +11,15 @@
   </div>
 
   <div>
+    <h3>Appears on</h3>
+    <div class="album-container">
+      <div *ngFor="let album of artist.appearsOnAlbums">
+        <moreloja-album-card [album]="album"></moreloja-album-card>
+      </div>
+    </div>
+  </div>
+
+  <div>
     <h3>Top Songs</h3>
     <div>
       <div *ngFor="let song of artist.topSongs">
