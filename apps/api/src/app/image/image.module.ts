@@ -1,18 +1,28 @@
 import { Module } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
 
-import { ImageService } from '@moreloja/api/data-access-services';
+import {
+  ImageService,
+  PictrsService,
+  DbAlbumCoverProvider,
+  DownloadAlbumCoverProvider,
+  MusicBrainzAlbumCoverProvider,
+  DeezerAlbumCoverProvider,
+} from '@moreloja/api/data-access-services';
 import { DataAccessRepositoriesModule } from '@moreloja/api/data-access-repositories';
 
 import { ImageController } from './image.controller';
 
-
 @Module({
-  imports: [
-    HttpModule,
-    DataAccessRepositoriesModule
-  ],
+  imports: [HttpModule, DataAccessRepositoriesModule],
   controllers: [ImageController],
-  providers: [ImageService],
+  providers: [
+    ImageService,
+    PictrsService,
+    DbAlbumCoverProvider,
+    DownloadAlbumCoverProvider,
+    MusicBrainzAlbumCoverProvider,
+    DeezerAlbumCoverProvider,
+  ],
 })
 export class ImageModule {}

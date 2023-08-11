@@ -74,4 +74,17 @@ export class SongRepository {
     ]);
     return topSongs;
   }
+
+  async getArtistAndAlbumByMusicbrainzalbumId(
+    musicbrainzalbum: string
+  ): Promise<{ artist: string; album: string } | undefined> {
+    const song = await this.songModel
+      .findOne({ Provider_musicbrainzalbum: musicbrainzalbum })
+      .exec();
+    if (song) {
+      return { artist: song.Artist ?? '', album: song.Album ?? '' };
+    }
+
+    return undefined;
+  }
 }
