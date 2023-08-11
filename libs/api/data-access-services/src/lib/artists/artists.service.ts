@@ -34,7 +34,10 @@ export class ArtistsService {
     );
 
     const appearsOnDistinctAlbums = await this.songRepository.getDistinctAlbums(
-      artistFilter
+      {
+        Provider_musicbrainzartist: mbidAlbumArtist,
+        Provider_musicbrainzalbumartist: { $ne: mbidAlbumArtist },
+      }
     );
 
     return new GetArtistResponseDto(
