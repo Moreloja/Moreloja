@@ -22,10 +22,9 @@ export class ArtistsService {
       10
     );
 
-    let artistName = '';
-    if (songs.length) {
-      artistName = songs[0].Artist ?? 'Unknown Artist';
-    }
+    const artistName = await this.songRepository.findArtistName(
+      mbidAlbumArtist
+    )
 
     const topSongs = await this.songRepository.getTopSongs(
       albumArtistFilter,
@@ -63,6 +62,7 @@ export class ArtistsService {
             song.timestamp ?? '',
             song.Provider_musicbrainzalbum ?? '',
             song.Provider_musicbrainzalbumartist ?? '',
+            song.Provider_musicbrainzartist ?? '',
             song.Provider_musicbrainztrack ?? '',
             song.run_time ?? 0
           )

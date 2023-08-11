@@ -16,6 +16,18 @@ export class SongRepository {
       .exec();
   }
 
+  async findArtistName(mbidAlbumArtist: string): Promise<string> {
+    const unknownArtist = 'Unknown Artist';
+    const song = await this.songModel
+      .findOne({ Provider_musicbrainzartist: mbidAlbumArtist })
+      .exec();
+    if (song) {
+      return song.Artist ?? unknownArtist;
+    }
+
+    return unknownArtist;
+  }
+
   async getDistinctAlbums(
     albumArtistFilter: any
   ): Promise<
