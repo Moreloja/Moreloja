@@ -39,6 +39,9 @@ export default class ArtistComponent implements OnInit {
   set mbidAlbumArtistInput(mbidAlbumArtist: string) {
     this.mbidAlbumArtist = mbidAlbumArtist;
   }
+  get mbidAlbumArtistInput(): string {
+    return this.mbidAlbumArtist;
+  }
 
   private artistsService = inject(ArtistsService);
 
