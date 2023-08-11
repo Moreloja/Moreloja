@@ -13,12 +13,16 @@ export class ArtistsService {
   constructor(private songRepository: SongRepository) {}
 
   async getArtist(mbidAlbumArtist: string): Promise<GetArtistResponseDto> {
+    const artistFilter = {
+      Provider_musicbrainzartist: mbidAlbumArtist,
+    };
+    
     const albumArtistFilter = {
       Provider_musicbrainzalbumartist: mbidAlbumArtist,
     };
 
     const songs = await this.songRepository.findLimitedSongs(
-      albumArtistFilter,
+      artistFilter,
       10
     );
 
@@ -27,7 +31,7 @@ export class ArtistsService {
     )
 
     const topSongs = await this.songRepository.getTopSongs(
-      albumArtistFilter,
+      artistFilter,
       10
     );
 
