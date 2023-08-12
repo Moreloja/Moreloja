@@ -30,7 +30,11 @@ export const appRoutes: Route[] = [
     },
     {
         path: 'songs',
-        title: `${title} - Songs`,
+        redirectTo: 'songs/page/1',
+        pathMatch: 'full'
+    },
+    {
+        path: 'songs/page/:page',
         loadComponent: () => import('./songs/songs.component')
     }
 ];

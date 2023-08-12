@@ -16,7 +16,7 @@ export class AlbumsService {
       Provider_musicbrainzalbum: mbidAlbum,
     };
 
-    const songs = await this.songRepository.findLimitedSongs(albumFilter, 10);
+    const songs = await this.songRepository.findLimitedSongs(albumFilter, 0, 10);
 
     let albumName = '';
     if (songs.length) {

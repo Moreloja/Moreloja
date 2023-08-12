@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 
 import { SongsService } from '@moreloja/api/data-access-services';
 
@@ -6,8 +6,10 @@ import { SongsService } from '@moreloja/api/data-access-services';
 export class SongsController {
   constructor(private readonly songsService: SongsService) {}
 
-  @Get('songs')
-  getAllSongs() {
-    return this.songsService.getAllSongs();
+  @Get('songs/page/:page')
+  getAllSongs(
+    @Param('page') page: number
+  ) {
+    return this.songsService.getAllSongs(page);
   }
 }

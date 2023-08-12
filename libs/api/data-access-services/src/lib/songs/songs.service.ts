@@ -10,8 +10,14 @@ import { SongRepository } from '@moreloja/api/data-access-repositories';
 export class SongsService {
   constructor(private songRepository: SongRepository) {}
 
-  async getAllSongs(): Promise<GetAllSongsResponseDto> {
-    const songs = await this.songRepository.findLimitedSongs({}, 10);
+  async getAllSongs(page: number): Promise<GetAllSongsResponseDto> {
+    const songsPerPage = 10;
+    const songsToSkip = (page - 1) * songsPerPage;
+    const songs = await this.songRepository.findLimitedSongs(
+      {},
+      songsToSkip < 0 ? 0 : songsToSkip,
+      songsPerPage
+    );
     return new GetAllSongsResponseDto(
       songs.map(
         (song) =>

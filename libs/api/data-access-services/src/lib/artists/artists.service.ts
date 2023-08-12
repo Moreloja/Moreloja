@@ -21,7 +21,7 @@ export class ArtistsService {
       Provider_musicbrainzalbumartist: mbidAlbumArtist,
     };
 
-    const songs = await this.songRepository.findLimitedSongs(artistFilter, 10);
+    const songs = await this.songRepository.findLimitedSongs(artistFilter, 0, 10);
 
     const artistName = await this.songRepository.findArtistName(
       mbidAlbumArtist

@@ -8,10 +8,11 @@ import { Song } from '@moreloja/api/data-access-models';
 export class SongRepository {
   constructor(@InjectModel(Song.name) private songModel: Model<Song>) {}
 
-  async findLimitedSongs(albumArtistFilter: any, limit: number) {
+  async findLimitedSongs(albumArtistFilter: any, skip: number, limit: number) {
     return await this.songModel
       .find(albumArtistFilter)
       .sort({ timestamp: -1 }) // Sort by timestamp in descending order
+      .skip(skip)
       .limit(limit)
       .exec();
   }
