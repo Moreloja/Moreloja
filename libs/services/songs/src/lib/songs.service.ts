@@ -10,7 +10,12 @@ import { GetAllSongsResponseDto } from '@moreloja/api/data-access-dtos';
 export class SongsService {
   private http = inject(HttpClient);
 
-  getAllSongs(page: number): Observable<GetAllSongsResponseDto> {
-    return this.http.get<GetAllSongsResponseDto>(`/api/songs/page/${page}`);
+  getAllSongs(
+    mbidArtist: string,
+    page: number
+  ): Observable<GetAllSongsResponseDto> {
+    return this.http.get<GetAllSongsResponseDto>(
+      `/api/songs/artist/${mbidArtist}/page/${page}`
+    );
   }
 }

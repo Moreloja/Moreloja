@@ -6,10 +6,11 @@ import { SongsService } from '@moreloja/api/data-access-services';
 export class SongsController {
   constructor(private readonly songsService: SongsService) {}
 
-  @Get('songs/page/:page')
-  getAllSongs(
+  @Get('songs/artist/:mbidArtist/page/:page')
+  getAllSongsByArtist(
+    @Param('mbidArtist') mbidArtist: string,
     @Param('page') page: number
   ) {
-    return this.songsService.getAllSongs(page);
+    return this.songsService.getAllSongs(mbidArtist, page);
   }
 }

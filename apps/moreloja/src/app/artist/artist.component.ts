@@ -6,6 +6,7 @@ import {
   inject,
 } from '@angular/core';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { GetArtistResponseDto } from '@moreloja/api/data-access-dtos';
@@ -25,6 +26,7 @@ import { TopSongCardComponent } from '../top-song-card/top-song-card.component';
     AlbumCardComponent,
     SongCardComponent,
     TopSongCardComponent,
+    RouterLink,
   ],
   templateUrl: './artist.component.html',
   styleUrls: ['./artist.component.css'],

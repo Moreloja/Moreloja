@@ -10,11 +10,20 @@ import { SongRepository } from '@moreloja/api/data-access-repositories';
 export class SongsService {
   constructor(private songRepository: SongRepository) {}
 
-  async getAllSongs(page: number): Promise<GetAllSongsResponseDto> {
+  async getAllSongs(
+    mbidArtist: string,
+    page: number
+  ): Promise<GetAllSongsResponseDto> {
+    let filter = {};
+
+    if (mbidArtist !== "undefined") {
+      filter = { Provider_musicbrainzartist: mbidArtist };
+    }
+
     const songsPerPage = 10;
     const songsToSkip = (page - 1) * songsPerPage;
     const songs = await this.songRepository.findLimitedSongs(
-      {},
+      filter,
       songsToSkip < 0 ? 0 : songsToSkip,
       songsPerPage
     );

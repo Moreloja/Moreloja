@@ -2,7 +2,10 @@
   <div class="artist-title">
     <h2>{{ artist.name }}</h2>
     <div>
-      <a href="https://musicbrainz.org/artist/{{ mbidAlbumArtistInput }}" target="_blank">
+      <a
+        href="https://musicbrainz.org/artist/{{ mbidAlbumArtistInput }}"
+        target="_blank"
+      >
         <img
           src="https://musicbrainz.org/static/images/favicons/favicon-32x32.png"
         />
@@ -41,7 +44,9 @@
   </div>
 
   <div>
-    <h3>Last Songs</h3>
+    <a routerLink="/songs/artist/{{ mbidAlbumArtistInput }}/page/1">
+      <h3>Last Songs</h3>
+    </a>
     <div *ngFor="let song of artist.songs">
       <moreloja-song-card [song]="song"></moreloja-song-card>
     </div>
