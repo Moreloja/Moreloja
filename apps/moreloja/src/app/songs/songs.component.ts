@@ -7,7 +7,7 @@ import {
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { Observable, map, merge, mergeMap, switchMap, tap } from 'rxjs';
+import { Observable, distinctUntilChanged, map, switchMap, tap } from 'rxjs';
 
 import { SongsService } from '@moreloja/services/songs';
 import { GetAllSongsResponseDto } from '@moreloja/api/data-access-dtos';
@@ -42,7 +42,8 @@ export default class SongsComponent implements OnInit {
 
   ngOnInit(): void {
     this.mbidArtist$ = this.route.params.pipe(
-      map((param) => param['mbidArtist'])
+      map((param) => param['mbidArtist']),
+      distinctUntilChanged()
     );
     this.page$ = this.route.params.pipe(map((param) => Number(param['page'])));
     this.songs$ = this.mbidArtist$.pipe(
