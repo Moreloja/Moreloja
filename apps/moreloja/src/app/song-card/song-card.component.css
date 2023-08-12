@@ -10,7 +10,7 @@
 }
 
 .cover-image {
-    
+  height: 100%;
 }
 
 .info-container {
@@ -23,9 +23,5 @@
 
 .runtime {
   margin-left: 0.5rem;
-  color:darkgrey;
-}
-
-.timestamp-container {
-
+  color: darkgrey;
 }

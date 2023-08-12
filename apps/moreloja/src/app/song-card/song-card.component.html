@@ -1,10 +1,12 @@
 <div class="main-container">
   <div *ngIf="coverUrl$ | async as coverUrl" class="cover-container">
-    <img
-      class="cover-image"
-      loading="lazy"
-      src="pictrs/image/process.webp?src={{ coverUrl }}&resize=100"
-    />
+    <a routerLink="/album/{{ song.Provider_musicbrainzalbum }}">
+      <img
+        class="cover-image"
+        loading="lazy"
+        src="pictrs/image/process.webp?src={{ coverUrl }}&resize=50"
+      />
+    </a>
   </div>
 
   <div class="info-container">
@@ -19,18 +21,13 @@
       </div>
     </div>
     <div>
-      <a routerLink="/album/{{ song.Provider_musicbrainzalbum }}">
-        {{ song.Album }}
-      </a>
-    </div>
-    <div>
       <a routerLink="/artist/{{ song.Provider_musicbrainzartist }}">{{
         song.Artist
       }}</a>
     </div>
   </div>
 
-  <div class="timestamp-container">
+  <div>
     <div title="{{ song.timestamp | date : 'short' }}">
       {{ song.timestamp | stringToDate | timeAgo }}
     </div>

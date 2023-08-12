@@ -20,7 +20,7 @@ export class SongsService {
       filter = { Provider_musicbrainzartist: mbidArtist };
     }
 
-    const songsPerPage = 10;
+    const songsPerPage = 25;
     const songsToSkip = (page - 1) * songsPerPage;
     const songs = await this.songRepository.findLimitedSongs(
       filter,
