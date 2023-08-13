@@ -6,7 +6,9 @@
     src="pictrs/image/process.webp?src={{ coverUrl }}&resize=50"
   />
 
-  <div>{{ topSong.Name }}</div>
+  <a routerLink="/song/{{ topSong.Provider_musicbrainztrack }}/page/1">{{
+    topSong.Name
+  }}</a>
 
   <div class="play-count-bar-container">
     <div>
