@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
-import { AsyncPipe, DatePipe, NgIf } from '@angular/common';
+import { AsyncPipe, DatePipe, NgIf, SlicePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -9,7 +9,7 @@ import { AlbumsService } from '@moreloja/services/albums';
 @Component({
   selector: 'moreloja-album-card',
   standalone: true,
-  imports: [AsyncPipe, DatePipe, NgIf, RouterModule],
+  imports: [AsyncPipe, SlicePipe, NgIf, RouterModule],
   templateUrl: './album-card.component.html',
   styleUrls: ['./album-card.component.css'],
 })
