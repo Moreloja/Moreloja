@@ -23,9 +23,9 @@ export class AlbumsService {
     return this.http.get<GetAlbumResponseDto>(`/api/album/${mbidAlbum}`);
   }
 
-  getAlbums(): Observable<AlbumDto[]> {
+  getAlbums(page: number): Observable<AlbumDto[]> {
     return this.http
-      .get<GetAlbumsResponseDto>(`/api/albums`)
+      .get<GetAlbumsResponseDto>(`/api/albums/page/${page}`)
       .pipe(map((response) => response.albums));
   }
 

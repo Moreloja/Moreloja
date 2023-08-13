@@ -10,7 +10,11 @@ export const appRoutes: Route[] = [
     },
     {
         path: 'albums',
-        title: `${title} - Albums`,
+        redirectTo: 'albums/page/1',
+        pathMatch: 'full'
+    },
+    {
+        path: 'albums/page/:page',
         loadComponent: () => import('./albums/albums.component')
     },
     {

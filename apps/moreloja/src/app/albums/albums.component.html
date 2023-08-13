@@ -1,5 +1,17 @@
 <h2>Albums</h2>
 
+<moreloja-pagination
+  *ngIf="page$ | async as page"
+  [page]="page"
+  (pageChange)="onPageChange($event)"
+></moreloja-pagination>
+
 <div *ngIf="albums$ | async as albums">
   <moreloja-albums-container [albums]="albums"></moreloja-albums-container>
 </div>
+
+<moreloja-pagination
+  *ngIf="page$ | async as page"
+  [page]="page"
+  (pageChange)="onPageChange($event)"
+></moreloja-pagination>

@@ -17,8 +17,10 @@ export class AlbumsController {
     return this.albumsService.getAlbum(mbidAlbum);
   }
 
-  @Get('albums')
-  getAlbums(): Promise<GetAlbumsResponseDto> {
-    return this.albumsService.getAlbums();
+  @Get('albums/page/:page')
+  getAlbums(
+    @Param('page') page: number
+  ): Promise<GetAlbumsResponseDto> {
+    return this.albumsService.getAlbums(page);
   }
 }

@@ -30,7 +30,9 @@ export class SongRepository {
   }
 
   async getDistinctAlbums(
-    albumArtistFilter: any
+    albumArtistFilter: any,
+    skip?: number,
+    limit?: number
   ): Promise<
     { Provider_musicbrainzalbum: string; Album: string; Year: number }[]
   > {
@@ -43,7 +45,11 @@ export class SongRepository {
           Year: { $first: '$Year' },
         },
       },
-      { $sort: { Year: -1 } },
+      { $sort: { Year: -1, _id: 1 } },
+      // Apply skip if provided
+      ...(skip ? [{ $skip: skip }] : []),
+      // Apply the limit if provided
+      ...(limit ? [{ $limit: limit }] : []),
       {
         $project: {
           _id: 0,
@@ -70,7 +76,7 @@ export class SongRepository {
         },
       },
       // Sort by play count in descending order
-      { $sort: { playCount: -1 } },
+      { $sort: { playCount: -1, _id: 1 } },
       // Apply the limit if provided
       ...(limit ? [{ $limit: limit }] : []),
       {

@@ -60,8 +60,19 @@ export class AlbumsService {
     );
   }
 
-  async getAlbums(): Promise<GetAlbumsResponseDto> {
-    const albums = await this.songRepository.getDistinctAlbums({});
+  async getAlbums(page: number): Promise<GetAlbumsResponseDto> {
+    const albums = await this.songRepository.getDistinctAlbums(
+      {},
+      this.pagesToSkip(page),
+      10
+    );
     return new GetAlbumsResponseDto(albums);
+  }
+
+  // TODO Extract into PaginationService?
+  private readonly songsPerPage = 15;
+  private pagesToSkip(page: number): number {
+    const result = (page - 1) * this.songsPerPage;
+    return result < 0 ? 0 : result;
   }
 }
