@@ -1,1 +1,19 @@
-<p>song works!</p>
+<h2>Song</h2>
+
+<moreloja-pagination
+  *ngIf="page$ | async as page"
+  [page]="page"
+  (pageChange)="onPageChange($event)"
+></moreloja-pagination>
+
+<div *ngIf="songs$ | async as songs">
+  <div *ngFor="let song of songs.songs">
+    <moreloja-song-card [song]="song"></moreloja-song-card>
+  </div>
+</div>
+
+<moreloja-pagination
+  *ngIf="page$ | async as page"
+  [page]="page"
+  (pageChange)="onPageChange($event)"
+></moreloja-pagination>

@@ -24,8 +24,7 @@ export const appRoutes: Route[] = [
         loadComponent: () => import('./artists/artists.component')
     },
     {
-        path: 'song',
-        title: `${title} - Song`,
+        path: 'song/:mbidTrack/page/:page',
         loadComponent: () => import('./song/song.component')
     },
     {

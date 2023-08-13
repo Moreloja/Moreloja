@@ -13,4 +13,12 @@ export class SongsController {
   ) {
     return this.songsService.getAllSongs(mbidArtist, page);
   }
+
+  @Get('song/:mbidTrack/page/:page')
+  getAllSongsByTrack(
+    @Param('mbidTrack') mbidTrack: string,
+    @Param('page') page: number
+  ) {
+    return this.songsService.getAllSongsByTrack(mbidTrack, page);
+  }
 }

@@ -18,4 +18,13 @@ export class SongsService {
       `/api/songs/artist/${mbidArtist}/page/${page}`
     );
   }
+
+  getAllSongsByTrack(
+    mbidTrack: string,
+    page: number
+  ): Observable<GetAllSongsResponseDto> {
+    return this.http.get<GetAllSongsResponseDto>(
+      `/api/song/${mbidTrack}/page/${page}`
+    );
+  }
 }

@@ -5,9 +5,12 @@ import {
   SongDto,
 } from '@moreloja/api/data-access-dtos';
 import { SongRepository } from '@moreloja/api/data-access-repositories';
+import { Song } from '@moreloja/api/data-access-models';
 
 @Injectable()
 export class SongsService {
+  private readonly songsPerPage = 25;
+
   constructor(private songRepository: SongRepository) {}
 
   async getAllSongs(
@@ -16,17 +19,31 @@ export class SongsService {
   ): Promise<GetAllSongsResponseDto> {
     let filter = {};
 
-    if (mbidArtist !== "undefined") {
+    if (mbidArtist !== 'undefined') {
       filter = { Provider_musicbrainzartist: mbidArtist };
     }
 
-    const songsPerPage = 25;
-    const songsToSkip = (page - 1) * songsPerPage;
     const songs = await this.songRepository.findLimitedSongs(
       filter,
-      songsToSkip < 0 ? 0 : songsToSkip,
-      songsPerPage
+      this.songsToSkip(page),
+      this.songsPerPage
     );
+    return this.createGetAllSongsResponseDto(songs);
+  }
+
+  async getAllSongsByTrack(
+    mbidTrack: string,
+    page: number
+  ): Promise<GetAllSongsResponseDto> {
+    const songs = await this.songRepository.findLimitedSongs(
+      { Provider_musicbrainztrack: mbidTrack },
+      this.songsToSkip(page),
+      this.songsPerPage
+    );
+    return this.createGetAllSongsResponseDto(songs);
+  }
+
+  private createGetAllSongsResponseDto(songs: Song[]): GetAllSongsResponseDto {
     return new GetAllSongsResponseDto(
       songs.map(
         (song) =>
@@ -43,5 +60,10 @@ export class SongsService {
           )
       )
     );
+  }
+
+  private songsToSkip(page: number): number {
+    const result = (page - 1) * this.songsPerPage;
+    return result < 0 ? 0 : result;
   }
 }
