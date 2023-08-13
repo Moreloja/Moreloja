@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import {
   GetAlbumResponseDto,
+  GetAlbumsResponseDto,
   SongDto,
   TopSongDto,
 } from '@moreloja/api/data-access-dtos';
@@ -16,7 +17,11 @@ export class AlbumsService {
       Provider_musicbrainzalbum: mbidAlbum,
     };
 
-    const songs = await this.songRepository.findLimitedSongs(albumFilter, 0, 10);
+    const songs = await this.songRepository.findLimitedSongs(
+      albumFilter,
+      0,
+      10
+    );
 
     let albumName = '';
     if (songs.length) {
@@ -53,5 +58,10 @@ export class AlbumsService {
           )
       )
     );
+  }
+
+  async getAlbums(): Promise<GetAlbumsResponseDto> {
+    const albums = await this.songRepository.getDistinctAlbums({});
+    return new GetAlbumsResponseDto(albums);
   }
 }

@@ -1,11 +1,13 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 
 import {
+  AlbumDto,
   GetAlbumResponseDto,
+  GetAlbumsResponseDto,
   GetImageResponseDto,
 } from '@moreloja/api/data-access-dtos';
-import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +21,12 @@ export class AlbumsService {
 
   getAlbum(mbidAlbum: string): Observable<GetAlbumResponseDto> {
     return this.http.get<GetAlbumResponseDto>(`/api/album/${mbidAlbum}`);
+  }
+
+  getAlbums(): Observable<AlbumDto[]> {
+    return this.http
+      .get<GetAlbumsResponseDto>(`/api/albums`)
+      .pipe(map((response) => response.albums));
   }
 
   getAlbumCover(mbidAlbum: string): Observable<string> {

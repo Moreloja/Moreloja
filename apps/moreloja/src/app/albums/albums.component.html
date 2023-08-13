@@ -1,1 +1,5 @@
-<p>albums works!</p>
+<h2>Albums</h2>
+
+<div *ngIf="albums$ | async as albums">
+  <moreloja-albums-container [albums]="albums"></moreloja-albums-container>
+</div>
