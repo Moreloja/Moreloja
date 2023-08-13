@@ -44,6 +44,9 @@ export class AlbumsService {
         next: (response) => {
           this.albumCovers[mbidAlbum].next(response.image_url);
         },
+        error: () => {
+          console.log(`No cover found for ${mbidAlbum}.`);
+        }
       });
     return this.albumCovers[mbidAlbum].asObservable();
   }

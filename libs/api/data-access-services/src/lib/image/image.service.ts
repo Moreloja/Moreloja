@@ -15,6 +15,7 @@ import {
   DbAlbumCoverProvider,
   DownloadAlbumCoverProvider,
 } from './cover-provider';
+import { NoCoverFoundError } from '../errors';
 
 @Injectable()
 export class ImageService {
@@ -31,15 +32,6 @@ export class ImageService {
     }[] = [
       this.dbAlbumCoverProvider,
       this.downloadAlbumCoverProvider,
-      // PlaceholderProvider
-      {
-        async provideAlbumCover(musicbrainzalbum: string): Promise<string> {
-          // TODO Maybe throw error instead.
-          // Placeholder image is already set before calling this method.
-          // TODO Use static image instead
-          return '2d8649a6-96ff-48d5-a133-36da61261edd.webp';
-        },
-      },
     ];
 
     for (const pictrsImageResponseCreator of pictrsImageResponseCreators) {
@@ -53,7 +45,7 @@ export class ImageService {
       }
     }
 
-    throw new Error('No cover found at all.');
+    throw new NoCoverFoundError('No cover found at all.');
   }
 
   async setAlbumCover(
