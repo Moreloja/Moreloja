@@ -5,7 +5,7 @@ import {
   GetAlbumResponseDto,
   GetImageResponseDto,
 } from '@moreloja/api/data-access-dtos';
-import { Observable, map, merge, of } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,28 +13,43 @@ import { Observable, map, merge, of } from 'rxjs';
 export class AlbumsService {
   private http = inject(HttpClient);
 
+  private readonly albumCovers: {
+    [mbidAlbum: string]: BehaviorSubject<string>;
+  } = {};
+
   getAlbum(mbidAlbum: string): Observable<GetAlbumResponseDto> {
     return this.http.get<GetAlbumResponseDto>(`/api/album/${mbidAlbum}`);
   }
 
-  getAlbumCover(musicbrainzalbum: string): Observable<string> {
-    return merge(
-      // TODO Use static image instead
-      of('2d8649a6-96ff-48d5-a133-36da61261edd.webp'),
-      this.http
-        .get<GetImageResponseDto>(`/api/image/album/${musicbrainzalbum}`)
-        .pipe(map((response) => response.image_url))
+  getAlbumCover(mbidAlbum: string): Observable<string> {
+    if (this.albumCovers[mbidAlbum]) {
+      return this.albumCovers[mbidAlbum].asObservable();
+    }
+
+    this.albumCovers[mbidAlbum] = new BehaviorSubject<string>(
+      // TODO Placeholder image is different for every pictrs server
+      '2d8649a6-96ff-48d5-a133-36da61261edd.webp'
     );
+    this.http
+      .get<GetImageResponseDto>(`/api/image/album/${mbidAlbum}`)
+      .subscribe({
+        next: (response) => {
+          this.albumCovers[mbidAlbum].next(response.image_url);
+        },
+      });
+    return this.albumCovers[mbidAlbum].asObservable();
   }
 
-  setAlbumCover(musicbrainzalbum: string, image: File): Observable<string> {
+  setAlbumCover(mbidAlbum: string, image: File): void {
     const formData = new FormData();
     formData.append('image', image);
-    return this.http
-      .post<GetImageResponseDto>(
-        `/api/image/album/${musicbrainzalbum}`,
-        formData
-      )
-      .pipe(map((response) => response.image_url));
+
+    this.http
+      .post<GetImageResponseDto>(`/api/image/album/${mbidAlbum}`, formData)
+      .subscribe({
+        next: (response) => {
+          this.albumCovers[mbidAlbum].next(response.image_url);
+        },
+      });
   }
 }

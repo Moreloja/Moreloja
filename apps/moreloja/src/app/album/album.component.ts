@@ -34,7 +34,6 @@ export default class AlbumComponent implements OnInit {
 
   album$!: Observable<GetAlbumResponseDto>;
   coverUrl$!: Observable<string>;
-  private selectedFile$ = new Subject<File>();
 
   @Input()
   set mbidAlbumInput(mbidAlbum: string) {
@@ -48,14 +47,7 @@ export default class AlbumComponent implements OnInit {
 
   ngOnInit(): void {
     this.album$ = this.albumsService.getAlbum(this.mbidAlbum);
-    this.coverUrl$ = merge(
-      this.albumsService.getAlbumCover(this.mbidAlbum),
-      this.selectedFile$.pipe(
-        switchMap((file) =>
-          this.albumsService.setAlbumCover(this.mbidAlbum, file)
-        )
-      )
-    );
+    this.coverUrl$ = this.albumsService.getAlbumCover(this.mbidAlbum);
   }
 
   onFileSelected(event: Event) {
@@ -63,7 +55,7 @@ export default class AlbumComponent implements OnInit {
     const selectedFiles = input.files;
 
     if (selectedFiles && selectedFiles.length > 0) {
-      this.selectedFile$.next(selectedFiles[0]);
+      this.albumsService.setAlbumCover(this.mbidAlbum, selectedFiles[0]);
     }
   }
 }
