@@ -7,10 +7,14 @@ import {
   TopSongDto,
 } from '@moreloja/api/data-access-dtos';
 import { SongRepository } from '@moreloja/api/data-access-repositories';
+import { PaginationService } from '../pagination.service';
 
 @Injectable()
 export class AlbumsService {
-  constructor(private songRepository: SongRepository) {}
+  constructor(
+    private songRepository: SongRepository,
+    private paginationService: PaginationService
+  ) {}
 
   async getAlbum(mbidAlbum: string): Promise<GetAlbumResponseDto> {
     const albumFilter = {
@@ -63,16 +67,9 @@ export class AlbumsService {
   async getAlbums(page: number): Promise<GetAlbumsResponseDto> {
     const albums = await this.songRepository.getDistinctAlbums(
       {},
-      this.pagesToSkip(page),
-      10
+      this.paginationService.pagesToSkip(page),
+      this.paginationService.songsPerPage
     );
     return new GetAlbumsResponseDto(albums);
-  }
-
-  // TODO Extract into PaginationService?
-  private readonly songsPerPage = 15;
-  private pagesToSkip(page: number): number {
-    const result = (page - 1) * this.songsPerPage;
-    return result < 0 ? 0 : result;
   }
 }

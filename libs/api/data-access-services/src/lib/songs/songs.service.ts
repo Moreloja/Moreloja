@@ -6,12 +6,14 @@ import {
 } from '@moreloja/api/data-access-dtos';
 import { SongRepository } from '@moreloja/api/data-access-repositories';
 import { Song } from '@moreloja/api/data-access-models';
+import { PaginationService } from '../pagination.service';
 
 @Injectable()
 export class SongsService {
-  private readonly songsPerPage = 25;
-
-  constructor(private songRepository: SongRepository) {}
+  constructor(
+    private songRepository: SongRepository,
+    private paginationService: PaginationService
+  ) {}
 
   async getAllSongs(
     mbidArtist: string,
@@ -25,8 +27,8 @@ export class SongsService {
 
     const songs = await this.songRepository.findLimitedSongs(
       filter,
-      this.songsToSkip(page),
-      this.songsPerPage
+      this.paginationService.pagesToSkip(page),
+      this.paginationService.songsPerPage
     );
     return this.createGetAllSongsResponseDto(songs);
   }
@@ -37,8 +39,8 @@ export class SongsService {
   ): Promise<GetAllSongsResponseDto> {
     const songs = await this.songRepository.findLimitedSongs(
       { Provider_musicbrainztrack: mbidTrack },
-      this.songsToSkip(page),
-      this.songsPerPage
+      this.paginationService.pagesToSkip(page),
+      this.paginationService.songsPerPage
     );
     return this.createGetAllSongsResponseDto(songs);
   }
@@ -60,10 +62,5 @@ export class SongsService {
           )
       )
     );
-  }
-
-  private songsToSkip(page: number): number {
-    const result = (page - 1) * this.songsPerPage;
-    return result < 0 ? 0 : result;
   }
 }
