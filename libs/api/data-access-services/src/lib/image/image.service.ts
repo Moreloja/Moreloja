@@ -14,8 +14,11 @@ import { PictrsService } from './pictrs.service';
 import {
   DbAlbumCoverProvider,
   DownloadAlbumCoverProvider,
+  PlaceholderAlbumCoverProvider,
 } from './cover-provider';
 import { NoCoverFoundError } from '../errors';
+import { readFile } from 'fs';
+import { join } from 'path';
 
 @Injectable()
 export class ImageService {
@@ -23,7 +26,8 @@ export class ImageService {
     private readonly pictrsService: PictrsService,
     private readonly imageRepository: ImageRepository,
     private readonly dbAlbumCoverProvider: DbAlbumCoverProvider,
-    private readonly downloadAlbumCoverProvider: DownloadAlbumCoverProvider
+    private readonly downloadAlbumCoverProvider: DownloadAlbumCoverProvider,
+    private readonly placeholderAlbumCoverProvider: PlaceholderAlbumCoverProvider
   ) {}
 
   async getAlbumCover(musicbrainzalbum: string): Promise<GetImageResponseDto> {
@@ -32,6 +36,7 @@ export class ImageService {
     }[] = [
       this.dbAlbumCoverProvider,
       this.downloadAlbumCoverProvider,
+      this.placeholderAlbumCoverProvider,
     ];
 
     for (const pictrsImageResponseCreator of pictrsImageResponseCreators) {
@@ -55,6 +60,33 @@ export class ImageService {
     const response = await this.pictrsService.uploadImage(image);
     await this.saveOrUpdateImageMetadata(musicbrainzalbum, response);
     return new GetImageResponseDto(response.files[0].file);
+  }
+
+  async ensurePlaceholderAlbumCoverExists(): Promise<void> {
+    const existingImage = await this.imageRepository.getImageByMusicBrainzAlbum(
+      this.placeholderAlbumCoverProvider.placeholderMusicbrainzid
+    );
+    if (existingImage) {
+      return;
+    }
+
+    console.log('Placeholder album cover not found in db. Creating...');
+
+    // If placeholder does not exist: Upload placeholder image to pictrs
+    readFile(
+      join(process.cwd(), 'assets', 'PlaceholderAlbumCover.webp'),
+      async (err, data) => {
+        if (err) {
+          console.error(err);
+        } else {
+          const response = await this.pictrsService.uploadImageBuffer(data);
+          await this.saveOrUpdateImageMetadata(
+            this.placeholderAlbumCoverProvider.placeholderMusicbrainzid,
+            response
+          );
+        }
+      }
+    );
   }
 
   private async saveOrUpdateImageMetadata(

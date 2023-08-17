@@ -6,6 +6,7 @@ import {
   PictrsService,
   DbAlbumCoverProvider,
   DownloadAlbumCoverProvider,
+  PlaceholderAlbumCoverProvider,
   MusicBrainzAlbumCoverProvider,
   DeezerAlbumCoverProvider,
 } from '@moreloja/api/data-access-services';
@@ -21,6 +22,7 @@ import { ImageController } from './image.controller';
     PictrsService,
     DbAlbumCoverProvider,
     DownloadAlbumCoverProvider,
+    PlaceholderAlbumCoverProvider,
     MusicBrainzAlbumCoverProvider,
     DeezerAlbumCoverProvider,
   ],

@@ -42,6 +42,19 @@ export class PictrsService {
       type: image.mimetype,
     });
     formData.append('images[]', blob, image.originalname);
+    return await this.postAlbumCover(formData)
+  }
+
+  async uploadImageBuffer(
+    image: Buffer
+  ): Promise<UploadImageResponseDto> {
+    const formData = new FormData();
+    const blob = new Blob([image.buffer]);
+    formData.append('images[]', blob);
+    return await this.postAlbumCover(formData)
+  }
+
+  private async postAlbumCover(formData: FormData): Promise<UploadImageResponseDto> {
     const response = await firstValueFrom(
       this.httpService
         .post<UploadImageResponseDto>(
@@ -55,7 +68,6 @@ export class PictrsService {
           })
         )
     );
-
     return response.data;
   }
 }

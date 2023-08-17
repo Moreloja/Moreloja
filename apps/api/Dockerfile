@@ -19,6 +19,7 @@ RUN npm install
 FROM gcr.io/distroless/nodejs20-debian11
 
 WORKDIR /app
+COPY ./assets ./assets
 COPY --from=builder /app/builder/dist ./dist
 COPY --from=production-modules /app/builder/node_modules ./node_modules
 
