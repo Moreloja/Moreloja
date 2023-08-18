@@ -24,6 +24,11 @@ export const appRoutes: Route[] = [
     },
     {
         path: 'artists',
+        redirectTo: 'artists/page/1',
+        pathMatch: 'full'
+    },
+    {
+        path: 'artists/page/:page',
         title: `${title} - Artists`,
         loadComponent: () => import('./artists/artists.component')
     },

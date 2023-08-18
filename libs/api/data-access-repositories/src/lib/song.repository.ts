@@ -100,6 +100,44 @@ export class SongRepository {
     return topSongs;
   }
 
+  async getArtists(
+    skip?: number,
+    limit?: number
+  ): Promise<
+    {
+      Provider_musicbrainzartist: string;
+      Artist: string;
+      playCount: number;
+    }[]
+  > {
+    const artists = await this.songModel.aggregate([
+      //{ $match: {} },
+      // Group by musicbrainzartist to get play count for each artist
+      {
+        $group: {
+          _id: '$Provider_musicbrainzartist',
+          Artist: { $first: '$Artist' },
+          playCount: { $sum: 1 },
+        },
+      },
+      // Sort by play count in descending order
+      { $sort: { playCount: -1, _id: 1 } },
+      // Apply skip if provided
+      ...(skip ? [{ $skip: skip }] : []),
+      // Apply the limit if provided
+      ...(limit ? [{ $limit: limit }] : []),
+      {
+        $project: {
+          _id: 0,
+          Provider_musicbrainzartist: '$_id',
+          Artist: 1,
+          playCount: 1,
+        },
+      },
+    ]);
+    return artists;
+  }
+
   async getArtistAndAlbumByMusicbrainzalbumId(
     musicbrainzalbum: string
   ): Promise<{ artist: string; album: string } | undefined> {

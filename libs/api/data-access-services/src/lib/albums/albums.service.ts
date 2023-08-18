@@ -68,7 +68,7 @@ export class AlbumsService {
     const albums = await this.songRepository.getDistinctAlbums(
       {},
       this.paginationService.pagesToSkip(page),
-      this.paginationService.songsPerPage
+      this.paginationService.itemsPerPage
     );
     return new GetAlbumsResponseDto(albums);
   }

@@ -30,7 +30,7 @@ export class SongsService {
     const songs = await this.songRepository.findLimitedSongs(
       filter,
       this.paginationService.pagesToSkip(page),
-      this.paginationService.songsPerPage
+      this.paginationService.itemsPerPage
     );
     return this.createGetAllSongsResponseDto(songs);
   }
@@ -42,7 +42,7 @@ export class SongsService {
     const songs = await this.songRepository.findLimitedSongs(
       { Provider_musicbrainztrack: mbidTrack },
       this.paginationService.pagesToSkip(page),
-      this.paginationService.songsPerPage
+      this.paginationService.itemsPerPage
     );
     return this.createGetAllSongsResponseDto(songs);
   }
@@ -51,7 +51,7 @@ export class SongsService {
     const topSongs = await this.songRepository.getTopSongs(
       {},
       this.paginationService.pagesToSkip(page),
-      this.paginationService.songsPerPage
+      this.paginationService.itemsPerPage
     );
     return new GetTopSongsResponseDto(
       topSongs.map(

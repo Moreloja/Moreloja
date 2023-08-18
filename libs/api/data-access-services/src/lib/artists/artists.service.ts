@@ -2,15 +2,22 @@ import { Injectable } from '@nestjs/common';
 
 import {
   AlbumDto,
+  ArtistDto,
   GetArtistResponseDto,
+  GetArtistsResponseDto,
   SongDto,
   TopSongDto,
 } from '@moreloja/api/data-access-dtos';
 import { SongRepository } from '@moreloja/api/data-access-repositories';
 
+import { PaginationService } from '../pagination.service';
+
 @Injectable()
 export class ArtistsService {
-  constructor(private songRepository: SongRepository) {}
+  constructor(
+    private paginationService: PaginationService,
+    private songRepository: SongRepository
+  ) {}
 
   async getArtist(mbidAlbumArtist: string): Promise<GetArtistResponseDto> {
     const artistFilter = {
@@ -21,7 +28,11 @@ export class ArtistsService {
       Provider_musicbrainzalbumartist: mbidAlbumArtist,
     };
 
-    const songs = await this.songRepository.findLimitedSongs(artistFilter, 0, 10);
+    const songs = await this.songRepository.findLimitedSongs(
+      artistFilter,
+      0,
+      10
+    );
 
     const artistName = await this.songRepository.findArtistName(
       mbidAlbumArtist
@@ -81,6 +92,23 @@ export class ArtistsService {
             song.Provider_musicbrainzartist ?? '',
             song.Provider_musicbrainztrack ?? '',
             song.run_time ?? 0
+          )
+      )
+    );
+  }
+
+  async getArtists(page: number): Promise<GetArtistsResponseDto> {
+    const artists = await this.songRepository.getArtists(
+      this.paginationService.pagesToSkip(page),
+      this.paginationService.itemsPerPage
+    );
+    return new GetArtistsResponseDto(
+      artists.map(
+        (artist) =>
+          new ArtistDto(
+            artist.Provider_musicbrainzartist,
+            artist.Artist,
+            artist.playCount
           )
       )
     );

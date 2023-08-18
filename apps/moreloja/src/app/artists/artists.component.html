@@ -1,1 +1,24 @@
-<p>artists works!</p>
+<h2>Artists</h2>
+
+<moreloja-pagination
+  *ngIf="page$ | async as page"
+  [page]="page"
+  (pageChange)="onPageChange($event)"
+></moreloja-pagination>
+
+<div class="artist-container">
+  <ng-container *ngFor="let artist of artists$ | async as artists">
+    <a routerLink="/artist/{{ artist.mbidArtist }}">
+      {{ artist.name }}
+    </a>
+    <div>
+      {{ artist.playCount }}
+    </div>
+  </ng-container>
+</div>
+
+<moreloja-pagination
+  *ngIf="page$ | async as page"
+  [page]="page"
+  (pageChange)="onPageChange($event)"
+></moreloja-pagination>

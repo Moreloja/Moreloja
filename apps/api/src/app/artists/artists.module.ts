@@ -1,15 +1,16 @@
 import { Module } from '@nestjs/common';
 
-import { ArtistsService } from '@moreloja/api/data-access-services';
+import {
+  ArtistsService,
+  PaginationService,
+} from '@moreloja/api/data-access-services';
 import { DataAccessRepositoriesModule } from '@moreloja/api/data-access-repositories';
 
 import { ArtistsController } from './artists.controller';
 
 @Module({
-  imports: [
-    DataAccessRepositoriesModule,
-  ],
+  imports: [DataAccessRepositoriesModule],
   controllers: [ArtistsController],
-  providers: [ArtistsService],
+  providers: [ArtistsService, PaginationService],
 })
 export class ArtistsModule {}
