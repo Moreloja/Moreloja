@@ -1,0 +1,29 @@
+{
+  "name": "shared-global-constants",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/global-constants/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/shared/global-constants",
+        "main": "libs/shared/global-constants/src/index.ts",
+        "tsConfig": "libs/shared/global-constants/tsconfig.lib.json",
+        "assets": []
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/shared/global-constants/**/*.ts",
+          "libs/shared/global-constants/package.json"
+        ]
+      }
+    }
+  },
+  "tags": ["shared"]
+}

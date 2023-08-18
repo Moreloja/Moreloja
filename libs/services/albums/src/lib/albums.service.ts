@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 
+import { PlaceholderAlbumCover } from '@moreloja/shared/global-constants';
 import {
   AlbumDto,
   GetAlbumResponseDto,
@@ -14,6 +15,8 @@ import {
 })
 export class AlbumsService {
   private http = inject(HttpClient);
+
+  private placeholderAlbumCover: string | undefined;
 
   private readonly albumCovers: {
     [mbidAlbum: string]: BehaviorSubject<string>;
@@ -34,10 +37,28 @@ export class AlbumsService {
       return this.albumCovers[mbidAlbum].asObservable();
     }
 
-    this.albumCovers[mbidAlbum] = new BehaviorSubject<string>(
-      // TODO Placeholder image is different for every pictrs server
-      '2d8649a6-96ff-48d5-a133-36da61261edd.webp'
-    );
+    if (!this.placeholderAlbumCover) {
+      this.albumCovers[mbidAlbum] = new BehaviorSubject<string>(
+        'DoesNotExist.webp'
+      );
+
+      this.http
+        .get<GetImageResponseDto>(`/api/image/album/${PlaceholderAlbumCover}`)
+        .subscribe({
+          next: (response) => {
+            this.placeholderAlbumCover = response.image_url;
+            this.albumCovers[mbidAlbum].next(response.image_url);
+          },
+          error: () => {
+            console.log(`No cover found for ${mbidAlbum}.`);
+          },
+        });
+    } else {
+      this.albumCovers[mbidAlbum] = new BehaviorSubject<string>(
+        this.placeholderAlbumCover
+      );
+    }
+
     this.http
       .get<GetImageResponseDto>(`/api/image/album/${mbidAlbum}`)
       .subscribe({
@@ -46,8 +67,9 @@ export class AlbumsService {
         },
         error: () => {
           console.log(`No cover found for ${mbidAlbum}.`);
-        }
+        },
       });
+
     return this.albumCovers[mbidAlbum].asObservable();
   }
 

@@ -30,7 +30,10 @@
       ],
       "@moreloja/services/albums": ["libs/services/albums/src/index.ts"],
       "@moreloja/services/artists": ["libs/services/artists/src/index.ts"],
-      "@moreloja/services/songs": ["libs/services/songs/src/index.ts"]
+      "@moreloja/services/songs": ["libs/services/songs/src/index.ts"],
+      "@moreloja/shared/global-constants": [
+        "libs/shared/global-constants/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

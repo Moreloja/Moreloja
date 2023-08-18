@@ -19,6 +19,7 @@ import {
 import { NoCoverFoundError } from '../errors';
 import { readFile } from 'fs';
 import { join } from 'path';
+import { PlaceholderAlbumCover } from '@moreloja/shared/global-constants';
 
 @Injectable()
 export class ImageService {
@@ -64,7 +65,7 @@ export class ImageService {
 
   async ensurePlaceholderAlbumCoverExists(): Promise<void> {
     const existingImage = await this.imageRepository.getImageByMusicBrainzAlbum(
-      this.placeholderAlbumCoverProvider.placeholderMusicbrainzid
+      PlaceholderAlbumCover
     );
     if (existingImage) {
       return;
@@ -80,10 +81,7 @@ export class ImageService {
           console.error(err);
         } else {
           const response = await this.pictrsService.uploadImageBuffer(data);
-          await this.saveOrUpdateImageMetadata(
-            this.placeholderAlbumCoverProvider.placeholderMusicbrainzid,
-            response
-          );
+          await this.saveOrUpdateImageMetadata(PlaceholderAlbumCover, response);
         }
       }
     );

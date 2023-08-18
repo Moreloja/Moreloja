@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 
 import { ImageRepository } from '@moreloja/api/data-access-repositories';
+import { PlaceholderAlbumCover } from '@moreloja/shared/global-constants';
 
 @Injectable()
 export class PlaceholderAlbumCoverProvider {
-  placeholderMusicbrainzid = '00000000-0000-0000-0000-000000000000';
   constructor(private readonly imageRepository: ImageRepository) {}
 
   async provideAlbumCover(musicbrainzalbum: string): Promise<string> {
     const coverUrl = await this.imageRepository.getImageByMusicBrainzAlbum(
-      this.placeholderMusicbrainzid
+      PlaceholderAlbumCover
     );
     if (coverUrl) {
       this.imageRepository.saveOrUpdateImageMetadata(
