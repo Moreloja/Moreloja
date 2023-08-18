@@ -2,7 +2,9 @@ import { Injectable } from '@nestjs/common';
 
 import {
   GetAllSongsResponseDto,
+  GetTopSongsResponseDto,
   SongDto,
+  TopSongDto,
 } from '@moreloja/api/data-access-dtos';
 import { SongRepository } from '@moreloja/api/data-access-repositories';
 import { Song } from '@moreloja/api/data-access-models';
@@ -43,6 +45,27 @@ export class SongsService {
       this.paginationService.songsPerPage
     );
     return this.createGetAllSongsResponseDto(songs);
+  }
+
+  async getTopSongs(page: number): Promise<GetTopSongsResponseDto> {
+    const topSongs = await this.songRepository.getTopSongs(
+      {},
+      this.paginationService.pagesToSkip(page),
+      this.paginationService.songsPerPage
+    );
+    return new GetTopSongsResponseDto(
+      topSongs.map(
+        (song) =>
+          new TopSongDto(
+            song.Album ?? '',
+            song.Name ?? '',
+            song.Provider_musicbrainzalbum ?? '',
+            song.Provider_musicbrainztrack ?? '',
+            song.run_time ?? 0,
+            song.playCount ?? 0
+          )
+      )
+    );
   }
 
   private createGetAllSongsResponseDto(songs: Song[]): GetAllSongsResponseDto {

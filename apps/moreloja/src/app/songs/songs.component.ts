@@ -51,7 +51,7 @@ export default class SongsComponent implements OnInit {
       switchMap((mbidArtist) =>
         this.page$.pipe(
           tap((page) => {
-            this.titleService.setTitle(`Moreloja - Songs - Page ${page}`);
+            this.titleService.setTitle(`Moreloja - Last Songs - Page ${page}`);
           }),
           switchMap((page) => {
             return this.songsService.getAllSongs(mbidArtist, page);

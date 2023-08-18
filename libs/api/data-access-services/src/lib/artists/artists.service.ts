@@ -27,7 +27,7 @@ export class ArtistsService {
       mbidAlbumArtist
     );
 
-    const topSongs = await this.songRepository.getTopSongs(artistFilter, 10);
+    const topSongs = await this.songRepository.getTopSongs(artistFilter, 0, 10);
 
     const distinctAlbums = await this.songRepository.getDistinctAlbums(
       albumArtistFilter

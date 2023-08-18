@@ -1,0 +1,22 @@
+<h2>Top Songs</h2>
+
+<moreloja-pagination
+  *ngIf="page$ | async as page"
+  [page]="page"
+  (pageChange)="onPageChange($event)"
+></moreloja-pagination>
+
+<div *ngIf="songs$ | async as songs">
+  <div *ngFor="let song of songs.topSongs">
+    <moreloja-top-song-card
+      [topSong]="song"
+      [maxPlayCount]="songs.topSongs[0].playCount"
+    ></moreloja-top-song-card>
+  </div>
+</div>
+
+<moreloja-pagination
+  *ngIf="page$ | async as page"
+  [page]="page"
+  (pageChange)="onPageChange($event)"
+></moreloja-pagination>

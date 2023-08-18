@@ -43,5 +43,14 @@ export const appRoutes: Route[] = [
     {
         path: 'songs/artist/:mbidArtist/page/:page',
         loadComponent: () => import('./songs/songs.component')
+    },
+    {
+        path: 'top-songs',
+        redirectTo: 'top-songs/page/1',
+        pathMatch: 'full'
+    },
+    {
+        path: 'top-songs/page/:page',
+        loadComponent: () => import('./top-songs/top-songs.component')
     }
 ];

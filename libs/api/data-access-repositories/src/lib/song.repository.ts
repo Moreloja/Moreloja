@@ -61,7 +61,11 @@ export class SongRepository {
     ]);
   }
 
-  async getTopSongs(songFilter: any, limit?: number): Promise<any[]> {
+  async getTopSongs(
+    songFilter: any,
+    skip?: number,
+    limit?: number
+  ): Promise<any[]> {
     const topSongs = await this.songModel.aggregate([
       { $match: songFilter },
       // Group by musicbrainztrack to get play count for each song
@@ -77,6 +81,8 @@ export class SongRepository {
       },
       // Sort by play count in descending order
       { $sort: { playCount: -1, _id: 1 } },
+      // Apply skip if provided
+      ...(skip ? [{ $skip: skip }] : []),
       // Apply the limit if provided
       ...(limit ? [{ $limit: limit }] : []),
       {
