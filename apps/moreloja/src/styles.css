@@ -1,10 +1,59 @@
 /* You can add global styles to this file, and also import other style files */
 
+:root {
+  /* dark colors */
+  --font-color: #c9d1d9;
+  --background-color: #0d1117;
+  --background-color-brighter: #161b22;
+
+  --font-color-button: #fefefe;
+
+  --background-color-button: #1f6feb;
+  --background-color-button-hover: #237fef;
+
+  --no-error-color: #1f7e37;
+  --error-color: #f35959;
+
+  /* light colors */
+  --light-font-color: #24292f;
+  --light-background-color: #fff;
+  --light-background-color-brighter: #f6f8fa;
+}
+
 body {
   margin: 1rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    color: var(--font-color);
+    background-color: var(--background-color);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    color: var(--light-font-color);
+    background-color: var(--light-background-color);
+  }
 }
 
 a {
   text-decoration: none;
   color: inherit;
+}
+
+button {
+  border: 0;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  color: var(--font-color-button);
+  background-color: var(--background-color-button);
+}
+
+button:hover {
+  background-color: var(--background-color-button-hover);
+}
+
+button:disabled {
+  background-color: grey;
 }

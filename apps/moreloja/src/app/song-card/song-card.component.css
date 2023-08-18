@@ -2,7 +2,20 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  border: 1px solid #eee;
+  border-width: 1px;
+  border-style: solid;
+}
+
+@media (prefers-color-scheme: dark) {
+  .main-container {
+    border-color: var(--background-color-brighter);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .main-container {
+    border-color: var(--light-background-color-brighter);
+  }
 }
 
 .cover-container {
