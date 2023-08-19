@@ -13,6 +13,10 @@ a {
   font-weight: bold;
 }
 
+h1 {
+  color: var(--background-color-button);
+}
+
 .content {
   display: flex;
   flex-direction: column;

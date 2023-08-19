@@ -14,6 +14,12 @@
     <div>
       {{ artist.playCount }}
     </div>
+    <div
+      class="play-count-bar-fill"
+      [style.width]="
+        getPlayCountBarWidth(artist.playCount, artists[0].playCount)
+      "
+    ></div>
   </ng-container>
 </div>
 

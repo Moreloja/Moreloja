@@ -46,4 +46,9 @@ export default class ArtistsComponent implements OnInit {
   onPageChange(page: number): void {
     this.router.navigate(['../', page], { relativeTo: this.route });
   }
+
+  getPlayCountBarWidth(playCount: number, maxPlayCount: number): string {
+    const percentage = (playCount / maxPlayCount) * 100;
+    return percentage + '%';
+  }
 }
