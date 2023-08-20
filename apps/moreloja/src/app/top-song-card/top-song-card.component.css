@@ -8,6 +8,7 @@
 .cover-image {
   aspect-ratio: 1;
   object-fit: cover;
+  min-height: 25px;
 }
 
 .play-count-bar-container {

@@ -6,7 +6,7 @@
   (pageChange)="onPageChange($event)"
 ></moreloja-pagination>
 
-<div *ngIf="songs$ | async as songs">
+<div *ngIf="songs$ | async as songs" class="songs-container">
   <div *ngFor="let song of songs.topSongs">
     <moreloja-top-song-card
       [topSong]="song"

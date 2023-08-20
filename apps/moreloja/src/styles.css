@@ -45,7 +45,7 @@ a {
 
 button {
   border: 0;
-  padding: 0.5rem 1rem 0.5rem 1rem;
+  padding: 0.25rem 1rem 0.25rem 1rem;
   color: var(--font-color-button);
   background-color: var(--background-color-button);
 }
