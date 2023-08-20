@@ -14,7 +14,7 @@ import {
   styleUrls: ['./pagination.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class PaginationComponent {
+export class PaginationComponent {
   @Input() page!: number;
 
   @Output() pageChange = new EventEmitter<number>();

@@ -12,12 +12,20 @@ import { Title } from '@angular/platform-browser';
 import { ArtistsService } from '@moreloja/services/artists';
 import { ArtistDto } from '@moreloja/api/data-access-dtos';
 
-import PaginationComponent from '../pagination/pagination.component';
+import { PaginationComponent } from '../pagination/pagination.component';
+import { SecondsToStringPipe } from '../pipes/seconds-to-string.pipe';
 
 @Component({
   selector: 'moreloja-artists',
   standalone: true,
-  imports: [AsyncPipe, NgFor, NgIf, PaginationComponent, RouterModule],
+  imports: [
+    AsyncPipe,
+    SecondsToStringPipe,
+    NgFor,
+    NgIf,
+    PaginationComponent,
+    RouterModule,
+  ],
   templateUrl: './artists.component.html',
   styleUrls: ['./artists.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

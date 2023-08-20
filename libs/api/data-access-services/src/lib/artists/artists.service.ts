@@ -108,7 +108,8 @@ export class ArtistsService {
           new ArtistDto(
             artist.Provider_musicbrainzartist,
             artist.Artist,
-            artist.playCount
+            artist.playCount,
+            artist.playTime
           )
       )
     );

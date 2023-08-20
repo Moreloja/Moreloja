@@ -14,10 +14,13 @@
     <div>
       {{ artist.playCount }}
     </div>
+    <div>
+      {{ artist.playTime | secondsToString }}
+    </div>
     <div
       class="play-count-bar-fill"
       [style.width]="
-        getPlayCountBarWidth(artist.playCount, artists[0].playCount)
+        getPlayCountBarWidth(artist.playTime, artists[0].playTime)
       "
     ></div>
   </ng-container>

@@ -1,6 +1,6 @@
 .artist-container {
   display: grid;
-  grid-template-columns: auto auto 1fr;
+  grid-template-columns: auto auto auto 1fr;
   column-gap: 1rem;
   row-gap: 0.25rem;
 }

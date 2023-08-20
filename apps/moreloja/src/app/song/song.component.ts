@@ -12,7 +12,7 @@ import { Observable, distinctUntilChanged, map, switchMap, tap } from 'rxjs';
 import { GetAllSongsResponseDto } from '@moreloja/api/data-access-dtos';
 import { SongsService } from '@moreloja/services/songs';
 
-import PaginationComponent from '../pagination/pagination.component';
+import { PaginationComponent } from '../pagination/pagination.component';
 import { SongCardComponent } from '../song-card/song-card.component';
 
 @Component({

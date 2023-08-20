@@ -108,6 +108,7 @@ export class SongRepository {
       Provider_musicbrainzartist: string;
       Artist: string;
       playCount: number;
+      playTime: number;
     }[]
   > {
     const artists = await this.songModel.aggregate([
@@ -118,10 +119,11 @@ export class SongRepository {
           _id: '$Provider_musicbrainzartist',
           Artist: { $first: '$Artist' },
           playCount: { $sum: 1 },
+          playTime: { $sum: '$run_time' },
         },
       },
       // Sort by play count in descending order
-      { $sort: { playCount: -1, _id: 1 } },
+      { $sort: { playTime: -1, _id: 1 } },
       // Apply skip if provided
       ...(skip ? [{ $skip: skip }] : []),
       // Apply the limit if provided
@@ -132,6 +134,7 @@ export class SongRepository {
           Provider_musicbrainzartist: '$_id',
           Artist: 1,
           playCount: 1,
+          playTime: 1,
         },
       },
     ]);

@@ -13,7 +13,7 @@ import { AlbumsService } from '@moreloja/services/albums';
 import { AlbumDto } from '@moreloja/api/data-access-dtos';
 
 import { AlbumsContainerComponent } from '../albums-container/albums-container.component';
-import PaginationComponent from '../pagination/pagination.component';
+import { PaginationComponent } from '../pagination/pagination.component';
 
 @Component({
   selector: 'moreloja-albums',

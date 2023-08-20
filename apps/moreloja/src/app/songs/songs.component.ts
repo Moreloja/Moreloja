@@ -13,7 +13,7 @@ import { SongsService } from '@moreloja/services/songs';
 import { GetAllSongsResponseDto } from '@moreloja/api/data-access-dtos';
 
 import { SongCardComponent } from '../song-card/song-card.component';
-import PaginationComponent from '../pagination/pagination.component';
+import { PaginationComponent } from '../pagination/pagination.component';
 
 @Component({
   selector: 'moreloja-songs',
