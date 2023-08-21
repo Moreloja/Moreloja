@@ -34,6 +34,10 @@
   display: flex;
 }
 
+.song-runtime-container > div > a {
+  font-weight: bold;
+}
+
 .runtime {
   margin-left: 0.5rem;
   color: darkgrey;
