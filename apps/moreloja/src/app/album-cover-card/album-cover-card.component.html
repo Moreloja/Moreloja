@@ -1,0 +1,10 @@
+<a routerLink="/album/{{ album.Provider_musicbrainzalbum }}">
+  <img
+    *ngIf="coverUrl$ | async as coverUrl"
+    class="cover-image"
+    [style.width]="size + 'px'"
+    loading="lazy"
+    src="pictrs/image/process.webp?src={{ coverUrl }}&resize={{ size }}"
+    alt="{{ album.Album }}"
+  />
+</a>

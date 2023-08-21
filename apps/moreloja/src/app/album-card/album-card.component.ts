@@ -1,29 +1,19 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
-import { AsyncPipe, DatePipe, NgIf, SlicePipe } from '@angular/common';
+import { Component, Input } from '@angular/core';
+import { AsyncPipe, NgIf, SlicePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { Observable } from 'rxjs';
 
 import { AlbumDto } from '@moreloja/api/data-access-dtos';
-import { AlbumsService } from '@moreloja/services/albums';
+
+import { AlbumCoverCardComponent } from '../album-cover-card/album-cover-card.component';
 
 @Component({
   selector: 'moreloja-album-card',
   standalone: true,
-  imports: [AsyncPipe, SlicePipe, NgIf, RouterModule],
+  imports: [AsyncPipe, SlicePipe, NgIf, AlbumCoverCardComponent, RouterModule],
   templateUrl: './album-card.component.html',
   styleUrls: ['./album-card.component.css'],
 })
-export class AlbumCardComponent implements OnInit {
+export class AlbumCardComponent {
   @Input()
   album!: AlbumDto;
-
-  coverUrl$!: Observable<string>;
-
-  private albumsService = inject(AlbumsService);
-
-  ngOnInit(): void {
-    this.coverUrl$ = this.albumsService.getAlbumCover(
-      this.album.Provider_musicbrainzalbum
-    );
-  }
 }

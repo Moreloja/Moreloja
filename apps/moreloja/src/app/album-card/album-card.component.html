@@ -1,12 +1,7 @@
-<a routerLink="/album/{{ album.Provider_musicbrainzalbum }}">
-  <img
-    *ngIf="coverUrl$ | async as coverUrl"
-    class="cover-image"
-    loading="lazy"
-    src="pictrs/image/process.webp?src={{ coverUrl }}&resize=250"
-    alt="{{ album.Album }}"
-  />
-</a>
+<moreloja-album-cover-card
+  [album]="album"
+  [size]="250"
+></moreloja-album-cover-card>
 <div class="album-title" title="{{ album.Album }}">
   {{
     album.Album.length > 30

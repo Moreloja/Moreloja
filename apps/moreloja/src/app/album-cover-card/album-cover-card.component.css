@@ -1,0 +1,5 @@
+.cover-image {
+  display: block;
+  aspect-ratio: 1;
+  object-fit: cover;
+}

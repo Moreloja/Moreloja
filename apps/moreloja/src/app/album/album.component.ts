@@ -6,7 +6,7 @@ import {
   inject,
 } from '@angular/core';
 import { AsyncPipe, JsonPipe, NgFor, NgIf } from '@angular/common';
-import { Observable, Subject, map, merge, of, switchMap } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { AlbumsService } from '@moreloja/services/albums';
 import { GetAlbumResponseDto } from '@moreloja/api/data-access-dtos';
