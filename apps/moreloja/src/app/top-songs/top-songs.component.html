@@ -6,41 +6,10 @@
   (pageChange)="onPageChange($event)"
 ></moreloja-pagination>
 
-<!-- TODO Extract this into component -->
-<div *ngIf="songs$ | async as songs" class="cover-container">
-  <div *ngFor="let song of songs.topSongs | slice : 0 : 1">
-    <moreloja-album-cover-card
-      [album]="song"
-      [size]="400"
-    ></moreloja-album-cover-card>
-  </div>
-
-  <div class="cover-container-inner">
-    <div *ngFor="let row of [0, 1]">
-      <div
-        *ngFor="let song of songs.topSongs | slice : row * 2 + 1 : row * 2 + 3"
-      >
-        <moreloja-album-cover-card
-          [album]="song"
-          [size]="200"
-        ></moreloja-album-cover-card>
-      </div>
-    </div>
-  </div>
-
-  <div class="cover-container-inner">
-    <div *ngFor="let row of [0, 1, 2]">
-      <div
-        *ngFor="let song of songs.topSongs | slice : row * 3 + 5 : row * 3 + 8"
-      >
-        <moreloja-album-cover-card
-          [album]="song"
-          [size]="133"
-        ></moreloja-album-cover-card>
-      </div>
-    </div>
-  </div>
-</div>
+<moreloja-cover-banner
+  *ngIf="songs$ | async as songs"
+  [items]="songs.topSongs"
+></moreloja-cover-banner>
 
 <div *ngIf="songs$ | async as songs" class="songs-container">
   <div *ngFor="let song of songs.topSongs">
