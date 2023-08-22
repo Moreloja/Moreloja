@@ -1,27 +1,29 @@
 <h2>Top Songs</h2>
 
-<moreloja-pagination
-  *ngIf="page$ | async as page"
-  [page]="page"
-  (pageChange)="onPageChange($event)"
-></moreloja-pagination>
+<div class="main-container">
+  <moreloja-pagination
+    *ngIf="page$ | async as page"
+    [page]="page"
+    (pageChange)="onPageChange($event)"
+  ></moreloja-pagination>
 
-<moreloja-cover-banner
-  *ngIf="songs$ | async as songs"
-  [items]="songs.topSongs"
-></moreloja-cover-banner>
+  <moreloja-cover-banner
+    *ngIf="songs$ | async as songs"
+    [items]="songs.topSongs"
+  ></moreloja-cover-banner>
 
-<div *ngIf="songs$ | async as songs" class="songs-container">
-  <div *ngFor="let song of songs.topSongs">
-    <moreloja-top-song-card
-      [topSong]="song"
-      [maxPlayCount]="songs.topSongs[0].playCount"
-    ></moreloja-top-song-card>
+  <div *ngIf="songs$ | async as songs">
+    <div *ngFor="let song of songs.topSongs">
+      <moreloja-top-song-card
+        [topSong]="song"
+        [maxPlayCount]="songs.topSongs[0].playCount"
+      ></moreloja-top-song-card>
+    </div>
   </div>
-</div>
 
-<moreloja-pagination
-  *ngIf="page$ | async as page"
-  [page]="page"
-  (pageChange)="onPageChange($event)"
-></moreloja-pagination>
+  <moreloja-pagination
+    *ngIf="page$ | async as page"
+    [page]="page"
+    (pageChange)="onPageChange($event)"
+  ></moreloja-pagination>
+</div>
