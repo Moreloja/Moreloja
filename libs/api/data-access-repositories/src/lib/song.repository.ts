@@ -34,7 +34,12 @@ export class SongRepository {
     skip?: number,
     limit?: number
   ): Promise<
-    { Provider_musicbrainzalbum: string; Album: string; Year: number }[]
+    {
+      Provider_musicbrainzalbum: string;
+      Album: string;
+      Year: number;
+      playTime: number;
+    }[]
   > {
     return await this.songModel.aggregate([
       { $match: albumArtistFilter },
@@ -43,9 +48,10 @@ export class SongRepository {
           _id: '$Provider_musicbrainzalbum',
           Album: { $first: '$Album' },
           Year: { $first: '$Year' },
+          playTime: { $sum: '$run_time' },
         },
       },
-      { $sort: { Year: -1, _id: 1 } },
+      { $sort: { playTime: -1, _id: 1 } },
       // Apply skip if provided
       ...(skip ? [{ $skip: skip }] : []),
       // Apply the limit if provided
@@ -56,6 +62,7 @@ export class SongRepository {
           Provider_musicbrainzalbum: '$_id',
           Album: 1,
           Year: 1,
+          playTime: 1,
         },
       },
     ]);
