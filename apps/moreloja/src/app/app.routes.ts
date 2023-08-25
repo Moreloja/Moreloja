@@ -9,7 +9,7 @@ export const appRoutes: Route[] = [
         loadComponent: () => import('./home/home.component')
     },
     {
-        path: 'album/:mbidAlbumInput',
+        path: 'album/:mbidAlbum',
         title: `${title} - Album`,
         loadComponent: () => import('./album/album.component')
     },
@@ -23,7 +23,7 @@ export const appRoutes: Route[] = [
         loadComponent: () => import('./albums/albums.component')
     },
     {
-        path: 'artist/:mbidAlbumArtistInput',
+        path: 'artist/:mbidAlbumArtist',
         title: `${title} - Artist`,
         loadComponent: () => import('./artist/artist.component')
     },

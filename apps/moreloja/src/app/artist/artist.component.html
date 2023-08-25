@@ -3,7 +3,7 @@
     <h2>{{ artist.name }}</h2>
     <div>
       <a
-        href="https://musicbrainz.org/artist/{{ mbidAlbumArtistInput }}"
+        href="https://musicbrainz.org/artist/{{ mbidAlbumArtist }}"
         target="_blank"
       >
         <img
@@ -13,23 +13,12 @@
     </div>
   </div>
 
-  <div>
-    <input
-      #file
-      type="file"
-      (change)="onFileSelected($event)"
-      accept=".jpg, .jpeg, .png, .webp"
-    />
-    <img
-      *ngIf="artistPictureUrl$ | async as artistPictureUrl"
-      (click)="file.click()"
-      class="cover-image"
-      loading="lazy"
-      src="pictrs/image/process.webp?src={{ artistPictureUrl }}&resize=400"
-    />
-  </div>
+  <moreloja-editable-image
+    [mbidArtist]="mbidAlbumArtist"
+    [size]="400"
+  ></moreloja-editable-image>
 
-  <div>
+  <div *ngIf="artist.albums.length">
     <h3>Albums</h3>
     <div class="album-container">
       <div *ngFor="let album of artist.albums">
@@ -38,7 +27,7 @@
     </div>
   </div>
 
-  <div>
+  <div *ngIf="artist.appearsOnAlbums.length">
     <h3>Appears on</h3>
     <div class="album-container">
       <div *ngFor="let album of artist.appearsOnAlbums">
@@ -60,7 +49,7 @@
   </div>
 
   <div>
-    <a routerLink="/songs/artist/{{ mbidAlbumArtistInput }}/page/1">
+    <a routerLink="/songs/artist/{{ mbidAlbumArtist }}/page/1">
       <h3>Last Songs</h3>
     </a>
     <div *ngFor="let song of artist.songs">

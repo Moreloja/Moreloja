@@ -11,11 +11,11 @@ import { Observable } from 'rxjs';
 
 import { GetArtistResponse } from '@moreloja/api/data-access-dtos';
 import { ArtistsService } from '@moreloja/services/artists';
-import { ImageService } from '@moreloja/services/image';
 
 import { AlbumCardComponent } from '../album-card/album-card.component';
 import { SongCardComponent } from '../song-card/song-card.component';
 import { TopSongCardComponent } from '../top-song-card/top-song-card.component';
+import { EditableImageComponent } from '../editable-image/editable-image.component';
 
 @Component({
   selector: 'moreloja-artist',
@@ -25,6 +25,7 @@ import { TopSongCardComponent } from '../top-song-card/top-song-card.component';
     NgFor,
     NgIf,
     AlbumCardComponent,
+    EditableImageComponent,
     SongCardComponent,
     TopSongCardComponent,
     RouterLink,
@@ -34,35 +35,14 @@ import { TopSongCardComponent } from '../top-song-card/top-song-card.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class ArtistComponent implements OnInit {
-  private mbidAlbumArtist!: string;
+  @Input()
+  mbidAlbumArtist!: string;
 
   artist$!: Observable<GetArtistResponse>;
-  artistPictureUrl$!: Observable<string>;
-
-  @Input()
-  set mbidAlbumArtistInput(mbidAlbumArtist: string) {
-    this.mbidAlbumArtist = mbidAlbumArtist;
-  }
-  get mbidAlbumArtistInput(): string {
-    return this.mbidAlbumArtist;
-  }
 
   private artistsService = inject(ArtistsService);
-  private imageService = inject(ImageService);
 
   ngOnInit(): void {
     this.artist$ = this.artistsService.getArtist(this.mbidAlbumArtist);
-    this.artistPictureUrl$ = this.imageService.getArtistPicture(
-      this.mbidAlbumArtist
-    );
-  }
-
-  onFileSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
-    const selectedFiles = input.files;
-
-    if (selectedFiles && selectedFiles.length > 0) {
-      this.imageService.setImage(this.mbidAlbumArtist, selectedFiles[0]);
-    }
   }
 }

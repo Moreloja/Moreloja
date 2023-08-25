@@ -2,7 +2,7 @@
   <div class="album-title">
     <h2>{{ album.name }}</h2>
     <div>
-      <a href="https://musicbrainz.org/release/{{ mbidAlbumInput }}" target="_blank">
+      <a href="https://musicbrainz.org/release/{{ mbidAlbum }}" target="_blank">
         <img
           src="https://musicbrainz.org/static/images/favicons/favicon-32x32.png"
         />
@@ -10,21 +10,9 @@
     </div>
   </div>
 
-  <div>
-    <input
-      #file
-      type="file"
-      (change)="onFileSelected($event)"
-      accept=".jpg, .jpeg, .png, .webp"
-    />
-    <img
-      *ngIf="coverUrl$ | async as coverUrl"
-      (click)="file.click()"
-      class="cover-image"
-      loading="lazy"
-      src="pictrs/image/process.webp?src={{ coverUrl }}&resize=250"
-    />
-  </div>
+  <moreloja-editable-image
+    [mbidAlbum]="mbidAlbum"
+  ></moreloja-editable-image>
 
   <div>
     <h3>Album Songs</h3>
