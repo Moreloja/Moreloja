@@ -14,7 +14,6 @@ import { GetTopSongsResponseDto } from '@moreloja/api/data-access-dtos';
 
 import { TopSongCardComponent } from '../top-song-card/top-song-card.component';
 import { PaginationComponent } from '../pagination/pagination.component';
-import { CoverBannerComponent } from '../cover-banner/cover-banner.component';
 import { AlbumCoverCardViewModel } from '../album-cover-card/album-cover-card.component';
 
 @Component({
@@ -26,7 +25,6 @@ import { AlbumCoverCardViewModel } from '../album-cover-card/album-cover-card.co
     NgIf,
     TopSongCardComponent,
     PaginationComponent,
-    CoverBannerComponent,
     RouterModule,
   ],
   templateUrl: './top-songs.component.html',
@@ -35,7 +33,6 @@ import { AlbumCoverCardViewModel } from '../album-cover-card/album-cover-card.co
 })
 export default class TopSongsComponent implements OnInit {
   songs$!: Observable<GetTopSongsResponseDto>;
-  coverBannerSongs$!: Observable<AlbumCoverCardViewModel[]>;
   page$!: Observable<number>;
 
   private router = inject(Router);
@@ -52,15 +49,6 @@ export default class TopSongsComponent implements OnInit {
       switchMap((page) => {
         return this.songsService.getTopSongs(page);
       })
-    );
-    this.coverBannerSongs$ = this.songs$.pipe(
-      map((songs) =>
-        songs.topSongs.map((song) => ({
-          mbidAlbum: song.Provider_musicbrainzalbum,
-          name: song.Name,
-          mbidTrack: song.Provider_musicbrainztrack,
-        }))
-      )
     );
   }
 

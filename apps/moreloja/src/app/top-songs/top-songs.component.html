@@ -7,11 +7,6 @@
     (pageChange)="onPageChange($event)"
   ></moreloja-pagination>
 
-  <moreloja-cover-banner
-    *ngIf="coverBannerSongs$ | async as songs"
-    [viewModels]="songs"
-  ></moreloja-cover-banner>
-
   <div *ngIf="songs$ | async as songs">
     <div *ngFor="let song of songs.topSongs">
       <moreloja-top-song-card
