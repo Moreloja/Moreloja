@@ -7,8 +7,8 @@ import { PlaceholderAlbumCover } from '@moreloja/shared/global-constants';
 export class PlaceholderAlbumCoverProvider {
   constructor(private readonly imageRepository: ImageRepository) {}
 
-  async provideAlbumCover(musicbrainzalbum: string): Promise<string> {
-    const coverUrl = await this.imageRepository.getImageByMusicBrainzAlbum(
+  async provideImage(musicbrainzalbum: string): Promise<string> {
+    const coverUrl = await this.imageRepository.getImageByMusicBrainzId(
       PlaceholderAlbumCover
     );
     if (coverUrl) {

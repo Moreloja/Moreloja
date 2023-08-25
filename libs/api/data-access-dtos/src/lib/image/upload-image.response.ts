@@ -16,6 +16,6 @@ export class FileItem {
   ) {}
 }
 
-export class UploadImageResponseDto {
+export class UploadImageResponse {
   constructor(public files: FileItem[], public msg: string) {}
 }

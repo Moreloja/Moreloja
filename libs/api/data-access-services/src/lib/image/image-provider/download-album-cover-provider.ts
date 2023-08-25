@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { UploadImageResponseDto } from '@moreloja/api/data-access-dtos';
+import { UploadImageResponse } from '@moreloja/api/data-access-dtos';
 import { ImageRepository } from '@moreloja/api/data-access-repositories';
 
 import { MusicBrainzAlbumCoverProvider } from './musicbrainz-album-cover-provider';
@@ -15,7 +15,7 @@ export class DownloadAlbumCoverProvider {
     private readonly musicBrainzAlbumCoverProvider: MusicBrainzAlbumCoverProvider,
     private readonly deezerAlbumCoverProvider: DeezerAlbumCoverProvider
   ) {}
-  async provideAlbumCover(musicbrainzalbum: string): Promise<string> {
+  async provideImage(musicbrainzalbum: string): Promise<string> {
     for await (const coverUrl of this.getAlbumCoverFromProvider(
       musicbrainzalbum
     )) {
@@ -48,7 +48,7 @@ export class DownloadAlbumCoverProvider {
 
   private async saveOrUpdateImageMetadata(
     musicbrainzalbum: string,
-    response: UploadImageResponseDto
+    response: UploadImageResponse
   ) {
     await this.imageRepository.saveOrUpdateImageMetadata(
       musicbrainzalbum,

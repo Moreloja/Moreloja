@@ -1,7 +1,7 @@
 import { AlbumDto } from './album.dto';
 import { SongDto, TopSongDto } from '../songs';
 
-export class GetArtistResponseDto {
+export class GetArtistResponse {
   constructor(
     public name: string,
     public albums: AlbumDto[],

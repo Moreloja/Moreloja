@@ -8,8 +8,8 @@
   ></moreloja-pagination>
 
   <moreloja-cover-banner
-    *ngIf="songs$ | async as songs"
-    [items]="songs.topSongs"
+    *ngIf="coverBannerSongs$ | async as songs"
+    [viewModels]="songs"
   ></moreloja-cover-banner>
 
   <div *ngIf="songs$ | async as songs">

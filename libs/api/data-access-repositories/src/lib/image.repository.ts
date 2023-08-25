@@ -8,7 +8,7 @@ import { Image } from '@moreloja/api/data-access-models';
 export class ImageRepository {
   constructor(@InjectModel(Image.name) private imageModel: Model<Image>) {}
 
-  async getImageByMusicBrainzAlbum(
+  async getImageByMusicBrainzId(
     musicbrainzid: string
   ): Promise<string | undefined> {
     const query = { musicbrainzid };
@@ -24,10 +24,10 @@ export class ImageRepository {
   }
 
   async saveOrUpdateImageMetadata(
-    musicbrainzalbum: string,
+    musicbrainzid: string,
     image: string
   ): Promise<void> {
-    const filter = { musicbrainzid: musicbrainzalbum };
+    const filter = { musicbrainzid: musicbrainzid };
     const updateOperation = {
       $set: { image: image },
     };

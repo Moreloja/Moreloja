@@ -4,8 +4,8 @@ import { Observable, map } from 'rxjs';
 
 import {
   ArtistDto,
-  GetArtistResponseDto,
-  GetArtistsResponseDto,
+  GetArtistResponse,
+  GetArtistsResponse,
 } from '@moreloja/api/data-access-dtos';
 
 @Injectable({
@@ -14,15 +14,13 @@ import {
 export class ArtistsService {
   private http = inject(HttpClient);
 
-  getArtist(mbidAlbumArtist: string): Observable<GetArtistResponseDto> {
-    return this.http.get<GetArtistResponseDto>(
-      `/api/artist/${mbidAlbumArtist}`
-    );
+  getArtist(mbidAlbumArtist: string): Observable<GetArtistResponse> {
+    return this.http.get<GetArtistResponse>(`/api/artist/${mbidAlbumArtist}`);
   }
 
   getArtists(page: number): Observable<ArtistDto[]> {
     return this.http
-      .get<GetArtistsResponseDto>(`/api/artists/page/${page}`)
+      .get<GetArtistsResponse>(`/api/artists/page/${page}`)
       .pipe(map((response) => response.artists));
   }
 }

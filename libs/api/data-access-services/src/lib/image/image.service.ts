@@ -5,17 +5,18 @@ import { Injectable } from '@nestjs/common';
 import 'multer';
 
 import {
-  GetImageResponseDto,
-  UploadImageResponseDto,
+  GetImageResponse,
+  UploadImageResponse,
 } from '@moreloja/api/data-access-dtos';
 import { ImageRepository } from '@moreloja/api/data-access-repositories';
 
 import { PictrsService } from './pictrs.service';
 import {
-  DbAlbumCoverProvider,
+  DbImageProvider,
   DownloadAlbumCoverProvider,
+  DownloadArtistPictureProvider,
   PlaceholderAlbumCoverProvider,
-} from './cover-provider';
+} from './image-provider';
 import { NoCoverFoundError } from '../errors';
 import { readFile } from 'fs';
 import { join } from 'path';
@@ -26,26 +27,27 @@ export class ImageService {
   constructor(
     private readonly pictrsService: PictrsService,
     private readonly imageRepository: ImageRepository,
-    private readonly dbAlbumCoverProvider: DbAlbumCoverProvider,
+    private readonly dbImageProvider: DbImageProvider,
     private readonly downloadAlbumCoverProvider: DownloadAlbumCoverProvider,
+    private readonly downloadArtistPictureProvider: DownloadArtistPictureProvider,
     private readonly placeholderAlbumCoverProvider: PlaceholderAlbumCoverProvider
   ) {}
 
-  async getAlbumCover(musicbrainzalbum: string): Promise<GetImageResponseDto> {
+  async getAlbumCover(musicbrainzalbum: string): Promise<GetImageResponse> {
     const pictrsImageResponseCreators: {
-      provideAlbumCover(musicbrainzalbum: string): Promise<string>;
+      provideImage(musicbrainzalbum: string): Promise<string>;
     }[] = [
-      this.dbAlbumCoverProvider,
+      this.dbImageProvider,
       this.downloadAlbumCoverProvider,
       this.placeholderAlbumCoverProvider,
     ];
 
     for (const pictrsImageResponseCreator of pictrsImageResponseCreators) {
       try {
-        const coverUrl = await pictrsImageResponseCreator.provideAlbumCover(
+        const coverUrl = await pictrsImageResponseCreator.provideImage(
           musicbrainzalbum
         );
-        return new GetImageResponseDto(coverUrl);
+        return new GetImageResponse(coverUrl);
       } catch (error) {
         console.log('No cover found. Trying next provider...');
       }
@@ -54,17 +56,38 @@ export class ImageService {
     throw new NoCoverFoundError('No cover found at all.');
   }
 
+  async getArtistPicture(mbidArtist: string): Promise<GetImageResponse> {
+    const pictrsImageResponseCreators: {
+      provideImage(musicbrainzalbum: string): Promise<string>;
+    }[] = [
+      this.dbImageProvider,
+      this.downloadArtistPictureProvider,
+      //this.placeholderAlbumCoverProvider,
+    ];
+
+    for (const pictrsImageResponseCreator of pictrsImageResponseCreators) {
+      try {
+        const url = await pictrsImageResponseCreator.provideImage(mbidArtist);
+        return new GetImageResponse(url);
+      } catch (error) {
+        console.log('No image found. Trying next provider...');
+      }
+    }
+
+    throw new Error('No artist image found at all.');
+  }
+
   async setAlbumCover(
     musicbrainzalbum: string,
     image: Express.Multer.File
-  ): Promise<GetImageResponseDto> {
+  ): Promise<GetImageResponse> {
     const response = await this.pictrsService.uploadImage(image);
     await this.saveOrUpdateImageMetadata(musicbrainzalbum, response);
-    return new GetImageResponseDto(response.files[0].file);
+    return new GetImageResponse(response.files[0].file);
   }
 
   async ensurePlaceholderAlbumCoverExists(): Promise<void> {
-    const existingImage = await this.imageRepository.getImageByMusicBrainzAlbum(
+    const existingImage = await this.imageRepository.getImageByMusicBrainzId(
       PlaceholderAlbumCover
     );
     if (existingImage) {
@@ -89,7 +112,7 @@ export class ImageService {
 
   private async saveOrUpdateImageMetadata(
     musicbrainzalbum: string,
-    response: UploadImageResponseDto
+    response: UploadImageResponse
   ) {
     await this.imageRepository.saveOrUpdateImageMetadata(
       musicbrainzalbum,

@@ -9,8 +9,9 @@ import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { GetArtistResponseDto } from '@moreloja/api/data-access-dtos';
+import { GetArtistResponse } from '@moreloja/api/data-access-dtos';
 import { ArtistsService } from '@moreloja/services/artists';
+import { ImageService } from '@moreloja/services/image';
 
 import { AlbumCardComponent } from '../album-card/album-card.component';
 import { SongCardComponent } from '../song-card/song-card.component';
@@ -35,7 +36,8 @@ import { TopSongCardComponent } from '../top-song-card/top-song-card.component';
 export default class ArtistComponent implements OnInit {
   private mbidAlbumArtist!: string;
 
-  artist$!: Observable<GetArtistResponseDto>;
+  artist$!: Observable<GetArtistResponse>;
+  artistPictureUrl$!: Observable<string>;
 
   @Input()
   set mbidAlbumArtistInput(mbidAlbumArtist: string) {
@@ -46,8 +48,21 @@ export default class ArtistComponent implements OnInit {
   }
 
   private artistsService = inject(ArtistsService);
+  private imageService = inject(ImageService);
 
   ngOnInit(): void {
     this.artist$ = this.artistsService.getArtist(this.mbidAlbumArtist);
+    this.artistPictureUrl$ = this.imageService.getArtistPicture(
+      this.mbidAlbumArtist
+    );
+  }
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const selectedFiles = input.files;
+
+    if (selectedFiles && selectedFiles.length > 0) {
+      this.imageService.setImage(this.mbidAlbumArtist, selectedFiles[0]);
+    }
   }
 }

@@ -3,8 +3,8 @@ import { Injectable } from '@nestjs/common';
 import {
   AlbumDto,
   ArtistDto,
-  GetArtistResponseDto,
-  GetArtistsResponseDto,
+  GetArtistResponse,
+  GetArtistsResponse,
   SongDto,
   TopSongDto,
 } from '@moreloja/api/data-access-dtos';
@@ -19,7 +19,7 @@ export class ArtistsService {
     private songRepository: SongRepository
   ) {}
 
-  async getArtist(mbidAlbumArtist: string): Promise<GetArtistResponseDto> {
+  async getArtist(mbidAlbumArtist: string): Promise<GetArtistResponse> {
     const artistFilter = {
       Provider_musicbrainzartist: mbidAlbumArtist,
     };
@@ -51,7 +51,7 @@ export class ArtistsService {
       }
     );
 
-    return new GetArtistResponseDto(
+    return new GetArtistResponse(
       artistName,
       distinctAlbums.map(
         (album) =>
@@ -97,12 +97,12 @@ export class ArtistsService {
     );
   }
 
-  async getArtists(page: number): Promise<GetArtistsResponseDto> {
+  async getArtists(page: number): Promise<GetArtistsResponse> {
     const artists = await this.songRepository.getArtists(
       this.paginationService.pagesToSkip(page),
       this.paginationService.itemsPerPage
     );
-    return new GetArtistsResponseDto(
+    return new GetArtistsResponse(
       artists.map(
         (artist) =>
           new ArtistDto(

@@ -3,11 +3,11 @@ import { Injectable } from '@nestjs/common';
 import { ImageRepository } from '@moreloja/api/data-access-repositories';
 
 @Injectable()
-export class DbAlbumCoverProvider {
+export class DbImageProvider {
   constructor(private readonly imageRepository: ImageRepository) {}
-  async provideAlbumCover(musicbrainzalbum: string): Promise<string> {
-    const existingImage = await this.imageRepository.getImageByMusicBrainzAlbum(
-      musicbrainzalbum
+  async provideImage(musicBrainzId: string): Promise<string> {
+    const existingImage = await this.imageRepository.getImageByMusicBrainzId(
+      musicBrainzId
     );
     if (existingImage) {
       return existingImage;

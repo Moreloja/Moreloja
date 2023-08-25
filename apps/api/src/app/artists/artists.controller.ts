@@ -2,8 +2,8 @@ import { Controller, Get, Param } from '@nestjs/common';
 
 import { ArtistsService } from '@moreloja/api/data-access-services';
 import {
-  GetArtistResponseDto,
-  GetArtistsResponseDto,
+  GetArtistResponse,
+  GetArtistsResponse,
 } from '@moreloja/api/data-access-dtos';
 
 @Controller()
@@ -13,12 +13,12 @@ export class ArtistsController {
   @Get('artist/:mbidAlbumArtist')
   getArtist(
     @Param('mbidAlbumArtist') mbidAlbumArtist: string
-  ): Promise<GetArtistResponseDto> {
+  ): Promise<GetArtistResponse> {
     return this.artistsService.getArtist(mbidAlbumArtist);
   }
 
   @Get('artists/page/:page')
-  getArtists(@Param('page') page: number): Promise<GetArtistsResponseDto> {
+  getArtists(@Param('page') page: number): Promise<GetArtistsResponse> {
     return this.artistsService.getArtists(page);
   }
 }

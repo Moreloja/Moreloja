@@ -1,2 +1,2 @@
-export * from './get-image-response.dto';
-export * from './upload-image-response.dto';
+export * from './get-image.response';
+export * from './upload-image.response';

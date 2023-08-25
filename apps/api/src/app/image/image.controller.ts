@@ -17,7 +17,7 @@ import {
   ImageService,
   NoCoverFoundError,
 } from '@moreloja/api/data-access-services';
-import { GetImageResponseDto } from '@moreloja/api/data-access-dtos';
+import { GetImageResponse } from '@moreloja/api/data-access-dtos';
 
 @Controller()
 export class ImageController {
@@ -26,7 +26,7 @@ export class ImageController {
   @Get('image/album/:musicbrainzalbum')
   async getAlbumCover(
     @Param('musicbrainzalbum') musicbrainzalbum: string
-  ): Promise<GetImageResponseDto> {
+  ): Promise<GetImageResponse> {
     try {
       return await this.imageService.getAlbumCover(musicbrainzalbum);
     } catch (error) {
@@ -37,12 +37,19 @@ export class ImageController {
     }
   }
 
+  @Get('image/artist/:mbidArtist')
+  getArtistPicture(
+    @Param('mbidArtist') mbidArtist: string
+  ): Promise<GetImageResponse> {
+    return this.imageService.getArtistPicture(mbidArtist);
+  }
+
   @Post('image/album/:musicbrainzalbum')
   @UseInterceptors(FileInterceptor('image'))
   setAlbumCover(
     @Param('musicbrainzalbum') musicbrainzalbum: string,
     @UploadedFile() image: Express.Multer.File
-  ): Promise<GetImageResponseDto> {
+  ): Promise<GetImageResponse> {
     return this.imageService.setAlbumCover(musicbrainzalbum, image);
   }
 }

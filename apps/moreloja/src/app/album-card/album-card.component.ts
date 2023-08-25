@@ -4,7 +4,10 @@ import { RouterModule } from '@angular/router';
 
 import { AlbumDto } from '@moreloja/api/data-access-dtos';
 
-import { AlbumCoverCardComponent } from '../album-cover-card/album-cover-card.component';
+import {
+  AlbumCoverCardComponent,
+  AlbumCoverCardViewModel,
+} from '../album-cover-card/album-cover-card.component';
 
 @Component({
   selector: 'moreloja-album-card',
@@ -16,4 +19,11 @@ import { AlbumCoverCardComponent } from '../album-cover-card/album-cover-card.co
 export class AlbumCardComponent {
   @Input()
   album!: AlbumDto;
+
+  getAlbumCoverCardViewModel(): AlbumCoverCardViewModel {
+    return {
+      mbidAlbum: this.album.Provider_musicbrainzalbum,
+      name: this.album.Album,
+    };
+  }
 }

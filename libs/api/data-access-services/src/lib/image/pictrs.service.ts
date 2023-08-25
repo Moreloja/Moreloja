@@ -3,7 +3,7 @@ import { HttpService } from '@nestjs/axios';
 import { catchError, firstValueFrom, timeout } from 'rxjs';
 import { AxiosError } from 'axios';
 
-import { UploadImageResponseDto } from '@moreloja/api/data-access-dtos';
+import { UploadImageResponse } from '@moreloja/api/data-access-dtos';
 import {
   InjectPictrsConfig,
   PictrsConfiguration,
@@ -17,12 +17,12 @@ export class PictrsService {
     private readonly httpService: HttpService
   ) {}
 
-  async getUploadImage(coverUrl: string): Promise<UploadImageResponseDto> {
+  async getUploadImage(coverUrl: string): Promise<UploadImageResponse> {
     console.log('Loading cover for: ' + coverUrl);
     const pictrsImageDownloadUrl = `${this.pictrsConfiguration.domain}/image/download?url=${coverUrl}&backgrounded=false`;
 
     const response = await firstValueFrom(
-      this.httpService.get<UploadImageResponseDto>(pictrsImageDownloadUrl).pipe(
+      this.httpService.get<UploadImageResponse>(pictrsImageDownloadUrl).pipe(
         timeout(5000),
         catchError((error: AxiosError) => {
           console.error('An error occurred:', error.message);
@@ -34,30 +34,28 @@ export class PictrsService {
     return response.data;
   }
 
-  async uploadImage(
-    image: Express.Multer.File
-  ): Promise<UploadImageResponseDto> {
+  async uploadImage(image: Express.Multer.File): Promise<UploadImageResponse> {
     const formData = new FormData();
     const blob = new Blob([image.buffer], {
       type: image.mimetype,
     });
     formData.append('images[]', blob, image.originalname);
-    return await this.postAlbumCover(formData)
+    return await this.postAlbumCover(formData);
   }
 
-  async uploadImageBuffer(
-    image: Buffer
-  ): Promise<UploadImageResponseDto> {
+  async uploadImageBuffer(image: Buffer): Promise<UploadImageResponse> {
     const formData = new FormData();
     const blob = new Blob([image.buffer]);
     formData.append('images[]', blob);
-    return await this.postAlbumCover(formData)
+    return await this.postAlbumCover(formData);
   }
 
-  private async postAlbumCover(formData: FormData): Promise<UploadImageResponseDto> {
+  private async postAlbumCover(
+    formData: FormData
+  ): Promise<UploadImageResponse> {
     const response = await firstValueFrom(
       this.httpService
-        .post<UploadImageResponseDto>(
+        .post<UploadImageResponse>(
           this.pictrsConfiguration.domain + '/image',
           formData
         )

@@ -9,6 +9,7 @@ import { AsyncPipe, JsonPipe, NgFor, NgIf } from '@angular/common';
 import { Observable } from 'rxjs';
 
 import { AlbumsService } from '@moreloja/services/albums';
+import { ImageService } from '@moreloja/services/image';
 import { GetAlbumResponseDto } from '@moreloja/api/data-access-dtos';
 
 import { SongCardComponent } from '../song-card/song-card.component';
@@ -44,10 +45,11 @@ export default class AlbumComponent implements OnInit {
   }
 
   private albumsService = inject(AlbumsService);
+  private imageService = inject(ImageService);
 
   ngOnInit(): void {
     this.album$ = this.albumsService.getAlbum(this.mbidAlbum);
-    this.coverUrl$ = this.albumsService.getAlbumCover(this.mbidAlbum);
+    this.coverUrl$ = this.imageService.getAlbumCover(this.mbidAlbum);
   }
 
   onFileSelected(event: Event) {
@@ -55,7 +57,7 @@ export default class AlbumComponent implements OnInit {
     const selectedFiles = input.files;
 
     if (selectedFiles && selectedFiles.length > 0) {
-      this.albumsService.setAlbumCover(this.mbidAlbum, selectedFiles[0]);
+      this.imageService.setImage(this.mbidAlbum, selectedFiles[0]);
     }
   }
 }

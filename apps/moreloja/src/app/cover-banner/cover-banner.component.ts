@@ -2,9 +2,10 @@ import { Component, Input } from '@angular/core';
 import { NgFor, SlicePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { TopSongDto } from '@moreloja/api/data-access-dtos';
-
-import { AlbumCoverCardComponent } from '../album-cover-card/album-cover-card.component';
+import {
+  AlbumCoverCardComponent,
+  AlbumCoverCardViewModel,
+} from '../album-cover-card/album-cover-card.component';
 
 @Component({
   selector: 'moreloja-cover-banner',
@@ -14,6 +15,14 @@ import { AlbumCoverCardComponent } from '../album-cover-card/album-cover-card.co
   styleUrls: ['./cover-banner.component.css'],
 })
 export class CoverBannerComponent {
+  _viewModels!: AlbumCoverCardViewModel[];
+
   @Input()
-  items!: TopSongDto[];
+  set viewModels(viewModels: AlbumCoverCardViewModel[]) {
+    console.log('banner at input');
+    this._viewModels = viewModels;
+  }
+  get viewModels() {
+    return this._viewModels;
+  }
 }

@@ -4,6 +4,11 @@ const title = 'Moreloja';
 
 export const appRoutes: Route[] = [
     {
+        path: '',
+        title: `${title} - Home`,
+        loadComponent: () => import('./home/home.component')
+    },
+    {
         path: 'album/:mbidAlbumInput',
         title: `${title} - Album`,
         loadComponent: () => import('./album/album.component')

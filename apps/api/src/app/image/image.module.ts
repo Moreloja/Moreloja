@@ -4,11 +4,13 @@ import { HttpModule } from '@nestjs/axios';
 import {
   ImageService,
   PictrsService,
-  DbAlbumCoverProvider,
+  DbImageProvider,
   DownloadAlbumCoverProvider,
   PlaceholderAlbumCoverProvider,
   MusicBrainzAlbumCoverProvider,
   DeezerAlbumCoverProvider,
+  DownloadArtistPictureProvider,
+  DeezerArtistPictureProvider,
 } from '@moreloja/api/data-access-services';
 import { DataAccessRepositoriesModule } from '@moreloja/api/data-access-repositories';
 
@@ -20,11 +22,13 @@ import { ImageController } from './image.controller';
   providers: [
     ImageService,
     PictrsService,
-    DbAlbumCoverProvider,
+    DbImageProvider,
     DownloadAlbumCoverProvider,
+    DownloadArtistPictureProvider,
     PlaceholderAlbumCoverProvider,
     MusicBrainzAlbumCoverProvider,
     DeezerAlbumCoverProvider,
+    DeezerArtistPictureProvider,
   ],
 })
 export class ImageModule {}

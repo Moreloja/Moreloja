@@ -1,13 +1,9 @@
 <div class="main-container">
-  <div *ngIf="coverUrl$ | async as coverUrl" class="cover-container">
-    <a routerLink="/album/{{ song.Provider_musicbrainzalbum }}">
-      <img
-        class="cover-image"
-        loading="lazy"
-        src="pictrs/image/process.webp?src={{ coverUrl }}&resize=50"
-      />
-    </a>
-  </div>
+  <moreloja-album-cover-card
+    [viewModel]="getAlbumCoverCardViewModel()"
+    [size]="50"
+    [linkToAlbum]="true"
+  ></moreloja-album-cover-card>
 
   <div class="info-container">
     <div class="song-runtime-container">

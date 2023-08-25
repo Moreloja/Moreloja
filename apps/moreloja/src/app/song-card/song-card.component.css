@@ -18,14 +18,6 @@
   }
 }
 
-.cover-container {
-  display: flex;
-}
-
-.cover-image {
-  height: 100%;
-}
-
 .info-container {
   flex: auto;
 }

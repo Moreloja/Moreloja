@@ -153,4 +153,17 @@ export class SongRepository {
 
     return undefined;
   }
+
+  async getArtistByMusicbrainzartistId(
+    mbidArtist: string
+  ): Promise<{ artist: string } | undefined> {
+    const song = await this.songModel
+      .findOne({ Provider_musicbrainzartist: mbidArtist })
+      .exec();
+    if (song) {
+      return { artist: song.Artist ?? '' };
+    }
+
+    return undefined;
+  }
 }
