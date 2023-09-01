@@ -7,6 +7,7 @@ import {
   GetAlbumResponseDto,
   GetAlbumsResponseDto,
 } from '@moreloja/api/data-access-dtos';
+import { Order, Sort } from '@moreloja/shared/global-constants';
 
 @Injectable({
   providedIn: 'root',
@@ -18,9 +19,11 @@ export class AlbumsService {
     return this.http.get<GetAlbumResponseDto>(`/api/album/${mbidAlbum}`);
   }
 
-  getAlbums(page: number): Observable<AlbumDto[]> {
+  getAlbums(sortBy: Sort, order: Order, page: number): Observable<AlbumDto[]> {
     return this.http
-      .get<GetAlbumsResponseDto>(`/api/albums/page/${page}`)
+      .get<GetAlbumsResponseDto>(
+        `/api/albums/sort/${sortBy}/${order}/page/${page}`
+      )
       .pipe(map((response) => response.albums));
   }
 }

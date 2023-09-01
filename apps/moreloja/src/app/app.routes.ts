@@ -23,6 +23,14 @@ export const appRoutes: Route[] = [
         loadComponent: () => import('./albums/albums.component')
     },
     {
+        path: 'albums/sort/:sortBy/page/:page',
+        loadComponent: () => import('./albums/albums.component')
+    },
+    {
+        path: 'albums/sort/:sortBy/:order/page/:page',
+        loadComponent: () => import('./albums/albums.component')
+    },
+    {
         path: 'artist/:mbidAlbumArtist',
         title: `${title} - Artist`,
         loadComponent: () => import('./artist/artist.component')

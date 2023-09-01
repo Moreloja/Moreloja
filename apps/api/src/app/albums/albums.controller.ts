@@ -17,10 +17,12 @@ export class AlbumsController {
     return this.albumsService.getAlbum(mbidAlbum);
   }
 
-  @Get('albums/page/:page')
+  @Get('albums/sort/:sortBy/:order/page/:page')
   getAlbums(
+    @Param('sortBy') sortBy: string,
+    @Param('order') order: string,
     @Param('page') page: number
   ): Promise<GetAlbumsResponseDto> {
-    return this.albumsService.getAlbums(page);
+    return this.albumsService.getAlbums(sortBy, order, page);
   }
 }

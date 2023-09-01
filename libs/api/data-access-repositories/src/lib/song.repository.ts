@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 
 import { Song } from '@moreloja/api/data-access-models';
+import { Order, Sort } from '@moreloja/shared/global-constants';
 
 @Injectable()
 export class SongRepository {
@@ -31,6 +32,8 @@ export class SongRepository {
 
   async getDistinctAlbums(
     albumArtistFilter: any,
+    sortBy?: string,
+    order?: string,
     skip?: number,
     limit?: number
   ): Promise<
@@ -41,6 +44,16 @@ export class SongRepository {
       playTime: number;
     }[]
   > {
+    let sort = Sort.Year;
+    if (sortBy === Sort.PlayTime) {
+      sort = sortBy;
+    }
+
+    let sortOrder: 1 | -1 = 1;
+    if (order === Order.Descending) {
+      sortOrder = -1;
+    }
+
     return await this.songModel.aggregate([
       { $match: albumArtistFilter },
       {
@@ -51,7 +64,7 @@ export class SongRepository {
           playTime: { $sum: '$run_time' },
         },
       },
-      { $sort: { playTime: -1, _id: 1 } },
+      { $sort: { [sort]: sortOrder, _id: 1 } },
       // Apply skip if provided
       ...(skip ? [{ $skip: skip }] : []),
       // Apply the limit if provided

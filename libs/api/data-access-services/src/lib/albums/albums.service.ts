@@ -64,9 +64,11 @@ export class AlbumsService {
     );
   }
 
-  async getAlbums(page: number): Promise<GetAlbumsResponseDto> {
+  async getAlbums(sortBy: string, order: string, page: number): Promise<GetAlbumsResponseDto> {
     const albums = await this.songRepository.getDistinctAlbums(
       {},
+      sortBy,
+      order,
       this.paginationService.pagesToSkip(page),
       this.paginationService.itemsPerPage
     );

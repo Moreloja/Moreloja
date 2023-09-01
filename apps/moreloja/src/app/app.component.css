@@ -17,6 +17,10 @@ h1 {
   color: var(--background-color-button);
 }
 
+.active {
+  text-decoration-line: underline;
+}
+
 .content {
   display: flex;
   flex-direction: column;

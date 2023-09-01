@@ -5,7 +5,14 @@
 
   <nav>
     <ul>
-      <li><a routerLink="/">Home</a></li>
+      <li>
+        <a
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          >Home</a
+        >
+      </li>
       <li><a routerLink="/songs" routerLinkActive="active">Last Songs</a></li>
       <li>
         <a routerLink="/top-songs" routerLinkActive="active">Top Songs</a>
