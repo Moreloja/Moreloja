@@ -16,11 +16,12 @@ import {
   DownloadAlbumCoverProvider,
   DownloadArtistPictureProvider,
   PlaceholderAlbumCoverProvider,
+  PlaceholderArtistCoverProvider,
 } from './image-provider';
 import { NoCoverFoundError } from '../errors';
 import { readFile } from 'fs';
 import { join } from 'path';
-import { PlaceholderAlbumCover } from '@moreloja/shared/global-constants';
+import { PlaceholderAlbumCover, PlaceholderArtistCover } from '@moreloja/shared/global-constants';
 
 @Injectable()
 export class ImageService {
@@ -30,7 +31,8 @@ export class ImageService {
     private readonly dbImageProvider: DbImageProvider,
     private readonly downloadAlbumCoverProvider: DownloadAlbumCoverProvider,
     private readonly downloadArtistPictureProvider: DownloadArtistPictureProvider,
-    private readonly placeholderAlbumCoverProvider: PlaceholderAlbumCoverProvider
+    private readonly placeholderAlbumCoverProvider: PlaceholderAlbumCoverProvider,
+    private readonly placeholderArtistCoverProvider: PlaceholderArtistCoverProvider
   ) {}
 
   async getAlbumCover(musicbrainzalbum: string): Promise<GetImageResponse> {
@@ -62,7 +64,7 @@ export class ImageService {
     }[] = [
       this.dbImageProvider,
       this.downloadArtistPictureProvider,
-      //this.placeholderAlbumCoverProvider,
+      this.placeholderArtistCoverProvider,
     ];
 
     for (const pictrsImageResponseCreator of pictrsImageResponseCreators) {
@@ -86,9 +88,9 @@ export class ImageService {
     return new GetImageResponse(response.files[0].file);
   }
 
-  async ensurePlaceholderAlbumCoverExists(): Promise<void> {
+  async ensurePlaceholderExists(placeholderId: string, imageName: string): Promise<void> {
     const existingImage = await this.imageRepository.getImageByMusicBrainzId(
-      PlaceholderAlbumCover
+      placeholderId
     );
     if (existingImage) {
       return;
@@ -98,13 +100,13 @@ export class ImageService {
 
     // If placeholder does not exist: Upload placeholder image to pictrs
     readFile(
-      join(process.cwd(), 'assets', 'PlaceholderAlbumCover.webp'),
+      join(process.cwd(), 'assets', imageName),
       async (err, data) => {
         if (err) {
           console.error(err);
         } else {
           const response = await this.pictrsService.uploadImageBuffer(data);
-          await this.saveOrUpdateImageMetadata(PlaceholderAlbumCover, response);
+          await this.saveOrUpdateImageMetadata(placeholderId, response);
         }
       }
     );

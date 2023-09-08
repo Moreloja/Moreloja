@@ -5,3 +5,4 @@ export * from './download-album-cover-provider';
 export * from './download-artist-picture-provider';
 export * from './musicbrainz-album-cover-provider';
 export * from './placeholder-album-cover-provider';
+export * from './placeholder-artist-cover-provider';
