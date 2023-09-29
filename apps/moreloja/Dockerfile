@@ -2,11 +2,11 @@ FROM node:alpine as builder
 
 WORKDIR /app/builder
 COPY package.json .
-COPY package-lock.json .
-RUN npm install
+COPY yarn.lock .
+RUN yarn install
 
 COPY . .
-RUN npx nx build moreloja
+RUN yarn nx build moreloja
 
 FROM nginx:alpine-slim
 

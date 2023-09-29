@@ -2,19 +2,19 @@ FROM node:alpine as builder
 
 WORKDIR /app/builder
 COPY package.json .
-COPY package-lock.json .
-RUN npm install
+COPY yarn.lock .
+RUN yarn install
 
 COPY . .
-RUN npx nx build api
+RUN yarn nx build api
 
 FROM node:alpine AS production-modules
 
 WORKDIR /app/builder
 COPY --from=builder /app/builder/dist/apps/api/package.json .
-COPY --from=builder /app/builder/dist/apps/api/package-lock.json .
+COPY --from=builder /app/builder/dist/apps/api/yarn.lock .
 
-RUN npm install
+RUN yarn install
 
 FROM gcr.io/distroless/nodejs20-debian11
 

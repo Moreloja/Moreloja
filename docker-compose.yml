@@ -14,6 +14,7 @@ services:
     build:
       context: ./
       dockerfile: ./apps/moreloja/Dockerfile
+      network: host
     ports:
       - 4200:80
     environment:
@@ -36,6 +37,7 @@ services:
     build:
       context: ./
       dockerfile: ./apps/api/Dockerfile
+      network: host
     # ports:
     #   - 3000:3000
     environment:
