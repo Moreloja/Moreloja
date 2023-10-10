@@ -23,11 +23,23 @@ export const appRoutes: Route[] = [
         loadComponent: () => import('./albums/albums.component')
     },
     {
+        path: 'albums/:range/page/:page',
+        loadComponent: () => import('./albums/albums.component')
+    },
+    {
         path: 'albums/sort/:sortBy/page/:page',
         loadComponent: () => import('./albums/albums.component')
     },
     {
+        path: 'albums/:range/sort/:sortBy/page/:page',
+        loadComponent: () => import('./albums/albums.component')
+    },
+    {
         path: 'albums/sort/:sortBy/:order/page/:page',
+        loadComponent: () => import('./albums/albums.component')
+    },
+    {
+        path: 'albums/:range/sort/:sortBy/:order/page/:page',
         loadComponent: () => import('./albums/albums.component')
     },
     {

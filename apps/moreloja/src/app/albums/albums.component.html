@@ -3,6 +3,23 @@
 <div class="main-container">
   <div>
     <ng-container *ngIf="order$ | async as order">
+      <ng-container *ngIf="sortBy$ | async as sortBy">
+        <span *ngFor="let range of ranges; last as last">
+          <a
+            routerLink="/albums/{{ range.range }}/sort/{{ sortBy }}/{{
+              order
+            }}/page/1"
+            routerLinkActive="active"
+            >{{ range.label }}</a
+          >
+          <ng-container *ngIf="!last"> | </ng-container>
+        </span>
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <div>
+    <ng-container *ngIf="order$ | async as order">
       <span *ngFor="let sort of sortings">
         <a
           routerLink="/albums/sort/{{ sort.sort }}/{{ order }}/page/1"

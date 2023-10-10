@@ -12,7 +12,7 @@ import { SongsService } from '@moreloja/services/songs';
 import { ArtistDto } from '@moreloja/api/data-access-dtos';
 import { ArtistsService } from '@moreloja/services/artists';
 import { AlbumsService } from '@moreloja/services/albums';
-import { Order, Sort } from '@moreloja/shared/global-constants';
+import { Range, Order, Sort } from '@moreloja/shared/global-constants';
 
 import { CoverBannerComponent } from '../cover-banner/cover-banner.component';
 import { AlbumCoverCardViewModel } from '../album-cover-card/album-cover-card.component';
@@ -36,7 +36,7 @@ export default class TopSongsComponent implements OnInit {
 
   ngOnInit(): void {
     this.artists$ = this.artistsService.getArtists(1);
-    this.albums$ = this.albumsService.getAlbums(Sort.PlayTime, Order.Descending, 1).pipe(
+    this.albums$ = this.albumsService.getAlbums(Range.All, Sort.PlayTime, Order.Descending, 1).pipe(
       map((albums) =>
         albums.map((album) => ({
           mbidAlbum: album.Provider_musicbrainzalbum,

@@ -7,18 +7,12 @@ import {
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import {
-  Observable,
-  distinctUntilChanged,
-  map,
-  merge,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { Observable, distinctUntilChanged, map, switchMap, tap } from 'rxjs';
+import { format, startOfWeek } from 'date-fns';
 
 import { AlbumsService } from '@moreloja/services/albums';
 import { AlbumDto } from '@moreloja/api/data-access-dtos';
-import { Order, Sort } from '@moreloja/shared/global-constants';
+import { Order, Range, Sort } from '@moreloja/shared/global-constants';
 
 import { AlbumsContainerComponent } from '../albums-container/albums-container.component';
 import { PaginationComponent } from '../pagination/pagination.component';
@@ -39,6 +33,20 @@ import { PaginationComponent } from '../pagination/pagination.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class AlbumsComponent implements OnInit {
+  // TODO Probably extract into a service and a component
+  ranges: { label: string; range: string }[] = [
+    { label: 'Today', range: format(new Date(), 'yyyy-MM-dd') },
+    {
+      label: 'This Week',
+      range: `${format(new Date(), 'yyyy')}-W${format(
+        startOfWeek(new Date(), { weekStartsOn: 1 }),
+        'II'
+      )}`,
+    },
+    { label: 'This Month', range: format(new Date(), 'yyyy-MM') },
+    { label: 'This Year', range: format(new Date(), 'yyyy') },
+    { label: 'All Time', range: Range.All },
+  ];
   sortings: { label: string; sort: Sort }[] = [
     { label: 'Play Time', sort: Sort.PlayTime },
     { label: 'Year', sort: Sort.Year },
@@ -48,6 +56,7 @@ export default class AlbumsComponent implements OnInit {
     { label: '↓', order: Order.Descending },
   ];
   albums$!: Observable<AlbumDto[]>;
+  range$!: Observable<string>;
   page$!: Observable<number>;
   sortBy$!: Observable<Sort>;
   order$!: Observable<Order>;
@@ -67,18 +76,30 @@ export default class AlbumsComponent implements OnInit {
       map((param) => param['order'] ?? Order.Descending),
       distinctUntilChanged()
     );
+    this.range$ = this.route.params.pipe(
+      map((param) => param['range'] ?? Range.All),
+      distinctUntilChanged()
+    );
     this.page$ = this.route.params.pipe(
       map((param) => Number(param['page'] ?? 1))
     );
-    this.albums$ = this.sortBy$.pipe(
-      switchMap((sortBy) =>
-        this.order$.pipe(
-          switchMap((order) =>
-            this.page$.pipe(
-              tap((page) => {
-                this.titleService.setTitle(`Moreloja - Albums - Page ${page}`);
-              }),
-              switchMap((page) => this.albumsService.getAlbums(sortBy, order, page))
+    this.albums$ = this.range$.pipe(
+      switchMap((range) =>
+        this.sortBy$.pipe(
+          switchMap((sortBy) =>
+            this.order$.pipe(
+              switchMap((order) =>
+                this.page$.pipe(
+                  tap((page) => {
+                    this.titleService.setTitle(
+                      `Moreloja - Albums - Page ${page}`
+                    );
+                  }),
+                  switchMap((page) =>
+                    this.albumsService.getAlbums(range, sortBy, order, page)
+                  )
+                )
+              )
             )
           )
         )

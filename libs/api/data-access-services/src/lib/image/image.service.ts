@@ -21,7 +21,6 @@ import {
 import { NoCoverFoundError } from '../errors';
 import { readFile } from 'fs';
 import { join } from 'path';
-import { PlaceholderAlbumCover, PlaceholderArtistCover } from '@moreloja/shared/global-constants';
 
 @Injectable()
 export class ImageService {
