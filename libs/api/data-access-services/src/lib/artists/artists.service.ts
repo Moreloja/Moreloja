@@ -9,6 +9,7 @@ import {
   TopSongDto,
 } from '@moreloja/api/data-access-dtos';
 import { SongRepository } from '@moreloja/api/data-access-repositories';
+import { Order, Sort } from '@moreloja/shared/global-constants';
 
 import { PaginationService } from '../pagination.service';
 
@@ -41,14 +42,18 @@ export class ArtistsService {
     const topSongs = await this.songRepository.getTopSongs(artistFilter, 0, 10);
 
     const distinctAlbums = await this.songRepository.getDistinctAlbums(
-      albumArtistFilter
+      albumArtistFilter,
+      Sort.Year,
+      Order.Descending
     );
 
     const appearsOnDistinctAlbums = await this.songRepository.getDistinctAlbums(
       {
         Provider_musicbrainzartist: mbidAlbumArtist,
         Provider_musicbrainzalbumartist: { $ne: mbidAlbumArtist },
-      }
+      },
+      Sort.Year,
+      Order.Descending
     );
 
     return new GetArtistResponse(
