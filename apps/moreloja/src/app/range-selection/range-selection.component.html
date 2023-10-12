@@ -1,0 +1,17 @@
+<div>
+  <span *ngFor="let range of ranges; last as last">
+    <a *ngIf="sortBy && order"
+      routerLink="/{{ pagePath }}/{{ range.range }}/sort/{{ sortBy }}/{{
+        order
+      }}/page/1"
+      routerLinkActive="active"
+      >{{ range.label }}</a
+    >
+    <a *ngIf="!sortBy && !order"
+      routerLink="/{{ pagePath }}/{{ range.range }}/page/1"
+      routerLinkActive="active"
+      >{{ range.label }}</a
+    >
+    <ng-container *ngIf="!last"> | </ng-container>
+  </span>
+</div>

@@ -44,7 +44,7 @@ export default class TopSongsComponent implements OnInit {
         }))
       )
     );
-    this.songs$ = this.songsService.getTopSongs(1).pipe(
+    this.songs$ = this.songsService.getTopSongs(Range.All, 1).pipe(
       map((songs) =>
         songs.topSongs.map((song) => ({
           mbidAlbum: song.Provider_musicbrainzalbum,

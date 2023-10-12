@@ -4,3 +4,4 @@ export * from './lib/errors';
 export * from './lib/image';
 export * from './lib/songs/songs.service';
 export * from './lib/pagination.service';
+export * from './lib/rangeFilterCreator';

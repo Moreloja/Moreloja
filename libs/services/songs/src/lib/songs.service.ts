@@ -22,8 +22,10 @@ export class SongsService {
     );
   }
 
-  getTopSongs(page: number): Observable<GetTopSongsResponseDto> {
-    return this.http.get<GetTopSongsResponseDto>(`/api/top-songs/page/${page}`);
+  getTopSongs(range: string, page: number): Observable<GetTopSongsResponseDto> {
+    return this.http.get<GetTopSongsResponseDto>(
+      `/api/top-songs/${range}/page/${page}`
+    );
   }
 
   getAllSongsByTrack(

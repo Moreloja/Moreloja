@@ -15,9 +15,12 @@ export class SongsController {
     return this.songsService.getAllSongs(mbidArtist, page);
   }
 
-  @Get('top-songs/page/:page')
-  getTopSongs(@Param('page') page: number): Promise<GetTopSongsResponseDto> {
-    return this.songsService.getTopSongs(page);
+  @Get('top-songs/:range/page/:page')
+  getTopSongs(
+    @Param('range') range: string,
+    @Param('page') page: number
+  ): Promise<GetTopSongsResponseDto> {
+    return this.songsService.getTopSongs(range, page);
   }
 
   @Get('song/:mbidTrack/page/:page')

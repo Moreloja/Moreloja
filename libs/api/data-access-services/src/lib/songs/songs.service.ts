@@ -8,13 +8,16 @@ import {
 } from '@moreloja/api/data-access-dtos';
 import { SongRepository } from '@moreloja/api/data-access-repositories';
 import { Song } from '@moreloja/api/data-access-models';
+
 import { PaginationService } from '../pagination.service';
+import { RangeFilterCreator } from '../rangeFilterCreator';
 
 @Injectable()
 export class SongsService {
   constructor(
     private songRepository: SongRepository,
-    private paginationService: PaginationService
+    private paginationService: PaginationService,
+    private rangeFilterCreator: RangeFilterCreator
   ) {}
 
   async getAllSongs(
@@ -47,9 +50,24 @@ export class SongsService {
     return this.createGetAllSongsResponseDto(songs);
   }
 
-  async getTopSongs(page: number): Promise<GetTopSongsResponseDto> {
+  async getTopSongs(
+    range: string,
+    page: number
+  ): Promise<GetTopSongsResponseDto> {
+    const rangeFilter = this.rangeFilterCreator.constructRangeFilter(range);
+
+    let rangeQuery = {};
+
+    if (rangeFilter) {
+      rangeQuery = {
+        timestamp: {
+          $gte: rangeFilter.searchFrom,
+          $lt: rangeFilter.searchTo,
+        },
+      };
+    }
     const topSongs = await this.songRepository.getTopSongs(
-      {},
+      rangeQuery,
       this.paginationService.pagesToSkip(page),
       this.paginationService.itemsPerPage
     );

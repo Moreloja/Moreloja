@@ -1,6 +1,8 @@
 <h2>Top Songs</h2>
 
 <div class="main-container">
+  <moreloja-range-selection pagePath="top-songs"></moreloja-range-selection>
+
   <moreloja-pagination
     *ngIf="page$ | async as page"
     [page]="page"

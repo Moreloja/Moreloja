@@ -1,43 +1,42 @@
 <h2>Albums</h2>
 
 <div class="main-container">
+  <ng-container *ngIf="order$ | async as order">
+    <ng-container *ngIf="sortBy$ | async as sortBy">
+      <moreloja-range-selection
+        pagePath="albums"
+        [sortBy]="sortBy"
+        [order]="order"
+      ></moreloja-range-selection>
+    </ng-container>
+  </ng-container>
+
   <div>
-    <ng-container *ngIf="order$ | async as order">
-      <ng-container *ngIf="sortBy$ | async as sortBy">
-        <span *ngFor="let range of ranges; last as last">
+    <ng-container *ngIf="range$ | async as range">
+      <ng-container *ngIf="order$ | async as order">
+        <span *ngFor="let sort of sortings">
           <a
-            routerLink="/albums/{{ range.range }}/sort/{{ sortBy }}/{{
+            routerLink="/albums/{{ range }}/sort/{{ sort.sort }}/{{
               order
             }}/page/1"
             routerLinkActive="active"
-            >{{ range.label }}</a
+            >{{ sort.label }}</a
+          >
+          |
+        </span>
+      </ng-container>
+      <ng-container *ngIf="sortBy$ | async as sortBy">
+        <span *ngFor="let ordering of orderings; last as last">
+          <a
+            routerLink="/albums/{{ range }}/sort/{{ sortBy }}/{{
+              ordering.order
+            }}/page/1"
+            routerLinkActive="active"
+            >{{ ordering.label }}</a
           >
           <ng-container *ngIf="!last"> | </ng-container>
         </span>
       </ng-container>
-    </ng-container>
-  </div>
-
-  <div>
-    <ng-container *ngIf="order$ | async as order">
-      <span *ngFor="let sort of sortings">
-        <a
-          routerLink="/albums/sort/{{ sort.sort }}/{{ order }}/page/1"
-          routerLinkActive="active"
-          >{{ sort.label }}</a
-        >
-        |
-      </span>
-    </ng-container>
-    <ng-container *ngIf="sortBy$ | async as sortBy">
-      <span *ngFor="let ordering of orderings; last as last">
-        <a
-          routerLink="/albums/sort/{{ sortBy }}/{{ ordering.order }}/page/1"
-          routerLinkActive="active"
-          >{{ ordering.label }}</a
-        >
-        <ng-container *ngIf="!last"> | </ng-container>
-      </span>
     </ng-container>
   </div>
 

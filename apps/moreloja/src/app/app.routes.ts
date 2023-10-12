@@ -82,5 +82,9 @@ export const appRoutes: Route[] = [
     {
         path: 'top-songs/page/:page',
         loadComponent: () => import('./top-songs/top-songs.component')
+    },
+    {
+        path: 'top-songs/:range/page/:page',
+        loadComponent: () => import('./top-songs/top-songs.component')
     }
 ];
