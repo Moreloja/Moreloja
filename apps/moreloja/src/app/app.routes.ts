@@ -91,5 +91,10 @@ export const appRoutes: Route[] = [
     {
         path: 'top-songs/:range/page/:page',
         loadComponent: () => import('./top-songs/top-songs.component')
+    },
+    {
+        path: 'about',
+        title: `${title} - About`,
+        loadComponent: () => import('./about/about.component')
     }
 ];
