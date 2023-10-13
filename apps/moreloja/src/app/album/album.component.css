@@ -1,5 +1,13 @@
+.artist-title {
+  margin-top: 1rem;
+}
+
 .album-title {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.album-title > h2 {
+  margin-top: 0;
 }

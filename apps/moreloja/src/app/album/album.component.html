@@ -1,4 +1,8 @@
 <div *ngIf="album$ | async as album">
+  <div class="artist-title">
+    <a routerLink="/artist/{{ album.artistMbid }}">{{ album.artistName }}</a>
+  </div>
+
   <div class="album-title">
     <h2>{{ album.name }}</h2>
     <div>
@@ -10,9 +14,7 @@
     </div>
   </div>
 
-  <moreloja-editable-image
-    [mbidAlbum]="mbidAlbum"
-  ></moreloja-editable-image>
+  <moreloja-editable-image [mbidAlbum]="mbidAlbum"></moreloja-editable-image>
 
   <div>
     <h3>Album Songs</h3>
@@ -26,7 +28,7 @@
     </div>
   </div>
 
-  <h2>Last Songs</h2>
+  <h3>Last Songs</h3>
 
   <div *ngFor="let song of album.songs">
     <moreloja-song-card [song]="song"></moreloja-song-card>

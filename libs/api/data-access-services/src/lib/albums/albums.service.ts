@@ -31,14 +31,20 @@ export class AlbumsService {
     );
 
     let albumName = '';
+    let artistName = '';
+    let artistMbid = '';
     if (songs.length) {
       albumName = songs[0].Album ?? 'Unknown Album';
+      artistName = songs[0].Artist ?? 'Unknown Artist';
+      artistMbid = songs[0].Provider_musicbrainzalbumartist ?? '';
     }
 
     const topSongs = await this.songRepository.getTopSongs(albumFilter);
 
     return new GetAlbumResponseDto(
       albumName,
+      artistName,
+      artistMbid,
       topSongs.map(
         (song) =>
           new TopSongDto(

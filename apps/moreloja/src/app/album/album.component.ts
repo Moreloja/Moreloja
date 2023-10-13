@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { AsyncPipe, JsonPipe, NgFor, NgIf } from '@angular/common';
 import { Observable } from 'rxjs';
+import { RouterModule } from '@angular/router';
 
 import { AlbumsService } from '@moreloja/services/albums';
 import { GetAlbumResponseDto } from '@moreloja/api/data-access-dtos';
@@ -23,6 +24,7 @@ import { EditableImageComponent } from '../editable-image/editable-image.compone
     JsonPipe,
     NgFor,
     NgIf,
+    RouterModule,
     EditableImageComponent,
     SongCardComponent,
     TopSongCardComponent,
