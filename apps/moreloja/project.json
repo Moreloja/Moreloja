@@ -15,7 +15,7 @@
         "main": "apps/moreloja/src/main.ts",
         "polyfills": ["zone.js"],
         "tsConfig": "apps/moreloja/tsconfig.app.json",
-        "assets": ["apps/moreloja/src/favicon.ico", "apps/moreloja/src/assets"],
+        "assets": ["apps/moreloja/src/assets"],
         "styles": ["apps/moreloja/src/styles.css"],
         "scripts": []
       },
