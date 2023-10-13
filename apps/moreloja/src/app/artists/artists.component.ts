@@ -5,15 +5,17 @@ import {
   OnInit,
 } from '@angular/core';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
-import { map, Observable, switchMap, tap } from 'rxjs';
+import { distinctUntilChanged, map, Observable, switchMap, tap } from 'rxjs';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 import { ArtistsService } from '@moreloja/services/artists';
 import { ArtistDto } from '@moreloja/api/data-access-dtos';
+import { Range } from '@moreloja/shared/global-constants';
 
 import { PaginationComponent } from '../pagination/pagination.component';
 import { SecondsToStringPipe } from '../pipes/seconds-to-string.pipe';
+import { RangeSelectionComponent } from '../range-selection/range-selection.component';
 
 @Component({
   selector: 'moreloja-artists',
@@ -24,6 +26,7 @@ import { SecondsToStringPipe } from '../pipes/seconds-to-string.pipe';
     NgFor,
     NgIf,
     PaginationComponent,
+    RangeSelectionComponent,
     RouterModule,
   ],
   templateUrl: './artists.component.html',
@@ -32,6 +35,7 @@ import { SecondsToStringPipe } from '../pipes/seconds-to-string.pipe';
 })
 export default class ArtistsComponent implements OnInit {
   artists$!: Observable<ArtistDto[]>;
+  range$!: Observable<string>;
   page$!: Observable<number>;
 
   private router = inject(Router);
@@ -40,14 +44,22 @@ export default class ArtistsComponent implements OnInit {
   private titleService = inject(Title);
 
   ngOnInit(): void {
+    this.range$ = this.route.params.pipe(
+      map((param) => param['range'] ?? Range.All),
+      distinctUntilChanged()
+    );
     this.page$ = this.route.params.pipe(map((param) => Number(param['page'])));
-    this.artists$ = this.page$.pipe(
-      tap((page) => {
-        this.titleService.setTitle(`Moreloja - Artists - Page ${page}`);
-      }),
-      switchMap((page) => {
-        return this.artistsService.getArtists(page);
-      })
+    this.artists$ = this.range$.pipe(
+      switchMap((range) =>
+        this.page$.pipe(
+          tap((page) => {
+            this.titleService.setTitle(`Moreloja - Artists - Page ${page}`);
+          }),
+          switchMap((page) => {
+            return this.artistsService.getArtists(range, page);
+          })
+        )
+      )
     );
   }
 

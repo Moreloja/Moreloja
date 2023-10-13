@@ -18,9 +18,9 @@ export class ArtistsService {
     return this.http.get<GetArtistResponse>(`/api/artist/${mbidAlbumArtist}`);
   }
 
-  getArtists(page: number): Observable<ArtistDto[]> {
+  getArtists(range: string, page: number): Observable<ArtistDto[]> {
     return this.http
-      .get<GetArtistsResponse>(`/api/artists/page/${page}`)
+      .get<GetArtistsResponse>(`/api/artists/${range}/page/${page}`)
       .pipe(map((response) => response.artists));
   }
 }

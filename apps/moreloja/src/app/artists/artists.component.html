@@ -1,33 +1,37 @@
 <h2>Artists</h2>
 
-<moreloja-pagination
-  *ngIf="page$ | async as page"
-  [page]="page"
-  (pageChange)="onPageChange($event)"
-></moreloja-pagination>
+<div class="main-container">
+  <moreloja-range-selection pagePath="artists"></moreloja-range-selection>
 
-<div class="artist-container">
-  <ng-container *ngFor="let artist of artists$ | async as artists">
-    <a routerLink="/artist/{{ artist.mbidArtist }}">
-      {{ artist.name }}
-    </a>
-    <div>
-      {{ artist.playCount }}
-    </div>
-    <div>
-      {{ artist.playTime | secondsToString }}
-    </div>
-    <div
-      class="play-count-bar-fill"
-      [style.width]="
-        getPlayCountBarWidth(artist.playTime, artists[0].playTime)
-      "
-    ></div>
-  </ng-container>
+  <moreloja-pagination
+    *ngIf="page$ | async as page"
+    [page]="page"
+    (pageChange)="onPageChange($event)"
+  ></moreloja-pagination>
+
+  <div class="artist-container">
+    <ng-container *ngFor="let artist of artists$ | async as artists">
+      <a routerLink="/artist/{{ artist.mbidArtist }}">
+        {{ artist.name }}
+      </a>
+      <div>
+        {{ artist.playCount }}
+      </div>
+      <div>
+        {{ artist.playTime | secondsToString }}
+      </div>
+      <div
+        class="play-count-bar-fill"
+        [style.width]="
+          getPlayCountBarWidth(artist.playTime, artists[0].playTime)
+        "
+      ></div>
+    </ng-container>
+  </div>
+
+  <moreloja-pagination
+    *ngIf="page$ | async as page"
+    [page]="page"
+    (pageChange)="onPageChange($event)"
+  ></moreloja-pagination>
 </div>
-
-<moreloja-pagination
-  *ngIf="page$ | async as page"
-  [page]="page"
-  (pageChange)="onPageChange($event)"
-></moreloja-pagination>

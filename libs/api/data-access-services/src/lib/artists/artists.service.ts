@@ -12,12 +12,14 @@ import { SongRepository } from '@moreloja/api/data-access-repositories';
 import { Order, Sort } from '@moreloja/shared/global-constants';
 
 import { PaginationService } from '../pagination.service';
+import { RangeFilterCreator } from '../rangeFilterCreator';
 
 @Injectable()
 export class ArtistsService {
   constructor(
     private paginationService: PaginationService,
-    private songRepository: SongRepository
+    private songRepository: SongRepository,
+    private rangeFilterCreator: RangeFilterCreator
   ) {}
 
   async getArtist(mbidAlbumArtist: string): Promise<GetArtistResponse> {
@@ -102,8 +104,20 @@ export class ArtistsService {
     );
   }
 
-  async getArtists(page: number): Promise<GetArtistsResponse> {
+  async getArtists(range: string, page: number): Promise<GetArtistsResponse> {
+    const rangeFilter = this.rangeFilterCreator.constructRangeFilter(range);
+    let rangeQuery = {};
+
+    if (rangeFilter) {
+      rangeQuery = {
+        timestamp: {
+          $gte: rangeFilter.searchFrom,
+          $lt: rangeFilter.searchTo,
+        },
+      };
+    }
     const artists = await this.songRepository.getArtists(
+      rangeQuery,
       this.paginationService.pagesToSkip(page),
       this.paginationService.itemsPerPage
     );

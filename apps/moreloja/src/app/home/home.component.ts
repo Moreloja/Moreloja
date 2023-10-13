@@ -35,7 +35,7 @@ export default class TopSongsComponent implements OnInit {
   private songsService = inject(SongsService);
 
   ngOnInit(): void {
-    this.artists$ = this.artistsService.getArtists(1);
+    this.artists$ = this.artistsService.getArtists(Range.All, 1);
     this.albums$ = this.albumsService.getAlbums(Range.All, Sort.PlayTime, Order.Descending, 1).pipe(
       map((albums) =>
         albums.map((album) => ({

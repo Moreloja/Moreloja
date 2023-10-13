@@ -58,6 +58,11 @@ export const appRoutes: Route[] = [
         loadComponent: () => import('./artists/artists.component')
     },
     {
+        path: 'artists/:range/page/:page',
+        title: `${title} - Artists`,
+        loadComponent: () => import('./artists/artists.component')
+    },
+    {
         path: 'song/:mbidTrack/page/:page',
         loadComponent: () => import('./song/song.component')
     },

@@ -121,6 +121,7 @@ export class SongRepository {
   }
 
   async getArtists(
+    filter: any,
     skip?: number,
     limit?: number
   ): Promise<
@@ -132,7 +133,7 @@ export class SongRepository {
     }[]
   > {
     const artists = await this.songModel.aggregate([
-      //{ $match: {} },
+      { $match: filter },
       // Group by musicbrainzartist to get play count for each artist
       {
         $group: {

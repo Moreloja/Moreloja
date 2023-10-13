@@ -17,8 +17,11 @@ export class ArtistsController {
     return this.artistsService.getArtist(mbidAlbumArtist);
   }
 
-  @Get('artists/page/:page')
-  getArtists(@Param('page') page: number): Promise<GetArtistsResponse> {
-    return this.artistsService.getArtists(page);
+  @Get('artists/:range/page/:page')
+  getArtists(
+    @Param('range') range: string,
+    @Param('page') page: number
+  ): Promise<GetArtistsResponse> {
+    return this.artistsService.getArtists(range, page);
   }
 }
