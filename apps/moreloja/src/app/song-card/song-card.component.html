@@ -13,7 +13,7 @@
         }}</a>
       </div>
       <div class="runtime">
-        {{ song.run_time * 1000 | date : 'mm:ss' }}
+        {{ song.run_time * 1000 | date: 'mm:ss' }}
       </div>
     </div>
     <div>
@@ -24,7 +24,7 @@
   </div>
 
   <div>
-    <div title="{{ song.timestamp | date : 'short' }}">
+    <div title="{{ song.timestamp | date: 'short' }}">
       {{ song.timestamp | stringToDate | timeAgo }}
     </div>
   </div>

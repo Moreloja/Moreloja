@@ -5,7 +5,7 @@
 <div class="album-title" title="{{ album.Album }}">
   {{
     album.Album.length > 30
-      ? (album.Album | slice : 0 : 27) + '...'
+      ? (album.Album | slice: 0 : 27) + '...'
       : album.Album
   }}
 </div>
