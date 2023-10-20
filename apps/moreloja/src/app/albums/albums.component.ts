@@ -35,20 +35,6 @@ import { RangeSelectionComponent } from '../range-selection/range-selection.comp
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class AlbumsComponent implements OnInit {
-  // TODO Probably extract into a service and a component
-  ranges: { label: string; range: string }[] = [
-    { label: 'Today', range: format(new Date(), 'yyyy-MM-dd') },
-    {
-      label: 'This Week',
-      range: `${format(new Date(), 'yyyy')}-W${format(
-        startOfWeek(new Date(), { weekStartsOn: 1 }),
-        'II'
-      )}`,
-    },
-    { label: 'This Month', range: format(new Date(), 'yyyy-MM') },
-    { label: 'This Year', range: format(new Date(), 'yyyy') },
-    { label: 'All Time', range: Range.All },
-  ];
   sortings: { label: string; sort: Sort }[] = [
     { label: 'Play Time', sort: Sort.PlayTime },
     { label: 'Year', sort: Sort.Year },

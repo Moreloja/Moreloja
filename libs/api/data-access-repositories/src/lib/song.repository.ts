@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 
 import { Song } from '@moreloja/api/data-access-models';
 import { Order, Sort } from '@moreloja/shared/global-constants';
+import { WeeklyTopArtistsDto } from '@moreloja/api/data-access-dtos';
 
 @Injectable()
 export class SongRepository {
@@ -186,5 +187,53 @@ export class SongRepository {
     }
 
     return undefined;
+  }
+
+  async getWeeklyTopArtists(): Promise<WeeklyTopArtistsDto[]> {
+    const result: WeeklyTopArtistsDto[] = await this.songModel
+      .aggregate([
+        {
+          $group: {
+            _id: {
+              Year: { $year: '$timestamp' },
+              Week: { $isoWeek: '$timestamp' },
+              Provider_musicbrainzartist: '$Provider_musicbrainzartist',
+            },
+            Plays: { $sum: '$run_time' },
+            Artist: { $first: '$Artist' },
+          },
+        },
+        {
+          $group: {
+            _id: {
+              Year: '$_id.Year',
+              Week: '$_id.Week',
+            },
+            Artists: {
+              $push: {
+                Provider_musicbrainzartist: '$_id.Provider_musicbrainzartist',
+                Artist: '$Artist',
+                Plays: '$Plays',
+              },
+            },
+          },
+        },
+        {
+          $sort: { '_id.Year': -1, '_id.Week': -1 },
+        },
+        {
+          $project: {
+            _id: 0,
+            Year: '$_id.Year',
+            Week: '$_id.Week',
+            Artists: 1,
+          },
+        },
+      ])
+      .exec();
+    const sortedResult = result.map((dto) => {
+      return { ...dto, Artists: dto.Artists.sort((a, b) => b.Plays - a.Plays) };
+    });
+    return sortedResult;
   }
 }

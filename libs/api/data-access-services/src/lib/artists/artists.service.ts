@@ -3,10 +3,13 @@ import { Injectable } from '@nestjs/common';
 import {
   AlbumDto,
   ArtistDto,
+  ArtistTopWeeksDto,
   GetArtistResponse,
   GetArtistsResponse,
   SongDto,
   TopSongDto,
+  WeekDto,
+  WeeklyTopArtistsDto,
 } from '@moreloja/api/data-access-dtos';
 import { SongRepository } from '@moreloja/api/data-access-repositories';
 import { Order, Sort } from '@moreloja/shared/global-constants';
@@ -41,6 +44,8 @@ export class ArtistsService {
       mbidAlbumArtist
     );
 
+    const artistTopWeeks = await this.getArtistTopWeeks(mbidAlbumArtist);
+
     const topSongs = await this.songRepository.getTopSongs(artistFilter, 0, 10);
 
     const distinctAlbums = await this.songRepository.getDistinctAlbums(
@@ -60,6 +65,7 @@ export class ArtistsService {
 
     return new GetArtistResponse(
       artistName,
+      artistTopWeeks,
       distinctAlbums.map(
         (album) =>
           new AlbumDto(
@@ -132,5 +138,33 @@ export class ArtistsService {
           )
       )
     );
+  }
+
+  private async getArtistTopWeeks(
+    mbidArtist: string
+  ): Promise<ArtistTopWeeksDto> {
+    const weeklyTopArtists = await this.songRepository.getWeeklyTopArtists();
+    return {
+      GoldWeeks: this.getWeeksAtPosition(mbidArtist, weeklyTopArtists, 0),
+      SilverWeeks: this.getWeeksAtPosition(mbidArtist, weeklyTopArtists, 1),
+      BronzeWeeks: this.getWeeksAtPosition(mbidArtist, weeklyTopArtists, 2),
+    };
+  }
+
+  private getWeeksAtPosition(
+    mbidArtist: string,
+    weeklyTopArtists: WeeklyTopArtistsDto[],
+    position: number
+  ): WeekDto[] {
+    return weeklyTopArtists
+      .filter((week) => {
+        if (week.Artists[position]) {
+          return (
+            week.Artists[position].Provider_musicbrainzartist === mbidArtist
+          );
+        }
+        return false;
+      })
+      .map((week) => new WeekDto(week.Year, week.Week));
   }
 }

@@ -16,6 +16,7 @@ import { AlbumCardComponent } from '../album-card/album-card.component';
 import { SongCardComponent } from '../song-card/song-card.component';
 import { TopSongCardComponent } from '../top-song-card/top-song-card.component';
 import { EditableImageComponent } from '../editable-image/editable-image.component';
+import { ArtistTopWeeksComponent } from '../artist-top-weeks/artist-top-weeks.component';
 
 @Component({
   selector: 'moreloja-artist',
@@ -25,6 +26,7 @@ import { EditableImageComponent } from '../editable-image/editable-image.compone
     NgFor,
     NgIf,
     AlbumCardComponent,
+    ArtistTopWeeksComponent,
     EditableImageComponent,
     SongCardComponent,
     TopSongCardComponent,
