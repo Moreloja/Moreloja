@@ -3,25 +3,35 @@
 <input id="search" name="search" type="text" [formControl]="searchControl" />
 
 <div *ngIf="searchResult$ | async as searchResult">
-  <h3>Albums</h3>
+  <h3 *ngIf="searchResult.Albums.length">Albums</h3>
 
   <moreloja-albums-container
     [albums]="searchResult.Albums"
   ></moreloja-albums-container>
 
-  <h3>Artists</h3>
+  <h3 *ngIf="searchResult.Artists.length">Artists</h3>
 
-  <div *ngFor="let artist of searchResult.Artists">
-    <a routerLink="/artist/{{ artist.Provider_musicbrainzartist }}">{{
-      artist.Artist
-    }}</a>
+  <div
+    *ngFor="let artist of searchResult.artistsForList"
+    class="list-container"
+  >
+    <moreloja-album-cover-card
+      [viewModel]="artist"
+      [size]="50"
+    ></moreloja-album-cover-card>
+
+    <a routerLink="/artist/{{ artist.mbidArtist }}">{{ artist.name }}</a>
   </div>
 
-  <h3>Songs</h3>
+  <h3 *ngIf="searchResult.Songs.length">Songs</h3>
 
-  <div *ngFor="let song of searchResult.Songs">
-    <a routerLink="/song/{{ song.Provider_musicbrainztrack }}/page/1">{{
-      song.Song
-    }}</a>
+  <div *ngFor="let song of searchResult.songsForList" class="list-container">
+    <moreloja-album-cover-card
+      [viewModel]="song"
+      [size]="25"
+      [linkToAlbum]="true"
+    ></moreloja-album-cover-card>
+
+    <a routerLink="/song/{{ song.mbidTrack }}/page/1">{{ song.name }}</a>
   </div>
 </div>

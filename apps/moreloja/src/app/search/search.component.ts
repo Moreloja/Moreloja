@@ -20,6 +20,10 @@ import { SearchResultDto } from '@moreloja/api/data-access-dtos';
 import { SearchService } from '@moreloja/services/search';
 
 import { AlbumsContainerComponent } from '../albums-container/albums-container.component';
+import {
+  AlbumCoverCardComponent,
+  AlbumCoverCardViewModel,
+} from '../album-cover-card/album-cover-card.component';
 
 @Component({
   selector: 'moreloja-search',
@@ -28,6 +32,7 @@ import { AlbumsContainerComponent } from '../albums-container/albums-container.c
     AsyncPipe,
     NgFor,
     NgIf,
+    AlbumCoverCardComponent,
     AlbumsContainerComponent,
     ReactiveFormsModule,
     RouterModule,
@@ -40,7 +45,12 @@ export default class SearchComponent implements OnInit {
   searchControl = new FormControl('', {
     nonNullable: true,
   });
-  searchResult$!: Observable<SearchResultDto>;
+  searchResult$!: Observable<
+    SearchResultDto & {
+      artistsForList: AlbumCoverCardViewModel[];
+      songsForList: AlbumCoverCardViewModel[];
+    }
+  >;
 
   searchService = inject(SearchService);
 
@@ -52,6 +62,24 @@ export default class SearchComponent implements OnInit {
 
     this.searchResult$ = searchInput.pipe(
       switchMap((search) => this.searchService.find(search)),
+      map((searchResult) => {
+        return {
+          ...searchResult,
+          artistsForList: searchResult.Artists.map((artist) => {
+            return {
+              name: artist.Artist,
+              mbidArtist: artist.Provider_musicbrainzartist,
+            };
+          }),
+          songsForList: searchResult.Songs.map((song) => {
+            return {
+              mbidAlbum: song.Provider_musicbrainzalbum,
+              name: song.Song,
+              mbidTrack: song.Provider_musicbrainztrack,
+            };
+          }),
+        };
+      }),
     );
   }
 }

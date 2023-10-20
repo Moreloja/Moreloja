@@ -243,7 +243,7 @@ export class SongRepository {
   async searchAll(search: string): Promise<SearchResultDto> {
     const albums = await this.songModel
       .aggregate([
-        { $match: { Album: { $regex: search } } },
+        { $match: { Album: { $regex: search, $options: 'i' } } },
         {
           $group: {
             _id: {
@@ -251,8 +251,10 @@ export class SongRepository {
             },
             Album: { $first: '$Album' },
             Year: { $first: '$Year' },
+            Sum: { $sum: '$run_time' },
           },
         },
+        { $sort: { Sum: -1 } },
         {
           $project: {
             _id: 0,
@@ -266,15 +268,17 @@ export class SongRepository {
 
     const artists = await this.songModel
       .aggregate([
-        { $match: { Artist: { $regex: search } } },
+        { $match: { Artist: { $regex: search, $options: 'i' } } },
         {
           $group: {
             _id: {
               Provider_musicbrainzartist: '$Provider_musicbrainzartist',
             },
             Artist: { $first: '$Artist' },
+            Sum: { $sum: '$run_time' },
           },
         },
+        { $sort: { Sum: -1 } },
         {
           $project: {
             _id: 0,
@@ -287,19 +291,23 @@ export class SongRepository {
 
     const songs = await this.songModel
       .aggregate([
-        { $match: { Name: { $regex: search } } },
+        { $match: { Name: { $regex: search, $options: 'i' } } },
         {
           $group: {
             _id: {
               Provider_musicbrainztrack: '$Provider_musicbrainztrack',
             },
             Name: { $first: '$Name' },
+            Provider_musicbrainzalbum: { $first: '$Provider_musicbrainzalbum' },
+            Sum: { $sum: '$run_time' },
           },
         },
+        { $sort: { Sum: -1 } },
         {
           $project: {
             _id: 0,
             Song: '$Name',
+            Provider_musicbrainzalbum: 1,
             Provider_musicbrainztrack: '$_id.Provider_musicbrainztrack',
           },
         },
