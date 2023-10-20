@@ -4,7 +4,10 @@ import { InjectModel } from '@nestjs/mongoose';
 
 import { Song } from '@moreloja/api/data-access-models';
 import { Order, Sort } from '@moreloja/shared/global-constants';
-import { WeeklyTopArtistsDto } from '@moreloja/api/data-access-dtos';
+import {
+  SearchResultDto,
+  WeeklyTopArtistsDto,
+} from '@moreloja/api/data-access-dtos';
 
 @Injectable()
 export class SongRepository {
@@ -36,7 +39,7 @@ export class SongRepository {
     sortBy?: string,
     order?: string,
     skip?: number,
-    limit?: number
+    limit?: number,
   ): Promise<
     {
       Provider_musicbrainzalbum: string;
@@ -85,7 +88,7 @@ export class SongRepository {
   async getTopSongs(
     songFilter: any,
     skip?: number,
-    limit?: number
+    limit?: number,
   ): Promise<any[]> {
     const topSongs = await this.songModel.aggregate([
       { $match: songFilter },
@@ -124,7 +127,7 @@ export class SongRepository {
   async getArtists(
     filter: any,
     skip?: number,
-    limit?: number
+    limit?: number,
   ): Promise<
     {
       Provider_musicbrainzartist: string;
@@ -164,7 +167,7 @@ export class SongRepository {
   }
 
   async getArtistAndAlbumByMusicbrainzalbumId(
-    musicbrainzalbum: string
+    musicbrainzalbum: string,
   ): Promise<{ artist: string; album: string } | undefined> {
     const song = await this.songModel
       .findOne({ Provider_musicbrainzalbum: musicbrainzalbum })
@@ -177,7 +180,7 @@ export class SongRepository {
   }
 
   async getArtistByMusicbrainzartistId(
-    mbidArtist: string
+    mbidArtist: string,
   ): Promise<{ artist: string } | undefined> {
     const song = await this.songModel
       .findOne({ Provider_musicbrainzartist: mbidArtist })
@@ -235,5 +238,74 @@ export class SongRepository {
       return { ...dto, Artists: dto.Artists.sort((a, b) => b.Plays - a.Plays) };
     });
     return sortedResult;
+  }
+
+  async searchAll(search: string): Promise<SearchResultDto> {
+    const albums = await this.songModel
+      .aggregate([
+        { $match: { Album: { $regex: search } } },
+        {
+          $group: {
+            _id: {
+              Provider_musicbrainzalbum: '$Provider_musicbrainzalbum',
+            },
+            Album: { $first: '$Album' },
+            Year: { $first: '$Year' },
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            Album: 1,
+            Year: 1,
+            Provider_musicbrainzalbum: '$_id.Provider_musicbrainzalbum',
+          },
+        },
+      ])
+      .exec();
+
+    const artists = await this.songModel
+      .aggregate([
+        { $match: { Artist: { $regex: search } } },
+        {
+          $group: {
+            _id: {
+              Provider_musicbrainzartist: '$Provider_musicbrainzartist',
+            },
+            Artist: { $first: '$Artist' },
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            Artist: 1,
+            Provider_musicbrainzartist: '$_id.Provider_musicbrainzartist',
+          },
+        },
+      ])
+      .exec();
+
+    const songs = await this.songModel
+      .aggregate([
+        { $match: { Name: { $regex: search } } },
+        {
+          $group: {
+            _id: {
+              Provider_musicbrainztrack: '$Provider_musicbrainztrack',
+            },
+            Name: { $first: '$Name' },
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            Song: '$Name',
+            Provider_musicbrainztrack: '$_id.Provider_musicbrainztrack',
+          },
+        },
+      ])
+      .exec();
+
+    return new SearchResultDto(albums, artists, songs);
   }
 }

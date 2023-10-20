@@ -2,6 +2,26 @@
 
 <input id="search" name="search" type="text" [formControl]="searchControl" />
 
-<div *ngIf="searchInput$ | async as searchInput">
-  {{ searchInput }}
+<div *ngIf="searchResult$ | async as searchResult">
+  <h3>Albums</h3>
+
+  <moreloja-albums-container
+    [albums]="searchResult.Albums"
+  ></moreloja-albums-container>
+
+  <h3>Artists</h3>
+
+  <div *ngFor="let artist of searchResult.Artists">
+    <a routerLink="/artist/{{ artist.Provider_musicbrainzartist }}">{{
+      artist.Artist
+    }}</a>
+  </div>
+
+  <h3>Songs</h3>
+
+  <div *ngFor="let song of searchResult.Songs">
+    <a routerLink="/song/{{ song.Provider_musicbrainztrack }}/page/1">{{
+      song.Song
+    }}</a>
+  </div>
 </div>

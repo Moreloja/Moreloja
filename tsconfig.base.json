@@ -31,6 +31,7 @@
       "@moreloja/services/albums": ["libs/services/albums/src/index.ts"],
       "@moreloja/services/artists": ["libs/services/artists/src/index.ts"],
       "@moreloja/services/image": ["libs/services/image/src/index.ts"],
+      "@moreloja/services/search": ["libs/services/search/src/index.ts"],
       "@moreloja/services/songs": ["libs/services/songs/src/index.ts"],
       "@moreloja/shared/global-constants": [
         "libs/shared/global-constants/src/index.ts"

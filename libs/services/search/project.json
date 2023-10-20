@@ -1,0 +1,33 @@
+{
+  "name": "libs/services/search",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/services/search/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/services/search",
+        "main": "libs/services/search/src/index.ts",
+        "tsConfig": "libs/services/search/tsconfig.lib.json",
+        "assets": []
+      }
+    },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs libs/services/search {args.ver} {args.tag}",
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/services/search/**/*.ts",
+          "libs/services/search/package.json"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

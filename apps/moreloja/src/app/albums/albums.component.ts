@@ -8,7 +8,6 @@ import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Observable, distinctUntilChanged, map, switchMap, tap } from 'rxjs';
-import { format, startOfWeek } from 'date-fns';
 
 import { AlbumsService } from '@moreloja/services/albums';
 import { AlbumDto } from '@moreloja/api/data-access-dtos';

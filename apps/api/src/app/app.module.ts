@@ -12,6 +12,7 @@ import {
 import { AlbumsModule } from './albums/albums.module';
 import { ArtistsModule } from './artists/artists.module';
 import { ImageModule } from './image/image.module';
+import { SearchModule } from './search/search.module';
 import { SongsModule } from './songs/songs.module';
 
 @Module({
@@ -23,6 +24,7 @@ import { SongsModule } from './songs/songs.module';
     AlbumsModule,
     ArtistsModule,
     ImageModule,
+    SearchModule,
     SongsModule,
     MongooseModule.forRootAsync({
       inject: [mongoConfiguration.KEY],
