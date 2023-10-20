@@ -1,0 +1,7 @@
+<h2>Search</h2>
+
+<input id="search" name="search" type="text" [formControl]="searchControl" />
+
+<div *ngIf="searchInput$ | async as searchInput">
+  {{ searchInput }}
+</div>

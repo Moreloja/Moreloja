@@ -63,6 +63,16 @@ export const appRoutes: Route[] = [
         loadComponent: () => import('./artists/artists.component')
     },
     {
+        path: 'search',
+        title: `${title} - Search`,
+        loadComponent: () => import('./search/search.component')
+    },
+    {
+        path: 'search/:query',
+        title: `${title} - Search`,
+        loadComponent: () => import('./search/search.component')
+    },
+    {
         path: 'song/:mbidTrack/page/:page',
         loadComponent: () => import('./song/song.component')
     },
