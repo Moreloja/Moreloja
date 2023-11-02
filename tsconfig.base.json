@@ -10,7 +10,7 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2020", "dom"],
+    "lib": ["esnext", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
@@ -30,6 +30,9 @@
       ],
       "@moreloja/services/albums": ["libs/services/albums/src/index.ts"],
       "@moreloja/services/artists": ["libs/services/artists/src/index.ts"],
+      "@moreloja/services/authentication": [
+        "libs/services/authentication/src/index.ts"
+      ],
       "@moreloja/services/image": ["libs/services/image/src/index.ts"],
       "@moreloja/services/search": ["libs/services/search/src/index.ts"],
       "@moreloja/services/songs": ["libs/services/songs/src/index.ts"],

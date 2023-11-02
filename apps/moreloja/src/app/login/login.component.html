@@ -1,0 +1,19 @@
+<h2>Login</h2>
+
+<div class="main-container">
+  <label for="password">Password</label>
+  <input
+    id="password"
+    name="password"
+    type="password"
+    [formControl]="passwordControl"
+  />
+  <label for="twoFactorToken">Two Factor Token</label>
+  <input
+    id="twoFactorToken"
+    name="twoFactorToken"
+    type="text"
+    [formControl]="twoFactorTokenControl"
+  />
+  <button (click)="login()">Login</button>
+</div>

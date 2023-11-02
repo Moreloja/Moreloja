@@ -5,6 +5,8 @@
 
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+// import * as cookieParser from 'cookie-parser';
+import cookieParser from 'cookie-parser';
 
 import { AppModule } from './app/app.module';
 
@@ -12,7 +14,7 @@ import {
   AppConfiguration,
   appConfiguration,
 } from '@moreloja/api/configurations';
-import { ImageService } from '@moreloja/api/data-access-services';
+import { AuthService, ImageService } from '@moreloja/api/data-access-services';
 import { PlaceholderAlbumCover, PlaceholderArtistCover } from '@moreloja/shared/global-constants';
 
 async function bootstrap() {
@@ -22,9 +24,13 @@ async function bootstrap() {
   await imageService.ensurePlaceholderExists(PlaceholderAlbumCover, 'PlaceholderAlbumCover.webp');
   await imageService.ensurePlaceholderExists(PlaceholderArtistCover, 'PlaceholderArtistCover.webp');
 
+  const authService = app.get<AuthService>(AuthService);
+  await authService.ensureAdminExists();
+
   const appConfig = app.get<AppConfiguration>(appConfiguration.KEY);
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
+  app.use(cookieParser());
   await app.listen(appConfig.port);
   Logger.log(
     `Application is running on: ${appConfig.domain}/${globalPrefix}`

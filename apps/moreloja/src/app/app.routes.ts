@@ -63,6 +63,11 @@ export const appRoutes: Route[] = [
         loadComponent: () => import('./artists/artists.component')
     },
     {
+        path: 'login',
+        title: `${title} - Login`,
+        loadComponent: () => import('./login/login.component')
+    },
+    {
         path: 'search',
         title: `${title} - Search`,
         loadComponent: () => import('./search/search.component')

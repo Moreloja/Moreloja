@@ -1,0 +1,33 @@
+{
+  "name": "authentication",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/services/authentication/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/services/authentication",
+        "main": "libs/services/authentication/src/index.ts",
+        "tsConfig": "libs/services/authentication/tsconfig.lib.json",
+        "assets": []
+      }
+    },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs authentication {args.ver} {args.tag}",
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/services/authentication/**/*.ts",
+          "libs/services/authentication/package.json"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

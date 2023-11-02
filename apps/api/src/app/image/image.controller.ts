@@ -5,6 +5,7 @@ import {
   Param,
   Post,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -18,6 +19,8 @@ import {
   NoCoverFoundError,
 } from '@moreloja/api/data-access-services';
 import { GetImageResponse } from '@moreloja/api/data-access-dtos';
+
+import { AccessTokenGuard } from '../common/guards';
 
 @Controller()
 export class ImageController {
@@ -46,6 +49,7 @@ export class ImageController {
 
   @Post('image/album/:musicbrainzalbum')
   @UseInterceptors(FileInterceptor('image'))
+  @UseGuards(AccessTokenGuard)
   setAlbumCover(
     @Param('musicbrainzalbum') musicbrainzalbum: string,
     @UploadedFile() image: Express.Multer.File

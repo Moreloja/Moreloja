@@ -14,3 +14,5 @@ export const enum Order {
   Ascending = 'ascending',
   Descending = 'descending',
 }
+
+export const AdminUser = 'admin';

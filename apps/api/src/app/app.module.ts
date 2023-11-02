@@ -5,11 +5,13 @@ import { ConfigModule } from '@nestjs/config';
 import {
   MongoConfiguration,
   appConfiguration,
+  jwtConfiguration,
   mongoConfiguration,
   pictrsConfiguration,
 } from '@moreloja/api/configurations';
 
 import { AlbumsModule } from './albums/albums.module';
+import { AuthModule } from './auth/auth.module';
 import { ArtistsModule } from './artists/artists.module';
 import { ImageModule } from './image/image.module';
 import { SearchModule } from './search/search.module';
@@ -19,10 +21,16 @@ import { SongsModule } from './songs/songs.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [appConfiguration, mongoConfiguration, pictrsConfiguration],
+      load: [
+        appConfiguration,
+        jwtConfiguration,
+        mongoConfiguration,
+        pictrsConfiguration,
+      ],
     }),
     AlbumsModule,
     ArtistsModule,
+    AuthModule,
     ImageModule,
     SearchModule,
     SongsModule,
