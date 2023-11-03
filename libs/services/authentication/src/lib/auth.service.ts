@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, EMPTY, Observable, catchError, of, tap } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, catchError, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -8,11 +8,13 @@ import { BehaviorSubject, EMPTY, Observable, catchError, of, tap } from 'rxjs';
 export class AuthService {
   private http = inject(HttpClient);
 
-  private isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false,
-  );
+  private isLoggedIn$: BehaviorSubject<boolean> | undefined;
 
   isLoggedIn(): Observable<boolean> {
+    if (this.isLoggedIn$ === undefined) {
+      this.isLoggedIn$ = new BehaviorSubject<boolean>(false);
+      this.refresh();
+    }
     return this.isLoggedIn$.asObservable();
   }
 
@@ -30,7 +32,7 @@ export class AuthService {
       })
       .pipe(
         tap(() => {
-          this.isLoggedIn$.next(true);
+          this.isLoggedIn$?.next(true);
           this.error$.next('');
         }),
         catchError((err: HttpErrorResponse) => {
@@ -40,10 +42,22 @@ export class AuthService {
       );
   }
 
+  private refresh(): void {
+    this.http.get(`/api/auth/refresh`).subscribe({
+      next: () => {
+        this.isLoggedIn$?.next(true);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.isLoggedIn$?.next(false);
+        this.error$.next(error.message);
+      },
+    });
+  }
+
   logout(): Observable<object> {
-    return this.http.post(`/api/auth/logout`, {}).pipe(
+    return this.http.get(`/api/auth/logout`).pipe(
       tap(() => {
-        this.isLoggedIn$.next(false);
+        this.isLoggedIn$?.next(false);
         this.error$.next('');
       }),
     );

@@ -1,4 +1,12 @@
-import { Body, Controller, Post, Res, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { CookieOptions, Request, Response } from 'express';
 
 import { AccessTokens, AuthService } from '@moreloja/api/data-access-services';
@@ -8,7 +16,7 @@ import {
   JwtConfiguration,
 } from '@moreloja/api/configurations';
 
-import { AccessTokenGuard } from '../common/guards';
+import { AccessTokenGuard, RefreshTokenGuard } from '../common/guards';
 
 @Controller()
 export class AuthController {
@@ -27,9 +35,19 @@ export class AuthController {
     this.setAccessTokenCookies(response, accessTokens);
   }
 
-  // TODO refresh token
+  @Get('auth/refresh')
+  @UseGuards(RefreshTokenGuard)
+  async refreshToken(
+    @Req() request: Request,
+    @Res({ passthrough: true }) response: Response,
+  ): Promise<void> {
+    const refreshToken =
+      request.cookies[this.jwtConfiguration.refreshTokenCookieName];
+    const accessTokens = await this.authService.refreshTokens(refreshToken);
+    this.setAccessTokenCookies(response, accessTokens);
+  }
 
-  @Post('auth/logout')
+  @Get('auth/logout')
   @UseGuards(AccessTokenGuard)
   async logout(@Res({ passthrough: true }) response: Response): Promise<void> {
     await this.authService.logout();
