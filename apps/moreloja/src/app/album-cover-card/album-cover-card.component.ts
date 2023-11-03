@@ -35,15 +35,15 @@ export class AlbumCoverCardComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.viewModel.mbidAlbum) {
-      console.log("mbidAlbum");
+      console.log('mbidAlbum');
       this.coverUrl$ = this.imageService.getAlbumCover(
-        this.viewModel.mbidAlbum
+        this.viewModel.mbidAlbum,
       );
     }
     if (this.viewModel.mbidArtist) {
-      console.log("mbidArtist");
+      console.log('mbidArtist');
       this.coverUrl$ = this.imageService.getArtistPicture(
-        this.viewModel.mbidArtist
+        this.viewModel.mbidArtist,
       );
     }
   }

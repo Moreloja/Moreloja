@@ -15,14 +15,23 @@ import {
   appConfiguration,
 } from '@moreloja/api/configurations';
 import { AuthService, ImageService } from '@moreloja/api/data-access-services';
-import { PlaceholderAlbumCover, PlaceholderArtistCover } from '@moreloja/shared/global-constants';
+import {
+  PlaceholderAlbumCover,
+  PlaceholderArtistCover,
+} from '@moreloja/shared/global-constants';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const imageService = app.get<ImageService>(ImageService);
-  await imageService.ensurePlaceholderExists(PlaceholderAlbumCover, 'PlaceholderAlbumCover.webp');
-  await imageService.ensurePlaceholderExists(PlaceholderArtistCover, 'PlaceholderArtistCover.webp');
+  await imageService.ensurePlaceholderExists(
+    PlaceholderAlbumCover,
+    'PlaceholderAlbumCover.webp',
+  );
+  await imageService.ensurePlaceholderExists(
+    PlaceholderArtistCover,
+    'PlaceholderArtistCover.webp',
+  );
 
   const authService = app.get<AuthService>(AuthService);
   await authService.ensureAdminExists();
@@ -32,9 +41,7 @@ async function bootstrap() {
   app.setGlobalPrefix(globalPrefix);
   app.use(cookieParser());
   await app.listen(appConfig.port);
-  Logger.log(
-    `Application is running on: ${appConfig.domain}/${globalPrefix}`
-  );
+  Logger.log(`Application is running on: ${appConfig.domain}/${globalPrefix}`);
 }
 
 bootstrap();

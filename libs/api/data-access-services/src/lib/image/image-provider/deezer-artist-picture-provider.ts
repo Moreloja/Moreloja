@@ -9,12 +9,11 @@ import { SongRepository } from '@moreloja/api/data-access-repositories';
 export class DeezerArtistPictureProvider {
   constructor(
     private readonly httpService: HttpService,
-    private readonly songRepository: SongRepository
+    private readonly songRepository: SongRepository,
   ) {}
   async provideImage(musicBrainzId: string): Promise<string> {
-    const document = await this.songRepository.getArtistByMusicbrainzartistId(
-      musicBrainzId
-    );
+    const document =
+      await this.songRepository.getArtistByMusicbrainzartistId(musicBrainzId);
     if (document) {
       return await this.getCoverUrlDeezer(document.artist);
     }
@@ -30,8 +29,8 @@ export class DeezerArtistPictureProvider {
           catchError((error: AxiosError) => {
             console.error('An error occurred:', error.message);
             throw 'An error happened in method getCoverUrlDeezer!';
-          })
-        )
+          }),
+        ),
     );
     return response.data.data[0].artist.picture_xl;
   }

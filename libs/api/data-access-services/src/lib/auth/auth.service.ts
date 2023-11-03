@@ -26,7 +26,7 @@ export class AuthService {
   async ensureAdminExists(): Promise<void> {
     const userInDb = await this.authRepository.findUser();
     if (userInDb === null) {
-      console.log("No admin user found.");
+      console.log('No admin user found.');
       await this.registerAdmin();
     }
   }
@@ -40,7 +40,7 @@ export class AuthService {
       twoFactorSecret,
     );
 
-    console.log("Creating admin user...");
+    console.log('Creating admin user...');
     console.log('Generated password: ' + password);
     console.log('Generated two factor secret: ' + twoFactorSecret);
   }
@@ -129,7 +129,7 @@ export class AuthService {
   ): Promise<boolean> {
     const token = this.otpGenerate(auth.twoFactorSecret);
     // TODO Maybe use verify() method of otpauth
-    console.debug("Two factor token: " + token);
+    console.debug('Two factor token: ' + token);
     return token === twoFactorToken;
   }
 

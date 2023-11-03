@@ -9,17 +9,17 @@ import { SongRepository } from '@moreloja/api/data-access-repositories';
 export class DeezerAlbumCoverProvider {
   constructor(
     private readonly httpService: HttpService,
-    private readonly songRepository: SongRepository
+    private readonly songRepository: SongRepository,
   ) {}
   async provideAlbumCover(musicbrainzalbum: string): Promise<string> {
     const document =
       await this.songRepository.getArtistAndAlbumByMusicbrainzalbumId(
-        musicbrainzalbum
+        musicbrainzalbum,
       );
     if (document) {
       const deezerCoverUrl = await this.getCoverUrlDeezer(
         document.artist,
-        document.album
+        document.album,
       );
 
       return deezerCoverUrl;
@@ -29,7 +29,7 @@ export class DeezerAlbumCoverProvider {
 
   private async getCoverUrlDeezer(
     artist: string,
-    album: string
+    album: string,
   ): Promise<string> {
     const response = await firstValueFrom(
       this.httpService
@@ -39,8 +39,8 @@ export class DeezerAlbumCoverProvider {
           catchError((error: AxiosError) => {
             console.error('An error occurred:', error.message);
             throw 'An error happened in method getCoverUrlDeezer!';
-          })
-        )
+          }),
+        ),
     );
 
     return response.data.data[0].album.cover_xl;

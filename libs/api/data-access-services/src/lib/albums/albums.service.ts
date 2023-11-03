@@ -27,7 +27,7 @@ export class AlbumsService {
     const songs = await this.songRepository.findLimitedSongs(
       albumFilter,
       0,
-      10
+      10,
     );
 
     let albumName = '';
@@ -53,8 +53,8 @@ export class AlbumsService {
             song.Provider_musicbrainzalbum ?? '',
             song.Provider_musicbrainztrack ?? '',
             song.run_time ?? 0,
-            song.playCount ?? 0
-          )
+            song.playCount ?? 0,
+          ),
       ),
       songs.map(
         (song) =>
@@ -67,9 +67,9 @@ export class AlbumsService {
             song.Provider_musicbrainzalbumartist ?? '',
             song.Provider_musicbrainzartist ?? '',
             song.Provider_musicbrainztrack ?? '',
-            song.run_time ?? 0
-          )
-      )
+            song.run_time ?? 0,
+          ),
+      ),
     );
   }
 
@@ -77,7 +77,7 @@ export class AlbumsService {
     range: string,
     sortBy: string,
     order: string,
-    page: number
+    page: number,
   ): Promise<GetAlbumsResponseDto> {
     const rangeFilter = this.rangeFilterCreator.constructRangeFilter(range);
 
@@ -97,7 +97,7 @@ export class AlbumsService {
       sortBy,
       order,
       this.paginationService.pagesToSkip(page),
-      this.paginationService.itemsPerPage
+      this.paginationService.itemsPerPage,
     );
     return new GetAlbumsResponseDto(albums);
   }

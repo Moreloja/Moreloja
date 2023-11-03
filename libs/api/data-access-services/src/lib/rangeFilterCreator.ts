@@ -21,7 +21,7 @@ export class RangeFilterCreator {
 
       const weekStartDate = this.getFirstDateOfWeek(
         parseInt(year),
-        parseInt(week)
+        parseInt(week),
       );
       const weekEndDate = new Date(weekStartDate);
       weekEndDate.setDate(weekEndDate.getDate() + 7);
@@ -52,7 +52,7 @@ export class RangeFilterCreator {
             31,
             23,
             59,
-            59
+            59,
           ),
         };
       } else if (partsCount === 3) {
@@ -63,7 +63,7 @@ export class RangeFilterCreator {
           searchFrom: new Date(
             parseInt(year),
             parseInt(month) - 1,
-            parseInt(day)
+            parseInt(day),
           ),
           searchTo: new Date(
             parseInt(year),
@@ -71,7 +71,7 @@ export class RangeFilterCreator {
             parseInt(day),
             23,
             59,
-            59
+            59,
           ),
         };
       }

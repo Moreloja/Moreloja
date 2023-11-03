@@ -6,9 +6,8 @@ import { ImageRepository } from '@moreloja/api/data-access-repositories';
 export class DbImageProvider {
   constructor(private readonly imageRepository: ImageRepository) {}
   async provideImage(musicBrainzId: string): Promise<string> {
-    const existingImage = await this.imageRepository.getImageByMusicBrainzId(
-      musicBrainzId
-    );
+    const existingImage =
+      await this.imageRepository.getImageByMusicBrainzId(musicBrainzId);
     if (existingImage) {
       return existingImage;
     }

@@ -31,7 +31,7 @@ export class ImageService {
     private readonly downloadAlbumCoverProvider: DownloadAlbumCoverProvider,
     private readonly downloadArtistPictureProvider: DownloadArtistPictureProvider,
     private readonly placeholderAlbumCoverProvider: PlaceholderAlbumCoverProvider,
-    private readonly placeholderArtistCoverProvider: PlaceholderArtistCoverProvider
+    private readonly placeholderArtistCoverProvider: PlaceholderArtistCoverProvider,
   ) {}
 
   async getAlbumCover(musicbrainzalbum: string): Promise<GetImageResponse> {
@@ -45,9 +45,8 @@ export class ImageService {
 
     for (const pictrsImageResponseCreator of pictrsImageResponseCreators) {
       try {
-        const coverUrl = await pictrsImageResponseCreator.provideImage(
-          musicbrainzalbum
-        );
+        const coverUrl =
+          await pictrsImageResponseCreator.provideImage(musicbrainzalbum);
         return new GetImageResponse(coverUrl);
       } catch (error) {
         console.log('No cover found. Trying next provider...');
@@ -80,17 +79,19 @@ export class ImageService {
 
   async setAlbumCover(
     musicbrainzalbum: string,
-    image: Express.Multer.File
+    image: Express.Multer.File,
   ): Promise<GetImageResponse> {
     const response = await this.pictrsService.uploadImage(image);
     await this.saveOrUpdateImageMetadata(musicbrainzalbum, response);
     return new GetImageResponse(response.files[0].file);
   }
 
-  async ensurePlaceholderExists(placeholderId: string, imageName: string): Promise<void> {
-    const existingImage = await this.imageRepository.getImageByMusicBrainzId(
-      placeholderId
-    );
+  async ensurePlaceholderExists(
+    placeholderId: string,
+    imageName: string,
+  ): Promise<void> {
+    const existingImage =
+      await this.imageRepository.getImageByMusicBrainzId(placeholderId);
     if (existingImage) {
       return;
     }
@@ -98,26 +99,23 @@ export class ImageService {
     console.log('Placeholder album cover not found in db. Creating...');
 
     // If placeholder does not exist: Upload placeholder image to pictrs
-    readFile(
-      join(process.cwd(), 'assets', imageName),
-      async (err, data) => {
-        if (err) {
-          console.error(err);
-        } else {
-          const response = await this.pictrsService.uploadImageBuffer(data);
-          await this.saveOrUpdateImageMetadata(placeholderId, response);
-        }
+    readFile(join(process.cwd(), 'assets', imageName), async (err, data) => {
+      if (err) {
+        console.error(err);
+      } else {
+        const response = await this.pictrsService.uploadImageBuffer(data);
+        await this.saveOrUpdateImageMetadata(placeholderId, response);
       }
-    );
+    });
   }
 
   private async saveOrUpdateImageMetadata(
     musicbrainzalbum: string,
-    response: UploadImageResponse
+    response: UploadImageResponse,
   ) {
     await this.imageRepository.saveOrUpdateImageMetadata(
       musicbrainzalbum,
-      response.files[0].file
+      response.files[0].file,
     );
   }
 }

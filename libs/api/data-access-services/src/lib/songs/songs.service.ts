@@ -17,12 +17,12 @@ export class SongsService {
   constructor(
     private songRepository: SongRepository,
     private paginationService: PaginationService,
-    private rangeFilterCreator: RangeFilterCreator
+    private rangeFilterCreator: RangeFilterCreator,
   ) {}
 
   async getAllSongs(
     mbidArtist: string,
-    page: number
+    page: number,
   ): Promise<GetAllSongsResponseDto> {
     let filter = {};
 
@@ -33,26 +33,26 @@ export class SongsService {
     const songs = await this.songRepository.findLimitedSongs(
       filter,
       this.paginationService.pagesToSkip(page),
-      this.paginationService.itemsPerPage
+      this.paginationService.itemsPerPage,
     );
     return this.createGetAllSongsResponseDto(songs);
   }
 
   async getAllSongsByTrack(
     mbidTrack: string,
-    page: number
+    page: number,
   ): Promise<GetAllSongsResponseDto> {
     const songs = await this.songRepository.findLimitedSongs(
       { Provider_musicbrainztrack: mbidTrack },
       this.paginationService.pagesToSkip(page),
-      this.paginationService.itemsPerPage
+      this.paginationService.itemsPerPage,
     );
     return this.createGetAllSongsResponseDto(songs);
   }
 
   async getTopSongs(
     range: string,
-    page: number
+    page: number,
   ): Promise<GetTopSongsResponseDto> {
     const rangeFilter = this.rangeFilterCreator.constructRangeFilter(range);
 
@@ -69,7 +69,7 @@ export class SongsService {
     const topSongs = await this.songRepository.getTopSongs(
       rangeQuery,
       this.paginationService.pagesToSkip(page),
-      this.paginationService.itemsPerPage
+      this.paginationService.itemsPerPage,
     );
     return new GetTopSongsResponseDto(
       topSongs.map(
@@ -80,9 +80,9 @@ export class SongsService {
             song.Provider_musicbrainzalbum ?? '',
             song.Provider_musicbrainztrack ?? '',
             song.run_time ?? 0,
-            song.playCount ?? 0
-          )
-      )
+            song.playCount ?? 0,
+          ),
+      ),
     );
   }
 
@@ -99,9 +99,9 @@ export class SongsService {
             song.Provider_musicbrainzalbumartist ?? '',
             song.Provider_musicbrainzartist ?? '',
             song.Provider_musicbrainztrack ?? '',
-            song.run_time ?? 0
-          )
-      )
+            song.run_time ?? 0,
+          ),
+      ),
     );
   }
 }

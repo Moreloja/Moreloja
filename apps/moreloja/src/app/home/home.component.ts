@@ -36,22 +36,24 @@ export default class TopSongsComponent implements OnInit {
 
   ngOnInit(): void {
     this.artists$ = this.artistsService.getArtists(Range.All, 1);
-    this.albums$ = this.albumsService.getAlbums(Range.All, Sort.PlayTime, Order.Descending, 1).pipe(
-      map((albums) =>
-        albums.map((album) => ({
-          mbidAlbum: album.Provider_musicbrainzalbum,
-          name: album.Album,
-        }))
-      )
-    );
+    this.albums$ = this.albumsService
+      .getAlbums(Range.All, Sort.PlayTime, Order.Descending, 1)
+      .pipe(
+        map((albums) =>
+          albums.map((album) => ({
+            mbidAlbum: album.Provider_musicbrainzalbum,
+            name: album.Album,
+          })),
+        ),
+      );
     this.songs$ = this.songsService.getTopSongs(Range.All, 1).pipe(
       map((songs) =>
         songs.topSongs.map((song) => ({
           mbidAlbum: song.Provider_musicbrainzalbum,
           name: song.Name,
           mbidTrack: song.Provider_musicbrainztrack,
-        }))
-      )
+        })),
+      ),
     );
   }
 }

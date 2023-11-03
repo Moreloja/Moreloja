@@ -14,7 +14,7 @@ export class PictrsService {
   constructor(
     @InjectPictrsConfig()
     private readonly pictrsConfiguration: PictrsConfiguration,
-    private readonly httpService: HttpService
+    private readonly httpService: HttpService,
   ) {}
 
   async getUploadImage(coverUrl: string): Promise<UploadImageResponse> {
@@ -27,8 +27,8 @@ export class PictrsService {
         catchError((error: AxiosError) => {
           console.error('An error occurred:', error.message);
           throw 'An error happened in method getUploadImage!';
-        })
-      )
+        }),
+      ),
     );
 
     return response.data;
@@ -51,20 +51,20 @@ export class PictrsService {
   }
 
   private async postAlbumCover(
-    formData: FormData
+    formData: FormData,
   ): Promise<UploadImageResponse> {
     const response = await firstValueFrom(
       this.httpService
         .post<UploadImageResponse>(
           this.pictrsConfiguration.domain + '/image',
-          formData
+          formData,
         )
         .pipe(
           catchError((error: AxiosError) => {
             console.error('An error occurred:', error.message);
             throw 'An error happened while setting album cover!';
-          })
-        )
+          }),
+        ),
     );
     return response.data;
   }

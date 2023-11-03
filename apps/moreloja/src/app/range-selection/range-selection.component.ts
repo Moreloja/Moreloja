@@ -20,7 +20,7 @@ export class RangeSelectionComponent {
       label: 'This Week',
       range: `${format(new Date(), 'yyyy')}-W${format(
         startOfWeek(new Date(), { weekStartsOn: 1 }),
-        'II'
+        'II',
       )}`,
     },
     { label: 'This Month', range: format(new Date(), 'yyyy-MM') },

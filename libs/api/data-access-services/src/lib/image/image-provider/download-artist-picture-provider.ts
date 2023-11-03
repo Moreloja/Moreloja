@@ -11,11 +11,11 @@ export class DownloadArtistPictureProvider {
   constructor(
     private readonly pictrsService: PictrsService,
     private readonly imageRepository: ImageRepository,
-    private readonly deezerArtistPictureProvider: DeezerArtistPictureProvider
+    private readonly deezerArtistPictureProvider: DeezerArtistPictureProvider,
   ) {}
   async provideImage(musicBrainzId: string): Promise<string> {
     for await (const coverUrl of this.getArtistPictureFromProvider(
-      musicBrainzId
+      musicBrainzId,
     )) {
       try {
         // Upload image to pictrs
@@ -40,7 +40,7 @@ export class DownloadArtistPictureProvider {
         yield provider.provideImage(musicBrainzId);
       } catch (error) {
         console.log(
-          'No artist picture found. Trying next provider... Error: ' + error
+          'No artist picture found. Trying next provider... Error: ' + error,
         );
       }
     }
@@ -48,11 +48,11 @@ export class DownloadArtistPictureProvider {
 
   private async saveOrUpdateImageMetadata(
     musicBrainzId: string,
-    response: UploadImageResponse
+    response: UploadImageResponse,
   ) {
     await this.imageRepository.saveOrUpdateImageMetadata(
       musicBrainzId,
-      response.files[0].file
+      response.files[0].file,
     );
   }
 }

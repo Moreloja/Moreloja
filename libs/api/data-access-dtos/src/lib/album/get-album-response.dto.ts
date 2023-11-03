@@ -6,5 +6,6 @@ export class GetAlbumResponseDto {
     public artistName: string,
     public artistMbid: string,
     public topSongs: TopSongDto[],
-    public songs: SongDto[]) {}
+    public songs: SongDto[],
+  ) {}
 }

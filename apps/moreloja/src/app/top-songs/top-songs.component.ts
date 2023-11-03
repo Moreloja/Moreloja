@@ -46,7 +46,7 @@ export default class TopSongsComponent implements OnInit {
   ngOnInit(): void {
     this.range$ = this.route.params.pipe(
       map((param) => param['range'] ?? Range.All),
-      distinctUntilChanged()
+      distinctUntilChanged(),
     );
     this.page$ = this.route.params.pipe(map((param) => Number(param['page'])));
     this.songs$ = this.range$.pipe(
@@ -57,9 +57,9 @@ export default class TopSongsComponent implements OnInit {
           }),
           switchMap((page) => {
             return this.songsService.getTopSongs(range, page);
-          })
-        )
-      )
+          }),
+        ),
+      ),
     );
   }
 

@@ -19,10 +19,15 @@ export class AlbumsService {
     return this.http.get<GetAlbumResponseDto>(`/api/album/${mbidAlbum}`);
   }
 
-  getAlbums(range: string, sortBy: Sort, order: Order, page: number): Observable<AlbumDto[]> {
+  getAlbums(
+    range: string,
+    sortBy: Sort,
+    order: Order,
+    page: number,
+  ): Observable<AlbumDto[]> {
     return this.http
       .get<GetAlbumsResponseDto>(
-        `/api/albums/${range}/sort/${sortBy}/${order}/page/${page}`
+        `/api/albums/${range}/sort/${sortBy}/${order}/page/${page}`,
       )
       .pipe(map((response) => response.albums));
   }

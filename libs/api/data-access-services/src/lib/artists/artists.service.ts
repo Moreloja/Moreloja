@@ -22,7 +22,7 @@ export class ArtistsService {
   constructor(
     private paginationService: PaginationService,
     private songRepository: SongRepository,
-    private rangeFilterCreator: RangeFilterCreator
+    private rangeFilterCreator: RangeFilterCreator,
   ) {}
 
   async getArtist(mbidAlbumArtist: string): Promise<GetArtistResponse> {
@@ -37,12 +37,11 @@ export class ArtistsService {
     const songs = await this.songRepository.findLimitedSongs(
       artistFilter,
       0,
-      10
+      10,
     );
 
-    const artistName = await this.songRepository.findArtistName(
-      mbidAlbumArtist
-    );
+    const artistName =
+      await this.songRepository.findArtistName(mbidAlbumArtist);
 
     const artistTopWeeks = await this.getArtistTopWeeks(mbidAlbumArtist);
 
@@ -51,7 +50,7 @@ export class ArtistsService {
     const distinctAlbums = await this.songRepository.getDistinctAlbums(
       albumArtistFilter,
       Sort.Year,
-      Order.Descending
+      Order.Descending,
     );
 
     const appearsOnDistinctAlbums = await this.songRepository.getDistinctAlbums(
@@ -60,7 +59,7 @@ export class ArtistsService {
         Provider_musicbrainzalbumartist: { $ne: mbidAlbumArtist },
       },
       Sort.Year,
-      Order.Descending
+      Order.Descending,
     );
 
     return new GetArtistResponse(
@@ -71,16 +70,16 @@ export class ArtistsService {
           new AlbumDto(
             album.Album ?? '',
             album.Provider_musicbrainzalbum ?? '',
-            album.Year ?? ''
-          )
+            album.Year ?? '',
+          ),
       ),
       appearsOnDistinctAlbums.map(
         (album) =>
           new AlbumDto(
             album.Album ?? '',
             album.Provider_musicbrainzalbum ?? '',
-            album.Year ?? ''
-          )
+            album.Year ?? '',
+          ),
       ),
       topSongs.map(
         (song) =>
@@ -90,8 +89,8 @@ export class ArtistsService {
             song.Provider_musicbrainzalbum ?? '',
             song.Provider_musicbrainztrack ?? '',
             song.run_time ?? 0,
-            song.playCount ?? 0
-          )
+            song.playCount ?? 0,
+          ),
       ),
       songs.map(
         (song) =>
@@ -104,9 +103,9 @@ export class ArtistsService {
             song.Provider_musicbrainzalbumartist ?? '',
             song.Provider_musicbrainzartist ?? '',
             song.Provider_musicbrainztrack ?? '',
-            song.run_time ?? 0
-          )
-      )
+            song.run_time ?? 0,
+          ),
+      ),
     );
   }
 
@@ -125,7 +124,7 @@ export class ArtistsService {
     const artists = await this.songRepository.getArtists(
       rangeQuery,
       this.paginationService.pagesToSkip(page),
-      this.paginationService.itemsPerPage
+      this.paginationService.itemsPerPage,
     );
     return new GetArtistsResponse(
       artists.map(
@@ -134,14 +133,14 @@ export class ArtistsService {
             artist.Provider_musicbrainzartist,
             artist.Artist,
             artist.playCount,
-            artist.playTime
-          )
-      )
+            artist.playTime,
+          ),
+      ),
     );
   }
 
   private async getArtistTopWeeks(
-    mbidArtist: string
+    mbidArtist: string,
   ): Promise<ArtistTopWeeksDto> {
     const weeklyTopArtists = await this.songRepository.getWeeklyTopArtists();
     return {
@@ -154,7 +153,7 @@ export class ArtistsService {
   private getWeeksAtPosition(
     mbidArtist: string,
     weeklyTopArtists: WeeklyTopArtistsDto[],
-    position: number
+    position: number,
   ): WeekDto[] {
     return weeklyTopArtists
       .filter((week) => {

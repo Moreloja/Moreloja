@@ -1,5 +1,5 @@
 export const PlaceholderAlbumCover = 'PlaceholderAlbumCover';
-export const PlaceholderArtistCover ='PlaceholderArtistCover';
+export const PlaceholderArtistCover = 'PlaceholderArtistCover';
 
 export const enum Range {
   All = 'all',

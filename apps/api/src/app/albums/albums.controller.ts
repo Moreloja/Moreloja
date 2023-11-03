@@ -12,7 +12,7 @@ export class AlbumsController {
 
   @Get('album/:mbidAlbum')
   getAlbum(
-    @Param('mbidAlbum') mbidAlbum: string
+    @Param('mbidAlbum') mbidAlbum: string,
   ): Promise<GetAlbumResponseDto> {
     return this.albumsService.getAlbum(mbidAlbum);
   }
@@ -22,7 +22,7 @@ export class AlbumsController {
     @Param('range') range: string,
     @Param('sortBy') sortBy: string,
     @Param('order') order: string,
-    @Param('page') page: number
+    @Param('page') page: number,
   ): Promise<GetAlbumsResponseDto> {
     return this.albumsService.getAlbums(range, sortBy, order, page);
   }

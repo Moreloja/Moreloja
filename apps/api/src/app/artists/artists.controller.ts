@@ -12,7 +12,7 @@ export class ArtistsController {
 
   @Get('artist/:mbidAlbumArtist')
   getArtist(
-    @Param('mbidAlbumArtist') mbidAlbumArtist: string
+    @Param('mbidAlbumArtist') mbidAlbumArtist: string,
   ): Promise<GetArtistResponse> {
     return this.artistsService.getArtist(mbidAlbumArtist);
   }
@@ -20,7 +20,7 @@ export class ArtistsController {
   @Get('artists/:range/page/:page')
   getArtists(
     @Param('range') range: string,
-    @Param('page') page: number
+    @Param('page') page: number,
   ): Promise<GetArtistsResponse> {
     return this.artistsService.getArtists(range, page);
   }

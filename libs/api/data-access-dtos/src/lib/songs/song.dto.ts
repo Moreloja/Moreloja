@@ -8,6 +8,6 @@ export class SongDto {
     public Provider_musicbrainzalbumartist: string,
     public Provider_musicbrainzartist: string,
     public Provider_musicbrainztrack: string,
-    public run_time: number
+    public run_time: number,
   ) {}
 }

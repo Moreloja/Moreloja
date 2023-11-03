@@ -46,7 +46,7 @@ export default class ArtistsComponent implements OnInit {
   ngOnInit(): void {
     this.range$ = this.route.params.pipe(
       map((param) => param['range'] ?? Range.All),
-      distinctUntilChanged()
+      distinctUntilChanged(),
     );
     this.page$ = this.route.params.pipe(map((param) => Number(param['page'])));
     this.artists$ = this.range$.pipe(
@@ -57,9 +57,9 @@ export default class ArtistsComponent implements OnInit {
           }),
           switchMap((page) => {
             return this.artistsService.getArtists(range, page);
-          })
-        )
-      )
+          }),
+        ),
+      ),
     );
   }
 

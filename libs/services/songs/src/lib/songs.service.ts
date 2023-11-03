@@ -15,25 +15,25 @@ export class SongsService {
 
   getAllSongs(
     mbidArtist: string,
-    page: number
+    page: number,
   ): Observable<GetAllSongsResponseDto> {
     return this.http.get<GetAllSongsResponseDto>(
-      `/api/songs/artist/${mbidArtist}/page/${page}`
+      `/api/songs/artist/${mbidArtist}/page/${page}`,
     );
   }
 
   getTopSongs(range: string, page: number): Observable<GetTopSongsResponseDto> {
     return this.http.get<GetTopSongsResponseDto>(
-      `/api/top-songs/${range}/page/${page}`
+      `/api/top-songs/${range}/page/${page}`,
     );
   }
 
   getAllSongsByTrack(
     mbidTrack: string,
-    page: number
+    page: number,
   ): Observable<GetAllSongsResponseDto> {
     return this.http.get<GetAllSongsResponseDto>(
-      `/api/song/${mbidTrack}/page/${page}`
+      `/api/song/${mbidTrack}/page/${page}`,
     );
   }
 }

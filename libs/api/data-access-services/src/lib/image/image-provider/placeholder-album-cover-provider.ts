@@ -9,18 +9,18 @@ export class PlaceholderAlbumCoverProvider {
 
   async provideImage(musicbrainzalbum: string): Promise<string> {
     const coverUrl = await this.imageRepository.getImageByMusicBrainzId(
-      PlaceholderAlbumCover
+      PlaceholderAlbumCover,
     );
     if (coverUrl) {
       this.imageRepository.saveOrUpdateImageMetadata(
         musicbrainzalbum,
-        coverUrl
+        coverUrl,
       );
       return coverUrl;
     }
 
     throw new Error(
-      'This should never happen! Placeholder image should be uploaded on first start.'
+      'This should never happen! Placeholder image should be uploaded on first start.',
     );
   }
 }

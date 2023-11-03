@@ -13,11 +13,11 @@ export class DownloadAlbumCoverProvider {
     private readonly pictrsService: PictrsService,
     private readonly imageRepository: ImageRepository,
     private readonly musicBrainzAlbumCoverProvider: MusicBrainzAlbumCoverProvider,
-    private readonly deezerAlbumCoverProvider: DeezerAlbumCoverProvider
+    private readonly deezerAlbumCoverProvider: DeezerAlbumCoverProvider,
   ) {}
   async provideImage(musicbrainzalbum: string): Promise<string> {
     for await (const coverUrl of this.getAlbumCoverFromProvider(
-      musicbrainzalbum
+      musicbrainzalbum,
     )) {
       try {
         // Upload image to pictrs
@@ -48,11 +48,11 @@ export class DownloadAlbumCoverProvider {
 
   private async saveOrUpdateImageMetadata(
     musicbrainzalbum: string,
-    response: UploadImageResponse
+    response: UploadImageResponse,
   ) {
     await this.imageRepository.saveOrUpdateImageMetadata(
       musicbrainzalbum,
-      response.files[0].file
+      response.files[0].file,
     );
   }
 }

@@ -20,9 +20,8 @@ export class ImageService {
   private getImage(
     mbid: string,
     placeholderId: string,
-    getImage: (mbid: string) => Observable<GetImageResponse>
+    getImage: (mbid: string) => Observable<GetImageResponse>,
   ): Observable<string> {
-
     if (this.images[mbid]) {
       return this.images[mbid].asObservable();
     }
@@ -41,7 +40,7 @@ export class ImageService {
       });
     } else {
       this.images[mbid] = new BehaviorSubject<string>(
-        this.placeholderAlbumCover
+        this.placeholderAlbumCover,
       );
     }
 
@@ -62,7 +61,7 @@ export class ImageService {
       mbidAlbum,
       PlaceholderAlbumCover,
       (mbid: string): Observable<GetImageResponse> =>
-        this.http.get<GetImageResponse>(`/api/image/album/${mbid}`)
+        this.http.get<GetImageResponse>(`/api/image/album/${mbid}`),
     );
   }
 
@@ -71,7 +70,7 @@ export class ImageService {
       mbidArtist,
       PlaceholderAlbumCover, // TODO Create one for artists
       (mbid: string): Observable<GetImageResponse> =>
-        this.http.get<GetImageResponse>(`/api/image/artist/${mbid}`)
+        this.http.get<GetImageResponse>(`/api/image/artist/${mbid}`),
     );
   }
 

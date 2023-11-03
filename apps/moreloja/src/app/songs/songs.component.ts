@@ -43,7 +43,7 @@ export default class SongsComponent implements OnInit {
   ngOnInit(): void {
     this.mbidArtist$ = this.route.params.pipe(
       map((param) => param['mbidArtist']),
-      distinctUntilChanged()
+      distinctUntilChanged(),
     );
     this.page$ = this.route.params.pipe(map((param) => Number(param['page'])));
     this.songs$ = this.mbidArtist$.pipe(
@@ -55,9 +55,9 @@ export default class SongsComponent implements OnInit {
           }),
           switchMap((page) => {
             return this.songsService.getAllSongs(mbidArtist, page);
-          })
-        )
-      )
+          }),
+        ),
+      ),
     );
   }
 

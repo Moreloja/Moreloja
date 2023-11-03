@@ -28,7 +28,7 @@ export class ImageController {
 
   @Get('image/album/:musicbrainzalbum')
   async getAlbumCover(
-    @Param('musicbrainzalbum') musicbrainzalbum: string
+    @Param('musicbrainzalbum') musicbrainzalbum: string,
   ): Promise<GetImageResponse> {
     try {
       return await this.imageService.getAlbumCover(musicbrainzalbum);
@@ -42,7 +42,7 @@ export class ImageController {
 
   @Get('image/artist/:mbidArtist')
   getArtistPicture(
-    @Param('mbidArtist') mbidArtist: string
+    @Param('mbidArtist') mbidArtist: string,
   ): Promise<GetImageResponse> {
     return this.imageService.getArtistPicture(mbidArtist);
   }
@@ -52,7 +52,7 @@ export class ImageController {
   @UseGuards(AccessTokenGuard)
   setAlbumCover(
     @Param('musicbrainzalbum') musicbrainzalbum: string,
-    @UploadedFile() image: Express.Multer.File
+    @UploadedFile() image: Express.Multer.File,
   ): Promise<GetImageResponse> {
     return this.imageService.setAlbumCover(musicbrainzalbum, image);
   }

@@ -57,18 +57,18 @@ export default class AlbumsComponent implements OnInit {
   ngOnInit(): void {
     this.sortBy$ = this.route.params.pipe(
       map((param) => param['sortBy'] ?? Sort.Year),
-      distinctUntilChanged()
+      distinctUntilChanged(),
     );
     this.order$ = this.route.params.pipe(
       map((param) => param['order'] ?? Order.Descending),
-      distinctUntilChanged()
+      distinctUntilChanged(),
     );
     this.range$ = this.route.params.pipe(
       map((param) => param['range'] ?? Range.All),
-      distinctUntilChanged()
+      distinctUntilChanged(),
     );
     this.page$ = this.route.params.pipe(
-      map((param) => Number(param['page'] ?? 1))
+      map((param) => Number(param['page'] ?? 1)),
     );
     this.albums$ = this.range$.pipe(
       switchMap((range) =>
@@ -79,18 +79,18 @@ export default class AlbumsComponent implements OnInit {
                 this.page$.pipe(
                   tap((page) => {
                     this.titleService.setTitle(
-                      `Moreloja - Albums - Page ${page}`
+                      `Moreloja - Albums - Page ${page}`,
                     );
                   }),
                   switchMap((page) =>
-                    this.albumsService.getAlbums(range, sortBy, order, page)
-                  )
-                )
-              )
-            )
-          )
-        )
-      )
+                    this.albumsService.getAlbums(range, sortBy, order, page),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 

@@ -9,7 +9,7 @@ export class ImageRepository {
   constructor(@InjectModel(Image.name) private imageModel: Model<Image>) {}
 
   async getImageByMusicBrainzId(
-    musicbrainzid: string
+    musicbrainzid: string,
   ): Promise<string | undefined> {
     const query = { musicbrainzid };
     const projection = { _id: 0, image: 1 };
@@ -25,7 +25,7 @@ export class ImageRepository {
 
   async saveOrUpdateImageMetadata(
     musicbrainzid: string,
-    image: string
+    image: string,
   ): Promise<void> {
     const filter = { musicbrainzid: musicbrainzid };
     const updateOperation = {

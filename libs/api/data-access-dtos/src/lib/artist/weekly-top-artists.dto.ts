@@ -6,6 +6,6 @@ export class WeeklyTopArtistsDto {
       Provider_musicbrainzartist: string;
       Artist: string;
       Plays: number;
-    }[]
+    }[],
   ) {}
 }
