@@ -1,19 +1,30 @@
-<h2>Login</h2>
+<ng-container *ngIf="(isLoggedIn$ | async) === false">
+  <h2>Login</h2>
 
-<div class="main-container">
-  <label for="password">Password</label>
-  <input
-    id="password"
-    name="password"
-    type="password"
-    [formControl]="passwordControl"
-  />
-  <label for="twoFactorToken">Two Factor Token</label>
-  <input
-    id="twoFactorToken"
-    name="twoFactorToken"
-    type="text"
-    [formControl]="twoFactorTokenControl"
-  />
-  <button (click)="login()">Login</button>
-</div>
+  <div class="main-container">
+    <label for="password">Password</label>
+    <input
+      id="password"
+      name="password"
+      type="password"
+      [formControl]="passwordControl"
+    />
+    <label for="twoFactorToken">Two Factor Token</label>
+    <input
+      id="twoFactorToken"
+      name="twoFactorToken"
+      type="text"
+      [formControl]="twoFactorTokenControl"
+    />
+    <button (click)="login()">Login</button>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="isLoggedIn$ | async">
+  <h2>Logout</h2>
+
+  <div *ngIf="isLoggedIn$ | async" class="main-container">
+    <div>Logged In</div>
+    <button (click)="logout()">Logout</button>
+  </div>
+</ng-container>
