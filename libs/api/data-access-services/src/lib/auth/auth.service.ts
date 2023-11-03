@@ -128,9 +128,10 @@ export class AuthService {
     twoFactorToken: string,
   ): Promise<boolean> {
     const token = this.otpGenerate(auth.twoFactorSecret);
-    // TODO Maybe use verify() method of otpauth
     console.debug('Two factor token: ' + token);
-    return token === twoFactorToken;
+
+    const isValid = this.otpValidate(auth.twoFactorSecret, twoFactorToken);
+    return isValid;
   }
 
   private hashData(data: string): Promise<string> {
@@ -156,6 +157,18 @@ export class AuthService {
       const otpAuth = new OTPAuth.TOTP(this.otpOptions);
       return otpAuth.generate();
     }
+  }
+
+  private otpValidate(
+    twoFactorSecret: string,
+    twoFactorToken: string,
+  ): boolean {
+    const otpAuth = new OTPAuth.TOTP({
+      ...this.otpOptions,
+      secret: twoFactorSecret,
+    });
+    const delta = otpAuth.validate({ token: twoFactorToken, window: 1 });
+    return delta !== null;
   }
 
   private getRandomTwoFactorSecret(): string {
