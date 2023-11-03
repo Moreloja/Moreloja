@@ -28,4 +28,12 @@ export class AuthService {
         }),
       );
   }
+
+  logout(): Observable<object> {
+    return this.http.post(`/api/auth/logout`, {}).pipe(
+      tap(() => {
+        this.isLoggedIn$.next(false);
+      }),
+    );
+  }
 }

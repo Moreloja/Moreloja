@@ -41,7 +41,6 @@ export default class LoginComponent implements OnInit {
   }
 
   logout() {
-    // TODO
-    //this.authService.logout();
+    this.authService.logout().subscribe();
   }
 }
