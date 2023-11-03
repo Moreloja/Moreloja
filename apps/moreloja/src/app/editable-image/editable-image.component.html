@@ -11,3 +11,6 @@
   loading="lazy"
   src="pictrs/image/process.webp?src={{ url }}&resize={{ size }}"
 />
+<div *ngIf="error$ | async as error" class="error-hint">
+  {{ error }}
+</div>

@@ -32,6 +32,7 @@ export class EditableImageComponent implements OnInit {
   size = 250;
 
   url$!: Observable<string>;
+  error$!: Observable<string>;
 
   private imageService = inject(ImageService);
 
@@ -42,6 +43,7 @@ export class EditableImageComponent implements OnInit {
     if (this.mbidArtist) {
       this.url$ = this.imageService.getArtistPicture(this.mbidArtist);
     }
+    this.error$ = this.imageService.getError();
   }
 
   onFileSelected(event: Event) {

@@ -1,8 +1,11 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { BehaviorSubject, EMPTY, Observable, catchError } from 'rxjs';
 
-import { PlaceholderAlbumCover } from '@moreloja/shared/global-constants';
+import {
+  PlaceholderAlbumCover,
+  PlaceholderArtistCover,
+} from '@moreloja/shared/global-constants';
 import { GetImageResponse } from '@moreloja/api/data-access-dtos';
 
 @Injectable({
@@ -12,10 +15,17 @@ export class ImageService {
   private http = inject(HttpClient);
 
   private placeholderAlbumCover: string | undefined;
+  private placeholderArtistCover: string | undefined;
 
   private readonly images: {
     [mbid: string]: BehaviorSubject<string>;
   } = {};
+
+  private error$ = new BehaviorSubject<string>('');
+
+  getError(): Observable<string> {
+    return this.error$.asObservable();
+  }
 
   private getImage(
     mbid: string,
@@ -26,12 +36,24 @@ export class ImageService {
       return this.images[mbid].asObservable();
     }
 
-    if (!this.placeholderAlbumCover) {
+    let placeholder: string | undefined;
+
+    if (placeholderId === PlaceholderAlbumCover) {
+      placeholder = this.placeholderAlbumCover;
+    } else if (placeholderId === PlaceholderArtistCover) {
+      placeholder = this.placeholderArtistCover;
+    }
+
+    if (!placeholder) {
       this.images[mbid] = new BehaviorSubject<string>('DoesNotExist.webp');
 
       getImage(placeholderId).subscribe({
         next: (response) => {
-          this.placeholderAlbumCover = response.image_url;
+          if (placeholderId === PlaceholderAlbumCover) {
+            this.placeholderAlbumCover = response.image_url;
+          } else if (placeholderId === PlaceholderArtistCover) {
+            this.placeholderArtistCover = response.image_url;
+          }
           this.images[mbid].next(response.image_url);
         },
         error: () => {
@@ -39,9 +61,7 @@ export class ImageService {
         },
       });
     } else {
-      this.images[mbid] = new BehaviorSubject<string>(
-        this.placeholderAlbumCover,
-      );
+      this.images[mbid] = new BehaviorSubject<string>(placeholder);
     }
 
     getImage(mbid).subscribe({
@@ -68,7 +88,7 @@ export class ImageService {
   getArtistPicture(mbidArtist: string): Observable<string> {
     return this.getImage(
       mbidArtist,
-      PlaceholderAlbumCover, // TODO Create one for artists
+      PlaceholderArtistCover,
       (mbid: string): Observable<GetImageResponse> =>
         this.http.get<GetImageResponse>(`/api/image/artist/${mbid}`),
     );
@@ -80,8 +100,15 @@ export class ImageService {
 
     this.http
       .post<GetImageResponse>(`/api/image/album/${mbid}`, formData)
+      .pipe(
+        catchError((err: HttpErrorResponse) => {
+          this.error$.next(err.message);
+          return EMPTY;
+        }),
+      )
       .subscribe({
         next: (response) => {
+          this.error$.next('');
           this.images[mbid].next(response.image_url);
         },
       });
