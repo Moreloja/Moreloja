@@ -1,4 +1,4 @@
-.main-container {
+.top-song-card-container {
   display: grid;
   grid-template-columns: auto 1fr 2fr;
   gap: 1rem;

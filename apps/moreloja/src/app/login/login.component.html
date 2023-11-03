@@ -17,14 +17,20 @@
       [formControl]="twoFactorTokenControl"
     />
     <button (click)="login()">Login</button>
+    <div *ngIf="error$ | async as error" class="error-hint">
+      {{ error }}
+    </div>
   </div>
 </ng-container>
 
 <ng-container *ngIf="isLoggedIn$ | async">
   <h2>Logout</h2>
 
-  <div *ngIf="isLoggedIn$ | async" class="main-container">
+  <div class="main-container">
     <div>You are logged in.</div>
     <button (click)="logout()">Logout</button>
+    <div *ngIf="error$ | async as error" class="error-hint">
+      {{ error }}
+    </div>
   </div>
 </ng-container>

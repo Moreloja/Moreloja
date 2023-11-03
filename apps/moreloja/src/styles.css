@@ -57,3 +57,14 @@ button:hover {
 button:disabled {
   background-color: grey;
 }
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.error-hint {
+  border: 0.15rem solid var(--error-color);
+  padding: 1rem;
+}

@@ -27,11 +27,13 @@ export default class LoginComponent implements OnInit {
   });
 
   isLoggedIn$!: Observable<boolean>;
+  error$!: Observable<string>;
 
   authService = inject(AuthService);
 
   ngOnInit(): void {
     this.isLoggedIn$ = this.authService.isLoggedIn();
+    this.error$ = this.authService.getError();
   }
 
   login() {

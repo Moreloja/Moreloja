@@ -1,4 +1,4 @@
-.main-container {
+.song-card-container {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -7,13 +7,13 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  .main-container {
+  .song-card-container {
     border-color: var(--background-color-brighter);
   }
 }
 
 @media (prefers-color-scheme: light) {
-  .main-container {
+  .song-card-container {
     border-color: var(--light-background-color-brighter);
   }
 }
