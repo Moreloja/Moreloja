@@ -6,6 +6,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class SecondsToStringPipe implements PipeTransform {
   public transform(totalSeconds: number): string {
+    // Round totalSeconds to the nearest whole number
+    totalSeconds = Math.round(totalSeconds);
+
     const hours = Math.floor(totalSeconds / 3600);
     const remainingSeconds = totalSeconds % 3600;
     const minutes = Math.floor(remainingSeconds / 60);
