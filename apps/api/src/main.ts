@@ -12,7 +12,11 @@ import { AppModule } from './app/app.module';
 
 import {
   AppConfiguration,
+  JwtConfiguration,
   appConfiguration,
+  defaultAccessTokenSecret,
+  defaultRefreshTokenSecret,
+  jwtConfiguration,
 } from '@moreloja/api/configurations';
 import { AuthService, ImageService } from '@moreloja/api/data-access-services';
 import {
@@ -35,6 +39,19 @@ async function bootstrap() {
 
   const authService = app.get<AuthService>(AuthService);
   await authService.ensureAdminExists();
+
+  // Print warning if JWT secret is the default value
+  const jwtConfig = app.get<JwtConfiguration>(jwtConfiguration.KEY);
+  if (jwtConfig.accessTokenSecret === defaultAccessTokenSecret) {
+    Logger.warn(
+      `JWT Access Token Secret is default value (${defaultAccessTokenSecret}). Please change it by using JWT_ACCESS_TOKEN_SECRET environment variable.`,
+    );
+  }
+  if (jwtConfig.refreshTokenSecret === defaultRefreshTokenSecret) {
+    Logger.warn(
+      `JWT Refresh Token Secret is default value (${defaultRefreshTokenSecret}). Please change it by using JWT_REFRESH_TOKEN_SECRET environment variable.`,
+    );
+  }
 
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);

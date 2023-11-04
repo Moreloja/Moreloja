@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as argon2 from 'argon2';
 import * as OTPAuth from 'otpauth';
@@ -26,7 +26,7 @@ export class AuthService {
   async ensureAdminExists(): Promise<void> {
     const userInDb = await this.authRepository.findUser();
     if (userInDb === null) {
-      console.log('No admin user found.');
+      Logger.log('No admin user found.');
       await this.registerAdmin();
     }
   }
@@ -40,9 +40,9 @@ export class AuthService {
       twoFactorSecret,
     );
 
-    console.log('Creating admin user...');
-    console.log('Generated password: ' + password);
-    console.log('Generated two factor secret: ' + twoFactorSecret);
+    Logger.log('Creating admin user...');
+    Logger.log('Generated password: ' + password);
+    Logger.log('Generated two factor secret: ' + twoFactorSecret);
   }
 
   private getRandomPassword(): string {
@@ -128,7 +128,7 @@ export class AuthService {
     twoFactorToken: string,
   ): Promise<boolean> {
     const token = this.otpGenerate(auth.twoFactorSecret);
-    console.debug('Two factor token: ' + token);
+    Logger.debug('Two factor token: ' + token);
 
     const isValid = this.otpValidate(auth.twoFactorSecret, twoFactorToken);
     return isValid;
