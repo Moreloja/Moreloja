@@ -8,6 +8,7 @@ import {
   jwtConfiguration,
   mongoConfiguration,
   pictrsConfiguration,
+  validationPipeConfiguration,
 } from '@moreloja/api/configurations';
 
 import { AlbumsModule } from './albums/albums.module';
@@ -26,6 +27,7 @@ import { SongsModule } from './songs/songs.module';
         jwtConfiguration,
         mongoConfiguration,
         pictrsConfiguration,
+        validationPipeConfiguration,
       ],
     }),
     AlbumsModule,

@@ -13,10 +13,13 @@ import { AppModule } from './app/app.module';
 import {
   AppConfiguration,
   JwtConfiguration,
+  ValidationPipeConfiguration,
   appConfiguration,
   defaultAccessTokenSecret,
+  defaultDisableErrorMessages,
   defaultRefreshTokenSecret,
   jwtConfiguration,
+  validationPipeConfiguration,
 } from '@moreloja/api/configurations';
 import { AuthService, ImageService } from '@moreloja/api/data-access-services';
 import {
@@ -56,12 +59,21 @@ async function bootstrap() {
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
 
-  // TODO Disable error messages in production?
-  // {
-  //   disableErrorMessages: true,
-  // }
+  // Print warning if error messages are not disabled
+  const validationPipeConfig = app.get<ValidationPipeConfiguration>(
+    validationPipeConfiguration.KEY,
+  );
+  if (
+    validationPipeConfig.disableErrorMessages === defaultDisableErrorMessages
+  ) {
+    Logger.warn(
+      `Disable error messages is set to ${defaultDisableErrorMessages}. Please change it to true if you run in production. Use the environment variable DISABLE_ERROR_MESSAGES.`,
+    );
+  }
+
   app.useGlobalPipes(
     new ValidationPipe({
+      disableErrorMessages: validationPipeConfig.disableErrorMessages,
       forbidNonWhitelisted: true,
       whitelist: true,
     }),
