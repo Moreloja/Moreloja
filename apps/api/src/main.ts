@@ -3,7 +3,7 @@
  * This is only a minimal backend to get started.
  */
 
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 // import * as cookieParser from 'cookie-parser';
 import cookieParser from 'cookie-parser';
@@ -36,10 +36,23 @@ async function bootstrap() {
   const authService = app.get<AuthService>(AuthService);
   await authService.ensureAdminExists();
 
-  const appConfig = app.get<AppConfiguration>(appConfiguration.KEY);
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
+
+  // TODO Disable error messages in production?
+  // {
+  //   disableErrorMessages: true,
+  // }
+  app.useGlobalPipes(
+    new ValidationPipe({
+      forbidNonWhitelisted: true,
+      whitelist: true,
+    }),
+  );
+
   app.use(cookieParser());
+
+  const appConfig = app.get<AppConfiguration>(appConfiguration.KEY);
   await app.listen(appConfig.port);
   Logger.log(`Application is running on: ${appConfig.domain}/${globalPrefix}`);
 }

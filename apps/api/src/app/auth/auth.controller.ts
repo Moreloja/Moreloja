@@ -51,9 +51,11 @@ export class AuthController {
   @UseGuards(AccessTokenGuard)
   async logout(@Res({ passthrough: true }) response: Response): Promise<void> {
     await this.authService.logout();
-    // TODO domain?
-    // TODO httpOnly?
-    const options: CookieOptions = { sameSite: 'strict', secure: true };
+    const options: CookieOptions = {
+      path: '/api/',
+      sameSite: 'strict',
+      secure: true,
+    };
     response.clearCookie(this.jwtConfiguration.accessTokenCookieName, options);
     response.clearCookie(this.jwtConfiguration.refreshTokenCookieName, options);
   }
@@ -64,6 +66,7 @@ export class AuthController {
   ): void {
     const options: CookieOptions = {
       domain: 'localhost', // TODO your domain here!
+      path: '/api/',
       httpOnly: true,
       sameSite: 'strict',
       secure: true,
