@@ -9,6 +9,11 @@
   display: flex;
 }
 
+.play-count-value {
+  min-width: 3rem;
+  text-align: center;
+}
+
 .play-count-bar {
   flex: auto;
   margin-left: 5px;
