@@ -8,6 +8,7 @@ import {
 import { AsyncPipe, NgIf } from '@angular/common';
 import { Observable } from 'rxjs';
 
+import { AuthService } from '@moreloja/services/authentication';
 import { ImageService } from '@moreloja/services/image';
 
 import { SongCardComponent } from '../song-card/song-card.component';
@@ -33,7 +34,9 @@ export class EditableImageComponent implements OnInit {
 
   url$!: Observable<string>;
   error$!: Observable<string>;
+  isLoggedIn$!: Observable<boolean>;
 
+  private authService = inject(AuthService);
   private imageService = inject(ImageService);
 
   ngOnInit(): void {
@@ -44,6 +47,7 @@ export class EditableImageComponent implements OnInit {
       this.url$ = this.imageService.getArtistPicture(this.mbidArtist);
     }
     this.error$ = this.imageService.getError();
+    this.isLoggedIn$ = this.authService.isLoggedIn();
   }
 
   onFileSelected(event: Event) {
