@@ -65,7 +65,6 @@ export class AuthController {
     tokens: AccessTokens,
   ): void {
     const options: CookieOptions = {
-      domain: 'localhost', // TODO your domain here!
       path: '/api/',
       httpOnly: true,
       sameSite: 'strict',
