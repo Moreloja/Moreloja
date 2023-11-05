@@ -1,4 +1,4 @@
-import { AsyncPipe, JsonPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import {
   ChangeDetectionStrategy,
@@ -13,7 +13,6 @@ import {
   distinctUntilChanged,
   map,
   switchMap,
-  tap,
 } from 'rxjs';
 
 import { SearchResultDto } from '@moreloja/api/data-access-dtos';

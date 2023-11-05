@@ -52,3 +52,29 @@ To start the development server run `nx serve moreloja`. Open your browser and n
 ### Start the nestjs backend
 
 To start the development nestjs server run `nx serve api`.
+
+## Admin user
+
+There is only one user.
+The password will be generated on the first run.
+The two factor authentication secret will also be generated on first run.
+Both will be printed to standart output.
+
+You can reset the password to one of your choice by setting the environment variable `MORELOJA_ADMIN_PASSWORD_HASH` to the hash of your password.
+
+Generate a new hash like this:
+
+``` bash
+echo -n "ThisIsYourNewPassword" | argon2 saltItWithSalt -id -m 16 -l 32 -e
+```
+
+You can change the two factor secret by setting the environment variable `MORELOJA_ADMIN_TWO_FACTOR_SECRET` to the new secret.
+
+### Example
+
+Given the password `PleaseStar`.
+
+``` bash
+export MORELOJA_ADMIN_PASSWORD_HASH=$(echo -n "PleaseStar" | argon2 saltItWithSalt -id -m 16 -l 32 -e)
+export MORELOJA_ADMIN_TWO_FACTOR_SECRET=ChangeMeToSecret
+```

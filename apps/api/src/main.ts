@@ -21,7 +21,11 @@ import {
   jwtConfiguration,
   validationPipeConfiguration,
 } from '@moreloja/api/configurations';
-import { AuthService, ImageService } from '@moreloja/api/data-access-services';
+import {
+  ApplyAdminConfigService,
+  AuthService,
+  ImageService,
+} from '@moreloja/api/data-access-services';
 import {
   PlaceholderAlbumCover,
   PlaceholderArtistCover,
@@ -42,6 +46,11 @@ async function bootstrap() {
 
   const authService = app.get<AuthService>(AuthService);
   await authService.ensureAdminExists();
+
+  const applyAdminConfigService = app.get<ApplyAdminConfigService>(
+    ApplyAdminConfigService,
+  );
+  await applyAdminConfigService.applyAdminConfig();
 
   // Print warning if JWT secret is the default value
   const jwtConfig = app.get<JwtConfiguration>(jwtConfiguration.KEY);

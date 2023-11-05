@@ -1,6 +1,5 @@
 import { ForbiddenException, Injectable, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import * as argon2 from 'argon2';
 import * as OTPAuth from 'otpauth';
 
 import { AuthRepository } from '@moreloja/api/data-access-repositories';
@@ -13,10 +12,12 @@ import {
 } from '@moreloja/api/configurations';
 
 import { AccessTokens } from './types/access-tokens';
+import { HashDataService } from '../utils';
 
 @Injectable()
 export class AuthService {
   constructor(
+    private readonly hashDataService: HashDataService,
     private readonly authRepository: AuthRepository,
     private readonly jwtService: JwtService,
     @InjectJwtConfig()
@@ -36,7 +37,7 @@ export class AuthService {
     const twoFactorSecret = this.getRandomTwoFactorSecret();
 
     await this.authRepository.createUser(
-      await this.hashData(password),
+      await this.hashDataService.hashData(password),
       twoFactorSecret,
     );
 
@@ -69,7 +70,7 @@ export class AuthService {
       user.refreshTokenHash !== null &&
       user.refreshTokenHash !== undefined
     ) {
-      const refreshTokenMatches = await argon2.verify(
+      const refreshTokenMatches = await this.hashDataService.verify(
         user.refreshTokenHash,
         refreshToken,
       );
@@ -107,7 +108,7 @@ export class AuthService {
     );
 
     await this.authRepository.updateRefreshToken(
-      await this.hashData(refreshToken),
+      await this.hashDataService.hashData(refreshToken),
     );
 
     return {
@@ -120,7 +121,7 @@ export class AuthService {
     passwordHash: string,
     password: string,
   ): Promise<boolean> {
-    return await argon2.verify(passwordHash, password);
+    return await this.hashDataService.verify(passwordHash, password);
   }
 
   private async twoFactorTokenIsCorrect(
@@ -132,10 +133,6 @@ export class AuthService {
 
     const isValid = this.otpValidate(auth.twoFactorSecret, twoFactorToken);
     return isValid;
-  }
-
-  private hashData(data: string): Promise<string> {
-    return argon2.hash(data);
   }
 
   private otpOptions = {

@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 
 import {
   MongoConfiguration,
+  adminConfiguration,
   appConfiguration,
   jwtConfiguration,
   mongoConfiguration,
@@ -23,6 +24,7 @@ import { SongsModule } from './songs/songs.module';
     ConfigModule.forRoot({
       isGlobal: true,
       load: [
+        adminConfiguration,
         appConfiguration,
         jwtConfiguration,
         mongoConfiguration,

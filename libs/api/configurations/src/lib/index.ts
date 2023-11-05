@@ -1,3 +1,4 @@
+export * from './admin.config';
 export * from './app.configuration';
 export * from './jwt.configuration';
 export * from './mongo.configuration';

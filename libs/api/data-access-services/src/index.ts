@@ -5,5 +5,6 @@ export * from './lib/errors';
 export * from './lib/image';
 export * from './lib/search/search.service';
 export * from './lib/songs/songs.service';
+export * from './lib/utils';
 export * from './lib/pagination.service';
 export * from './lib/rangeFilterCreator';
