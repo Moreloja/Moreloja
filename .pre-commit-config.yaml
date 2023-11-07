@@ -8,4 +8,4 @@ repos:
     rev: 'fc26039' # "v3.0.3"
     hooks:
       - id: prettier
-        types_or: [css, html, ts]
+        types_or: [css, html, markdown, ts]

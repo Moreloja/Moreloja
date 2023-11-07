@@ -19,7 +19,7 @@ See [docker-compose.yml](docker-compose.yml) for an example.
 
 Run the following:
 
-``` bash
+```bash
 docker compose build
 ```
 
@@ -27,13 +27,13 @@ docker compose build
 
 Run the following:
 
-``` bash
+```bash
 docker compose up -d
 ```
 
 Inspect the logs with:
 
-``` bash
+```bash
 docker compose logs
 ```
 
@@ -41,7 +41,7 @@ docker compose logs
 
 ### Install dependencies
 
-``` bash
+```bash
 npm install
 ```
 
@@ -64,7 +64,7 @@ You can reset the password to one of your choice by setting the environment vari
 
 Generate a new hash like this:
 
-``` bash
+```bash
 echo -n "ThisIsYourNewPassword" | argon2 saltItWithSalt -id -m 16 -l 32 -e
 ```
 
@@ -74,7 +74,7 @@ You can change the two factor secret by setting the environment variable `MORELO
 
 Given the password `PleaseStar`.
 
-``` bash
+```bash
 export MORELOJA_ADMIN_PASSWORD_HASH=$(echo -n "PleaseStar" | argon2 saltItWithSalt -id -m 16 -l 32 -e)
 export MORELOJA_ADMIN_TWO_FACTOR_SECRET=ChangeMeToSecret
 ```
