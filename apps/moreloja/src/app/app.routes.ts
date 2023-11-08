@@ -78,6 +78,19 @@ export const appRoutes: Route[] = [
     loadComponent: () => import('./search/search.component'),
   },
   {
+    path: 'settings',
+    title: `${title} - Settings`,
+    loadComponent: () => import('./settings/settings.component'),
+    children: [
+      {
+        path: 'placeholder',
+        title: `${title} - Placeholder Settings`,
+        loadComponent: () =>
+          import('./settings-placeholder/settings-placeholder.component'),
+      },
+    ],
+  },
+  {
     path: 'song/:mbidTrack/page/:page',
     loadComponent: () => import('./song/song.component'),
   },

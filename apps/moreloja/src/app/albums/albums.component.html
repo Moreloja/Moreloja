@@ -19,7 +19,7 @@
             routerLink="/albums/{{ range }}/sort/{{ sort.sort }}/{{
               order
             }}/page/1"
-            routerLinkActive="active"
+            routerLinkActive="router-link-active"
             >{{ sort.label }}</a
           >
           |
@@ -31,7 +31,7 @@
             routerLink="/albums/{{ range }}/sort/{{ sortBy }}/{{
               ordering.order
             }}/page/1"
-            routerLinkActive="active"
+            routerLinkActive="router-link-active"
             >{{ ordering.label }}</a
           >
           <ng-container *ngIf="!last"> | </ng-container>

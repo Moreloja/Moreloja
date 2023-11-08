@@ -58,6 +58,10 @@ button:disabled {
   background-color: grey;
 }
 
+.router-link-active {
+  text-decoration-line: underline;
+}
+
 .main-container {
   display: flex;
   flex-direction: column;
