@@ -9,6 +9,13 @@
 - ⚠️ The project is under **very active** development.
 - ⚠️ Expect bugs and breaking changes.
 
+## MusicBrainz Tags
+
+This progam heavily relies on MusicBrainz IDs.
+Make sure your music is tagged.
+
+You can always use [Maloja](https://github.com/krateng/maloja) instead.
+
 ## Installation
 
 ### Docker

@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { ImageService } from '@moreloja/services/image';
+import { PlaceholderAlbumCover } from '@moreloja/shared/global-constants';
 
 export type AlbumCoverCardViewModel = {
   mbidAlbum?: string;
@@ -39,12 +40,17 @@ export class AlbumCoverCardComponent implements OnInit {
       this.coverUrl$ = this.imageService.getAlbumCover(
         this.viewModel.mbidAlbum,
       );
-    }
-    if (this.viewModel.mbidArtist) {
-      console.log('mbidArtist');
-      this.coverUrl$ = this.imageService.getArtistPicture(
-        this.viewModel.mbidArtist,
-      );
+    } else {
+      if (this.viewModel.mbidArtist) {
+        console.log('mbidArtist');
+        this.coverUrl$ = this.imageService.getArtistPicture(
+          this.viewModel.mbidArtist,
+        );
+      } else {
+        // Neither album nor artist is set
+        // Display a placeholder
+        this.coverUrl$ = this.imageService.getAlbumCover(PlaceholderAlbumCover);
+      }
     }
   }
 

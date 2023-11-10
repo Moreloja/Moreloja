@@ -17,9 +17,12 @@
       </div>
     </div>
     <div>
-      <a routerLink="/artist/{{ song.Provider_musicbrainzartist }}">{{
-        song.Artist
-      }}</a>
+      <a
+        *ngIf="song.Artist"
+        routerLink="/artist/{{ song.Provider_musicbrainzartist }}"
+        >{{ song.Artist }}</a
+      >
+      <div *ngIf="!song.Artist">Unknown Artist</div>
     </div>
   </div>
 
