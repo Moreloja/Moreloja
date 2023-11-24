@@ -9,6 +9,7 @@ import {
   AlbumCoverCardComponent,
   AlbumCoverCardViewModel,
 } from '../album-cover-card/album-cover-card.component';
+import { JsonModalBoxComponent } from '../modal-box/json-modal-box';
 
 @Component({
   selector: 'moreloja-song-card',
@@ -19,6 +20,7 @@ import {
     RouterModule,
     StringToDatePipe,
     AlbumCoverCardComponent,
+    JsonModalBoxComponent,
     TimeAgoPipe,
   ],
   templateUrl: './song-card.component.html',

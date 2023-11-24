@@ -17,18 +17,22 @@
       </div>
     </div>
     <div>
-      <a
-        *ngIf="song.Artist"
-        routerLink="/artist/{{ song.Provider_musicbrainzartist }}"
-        >{{ song.Artist }}</a
-      >
-      <div *ngIf="!song.Artist">Unknown Artist</div>
+      @if (song.Artist) {
+      <a routerLink="/artist/{{ song.Provider_musicbrainzartist }}">{{
+        song.Artist
+      }}</a>
+      } @else {
+      <div>Unknown Artist</div>
+      }
     </div>
   </div>
 
-  <div>
-    <div title="{{ song.timestamp | date: 'short' }}">
-      {{ song.timestamp | stringToDate | timeAgo }}
-    </div>
+  <div title="{{ song.timestamp | date: 'short' }}">
+    {{ song.timestamp | stringToDate | timeAgo }}
   </div>
+
+  <div (click)="jsonModalBox.toggleModal()">🍔</div>
 </div>
+
+<moreloja-json-modal-box #jsonModalBox [header]="song.Name" [content]="song">
+</moreloja-json-modal-box>

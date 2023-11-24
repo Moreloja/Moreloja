@@ -1,0 +1,9 @@
+@if (showModal) {
+<div class="modal-box">
+  <h3>{{ header }}</h3>
+  <div>
+    <pre>{{ content | json }}</pre>
+  </div>
+  <button (click)="toggleModal()">Close</button>
+</div>
+}
