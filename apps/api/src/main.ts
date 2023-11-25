@@ -24,6 +24,7 @@ import {
 import {
   ApplyAdminConfigService,
   AuthService,
+  DatabaseStructureService,
   ImageService,
 } from '@moreloja/api/data-access-services';
 import {
@@ -43,6 +44,11 @@ async function bootstrap() {
     PlaceholderArtistCover,
     'PlaceholderArtistCover.webp',
   );
+
+  const databaseStructureService = app.get<DatabaseStructureService>(
+    DatabaseStructureService,
+  );
+  await databaseStructureService.ensureDatabaseStructureIsCorrect();
 
   const authService = app.get<AuthService>(AuthService);
   await authService.ensureAdminExists();

@@ -13,8 +13,9 @@ import {
 } from '@moreloja/api/configurations';
 
 import { AlbumsModule } from './albums/albums.module';
-import { AuthModule } from './auth/auth.module';
 import { ArtistsModule } from './artists/artists.module';
+import { AuthModule } from './auth/auth.module';
+import { DatabaseStructureModule } from './database-structure/database-structure.module';
 import { ImageModule } from './image/image.module';
 import { SearchModule } from './search/search.module';
 import { SongsModule } from './songs/songs.module';
@@ -35,6 +36,7 @@ import { SongsModule } from './songs/songs.module';
     AlbumsModule,
     ArtistsModule,
     AuthModule,
+    DatabaseStructureModule,
     ImageModule,
     SearchModule,
     SongsModule,

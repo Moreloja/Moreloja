@@ -316,4 +316,32 @@ export class SongRepository {
 
     return new SearchResultDto(albums, artists, songs);
   }
+
+  async ensureDatabaseStructureIsCorrect(): Promise<void> {
+    // Fix wrong types
+
+    await this.songModel
+      .updateMany({ Year: { $type: 'string' } }, [
+        { $set: { Year: { $toInt: '$Year' } } },
+      ])
+      .exec();
+
+    await this.songModel
+      .updateMany({ playback_position_seconds: { $type: 'string' } }, [
+        {
+          $set: {
+            playback_position_seconds: {
+              $toDouble: '$playback_position_seconds',
+            },
+          },
+        },
+      ])
+      .exec();
+
+    await this.songModel
+      .updateMany({ run_time: { $type: 'string' } }, [
+        { $set: { run_time: { $toDouble: '$run_time' } } },
+      ])
+      .exec();
+  }
 }
