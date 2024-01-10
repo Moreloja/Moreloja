@@ -18,7 +18,6 @@ import { EditableImageComponent } from '../editable-image/editable-image.compone
 
 @Component({
   selector: 'moreloja-album',
-  standalone: true,
   imports: [
     AsyncPipe,
     JsonPipe,

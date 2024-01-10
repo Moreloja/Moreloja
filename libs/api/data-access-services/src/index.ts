@@ -8,4 +8,4 @@ export * from './lib/search/search.service';
 export * from './lib/songs/songs.service';
 export * from './lib/utils';
 export * from './lib/pagination.service';
-export * from './lib/rangeFilterCreator';
+export * from './lib/range-filter-creator.wrapper';

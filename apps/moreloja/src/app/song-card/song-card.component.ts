@@ -13,7 +13,6 @@ import { JsonModalBoxComponent } from '../modal-box/json-modal-box';
 
 @Component({
   selector: 'moreloja-song-card',
-  standalone: true,
   imports: [
     DatePipe,
     NgIf,

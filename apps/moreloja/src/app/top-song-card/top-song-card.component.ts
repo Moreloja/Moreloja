@@ -11,7 +11,6 @@ import {
 
 @Component({
   selector: 'moreloja-top-song-card',
-  standalone: true,
   imports: [NgFor, NgIf, AlbumCoverCardComponent, RouterModule],
   templateUrl: './top-song-card.component.html',
   styleUrls: ['./top-song-card.component.css'],

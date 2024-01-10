@@ -7,7 +7,6 @@ import { Order, Range, Sort } from '@moreloja/shared/global-constants';
 
 @Component({
   selector: 'moreloja-range-selection',
-  standalone: true,
   imports: [NgIf, NgFor, RouterModule],
   templateUrl: './range-selection.component.html',
   styleUrls: ['./range-selection.component.css'],

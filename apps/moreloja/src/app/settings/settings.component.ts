@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'moreloja-settings',
-  standalone: true,
   imports: [RouterModule],
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css'],

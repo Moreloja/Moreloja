@@ -15,14 +15,14 @@ import { SongRepository } from '@moreloja/api/data-access-repositories';
 import { Order, Sort } from '@moreloja/shared/global-constants';
 
 import { PaginationService } from '../pagination.service';
-import { RangeFilterCreator } from '../rangeFilterCreator';
+import { RangeFilterCreatorWrapper } from '../range-filter-creator.wrapper';
 
 @Injectable()
 export class ArtistsService {
   constructor(
     private paginationService: PaginationService,
     private songRepository: SongRepository,
-    private rangeFilterCreator: RangeFilterCreator,
+    private rangeFilterCreator: RangeFilterCreatorWrapper,
   ) {}
 
   async getArtist(mbidAlbumArtist: string): Promise<GetArtistResponse> {

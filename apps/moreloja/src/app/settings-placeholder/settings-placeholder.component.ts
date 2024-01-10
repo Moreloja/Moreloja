@@ -10,7 +10,6 @@ import { EditableImageComponent } from '../editable-image/editable-image.compone
 
 @Component({
   selector: 'moreloja-settings-placeholder',
-  standalone: true,
   imports: [AsyncPipe, NgIf, EditableImageComponent],
   templateUrl: './settings-placeholder.component.html',
   styleUrls: ['./settings-placeholder.component.css'],

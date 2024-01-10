@@ -15,7 +15,6 @@ export type AlbumCoverCardViewModel = {
 
 @Component({
   selector: 'moreloja-album-cover-card',
-  standalone: true,
   imports: [AsyncPipe, SlicePipe, NgIf, RouterModule],
   templateUrl: './album-cover-card.component.html',
   styleUrls: ['./album-cover-card.component.css'],

@@ -9,7 +9,6 @@ import {
 
 @Component({
   selector: 'moreloja-cover-banner',
-  standalone: true,
   imports: [SlicePipe, AlbumCoverCardComponent, NgFor, RouterModule],
   templateUrl: './cover-banner.component.html',
   styleUrls: ['./cover-banner.component.css'],

@@ -19,7 +19,6 @@ import { RangeSelectionComponent } from '../range-selection/range-selection.comp
 
 @Component({
   selector: 'moreloja-albums',
-  standalone: true,
   imports: [
     AsyncPipe,
     NgIf,

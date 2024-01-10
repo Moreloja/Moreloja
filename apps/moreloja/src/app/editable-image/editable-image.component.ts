@@ -16,7 +16,6 @@ import { TopSongCardComponent } from '../top-song-card/top-song-card.component';
 
 @Component({
   selector: 'moreloja-editable-image',
-  standalone: true,
   imports: [AsyncPipe, NgIf, SongCardComponent, TopSongCardComponent],
   templateUrl: './editable-image.component.html',
   styleUrls: ['./editable-image.component.css'],

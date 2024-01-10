@@ -16,16 +16,17 @@ import { Range } from '@moreloja/shared/global-constants';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { SecondsToStringPipe } from '../pipes/seconds-to-string.pipe';
 import { RangeSelectionComponent } from '../range-selection/range-selection.component';
+import { RangeDisplayComponent } from '../range-display/range-display.component';
 
 @Component({
   selector: 'moreloja-artists',
-  standalone: true,
   imports: [
     AsyncPipe,
     SecondsToStringPipe,
     NgFor,
     NgIf,
     PaginationComponent,
+    RangeDisplayComponent,
     RangeSelectionComponent,
     RouterModule,
   ],

@@ -19,7 +19,6 @@ import { RangeSelectionComponent } from '../range-selection/range-selection.comp
 
 @Component({
   selector: 'moreloja-top-songs',
-  standalone: true,
   imports: [
     AsyncPipe,
     NgFor,

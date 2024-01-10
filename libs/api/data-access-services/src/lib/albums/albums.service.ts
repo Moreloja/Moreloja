@@ -9,14 +9,14 @@ import {
 import { SongRepository } from '@moreloja/api/data-access-repositories';
 
 import { PaginationService } from '../pagination.service';
-import { RangeFilterCreator } from '../rangeFilterCreator';
+import { RangeFilterCreatorWrapper } from '../range-filter-creator.wrapper';
 
 @Injectable()
 export class AlbumsService {
   constructor(
     private songRepository: SongRepository,
     private paginationService: PaginationService,
-    private rangeFilterCreator: RangeFilterCreator,
+    private rangeFilterCreator: RangeFilterCreatorWrapper,
   ) {}
 
   async getAlbum(mbidAlbum: string): Promise<GetAlbumResponseDto> {

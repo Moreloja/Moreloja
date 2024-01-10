@@ -3,7 +3,6 @@ import { JsonPipe, NgIf } from '@angular/common';
 
 @Component({
   selector: 'moreloja-json-modal-box',
-  standalone: true,
   imports: [JsonPipe, NgIf],
   templateUrl: './json-modal-box.component.html',
   styleUrls: ['./json-modal-box.component.css'],

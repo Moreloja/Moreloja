@@ -1,4 +1,4 @@
-FROM node:alpine as builder
+FROM node:alpine AS builder
 
 WORKDIR /app/builder
 COPY package.json .
@@ -16,7 +16,7 @@ COPY --from=builder /app/builder/dist/apps/api/yarn.lock .
 
 RUN yarn install
 
-FROM gcr.io/distroless/nodejs20-debian12
+FROM gcr.io/distroless/nodejs22-debian12
 
 WORKDIR /app
 COPY ./assets ./assets

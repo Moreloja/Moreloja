@@ -20,7 +20,6 @@ import { ArtistTopWeeksComponent } from '../artist-top-weeks/artist-top-weeks.co
 
 @Component({
   selector: 'moreloja-artist',
-  standalone: true,
   imports: [
     AsyncPipe,
     NgFor,

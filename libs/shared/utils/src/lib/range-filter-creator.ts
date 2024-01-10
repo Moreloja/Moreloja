@@ -1,8 +1,5 @@
-import { Injectable } from '@nestjs/common';
-
 import { Range } from '@moreloja/shared/global-constants';
 
-@Injectable()
 export class RangeFilterCreator {
   constructRangeFilter(range: string):
     | {

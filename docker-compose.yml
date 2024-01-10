@@ -61,12 +61,10 @@ services:
       - moreloja-network
 
   pictrs:
-    image: asonix/pictrs:0.4
+    image: asonix/pictrs:0.5
     restart: unless-stopped
     environment:
-      - PICTRS__MEDIA__FORMAT=webp
-      # Will be renamed to this:
-      # - PICTRS__MEDIA__IMAGE__FORMAT=webp
+      - PICTRS__MEDIA__IMAGE__FORMAT=webp
     volumes:
       - pictrs-data:/mnt
     networks:

@@ -17,7 +17,6 @@ import { SongCardComponent } from '../song-card/song-card.component';
 
 @Component({
   selector: 'moreloja-song',
-  standalone: true,
   imports: [AsyncPipe, NgIf, NgFor, PaginationComponent, SongCardComponent],
   templateUrl: './song.component.html',
   styleUrls: ['./song.component.css'],

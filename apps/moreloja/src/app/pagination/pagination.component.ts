@@ -8,7 +8,6 @@ import {
 
 @Component({
   selector: 'moreloja-pagination',
-  standalone: true,
   imports: [],
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.css'],

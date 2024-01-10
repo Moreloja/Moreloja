@@ -26,7 +26,6 @@ import {
 
 @Component({
   selector: 'moreloja-search',
-  standalone: true,
   imports: [
     AsyncPipe,
     NgFor,

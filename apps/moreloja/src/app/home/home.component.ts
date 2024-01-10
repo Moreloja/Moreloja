@@ -19,7 +19,6 @@ import { AlbumCoverCardViewModel } from '../album-cover-card/album-cover-card.co
 
 @Component({
   selector: 'moreloja-home',
-  standalone: true,
   imports: [AsyncPipe, NgFor, NgIf, CoverBannerComponent, RouterModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],

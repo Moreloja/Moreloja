@@ -17,7 +17,6 @@ import { PaginationComponent } from '../pagination/pagination.component';
 
 @Component({
   selector: 'moreloja-songs',
-  standalone: true,
   imports: [
     AsyncPipe,
     NgFor,

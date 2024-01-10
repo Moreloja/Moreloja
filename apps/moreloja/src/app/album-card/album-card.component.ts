@@ -11,7 +11,6 @@ import {
 
 @Component({
   selector: 'moreloja-album-card',
-  standalone: true,
   imports: [AsyncPipe, SlicePipe, NgIf, AlbumCoverCardComponent, RouterModule],
   templateUrl: './album-card.component.html',
   styleUrls: ['./album-card.component.css'],

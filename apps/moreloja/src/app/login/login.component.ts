@@ -12,7 +12,6 @@ import { AuthService } from '@moreloja/services/authentication';
 
 @Component({
   selector: 'moreloja-login',
-  standalone: true,
   imports: [AsyncPipe, NgIf, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
