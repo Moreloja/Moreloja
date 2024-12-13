@@ -68,7 +68,7 @@ To start the development nestjs server run `nx serve api`.
 There is only one user.
 The password will be generated on the first run.
 The two factor authentication secret will also be generated on first run.
-Both will be printed to standart output.
+Both will be printed to standard output.
 
 You can reset the password to one of your choice by setting the environment variable `MORELOJA_ADMIN_PASSWORD_HASH` to the hash of your password.
 
