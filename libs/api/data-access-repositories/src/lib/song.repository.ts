@@ -344,4 +344,61 @@ export class SongRepository {
       ])
       .exec();
   }
+
+  async getTotalPlayCount(): Promise<{ totalPlayCount: number }> {
+    const result = await this.songModel.countDocuments().exec();
+
+    return { totalPlayCount: result };
+  }
+
+  async getTotalPlayTime(): Promise<{ totalPlayTime: number }> {
+    const result = await this.songModel
+      .aggregate([
+        {
+          $group: {
+            _id: null, // No grouping key needed
+            totalPlayTime: { $sum: '$run_time' },
+          },
+        },
+      ])
+      .exec();
+
+    return { totalPlayTime: result[0]?.totalPlayTime || 0 };
+  }
+
+  async getUniqueSongsCount(): Promise<{ uniqueSongsCount: number }> {
+    const result = await this.songModel
+      .aggregate([
+        { $group: { _id: '$Provider_musicbrainztrack' } },
+        { $count: 'uniqueSongs' },
+      ])
+      .exec();
+
+    const uniqueSongsCount = result[0]?.uniqueSongs || 0;
+    return { uniqueSongsCount };
+  }
+
+  async getUniqueArtistsCount(): Promise<{ uniqueArtistsCount: number }> {
+    const result = await this.songModel
+      .aggregate([
+        { $group: { _id: '$Provider_musicbrainzartist' } },
+        { $count: 'uniqueArtists' },
+      ])
+      .exec();
+
+    const uniqueArtistsCount = result[0]?.uniqueArtists || 0;
+    return { uniqueArtistsCount };
+  }
+
+  async getUniqueAlbumsCount(): Promise<{ uniqueAlbumsCount: number }> {
+    const result = await this.songModel
+      .aggregate([
+        { $group: { _id: '$Provider_musicbrainzalbum' } },
+        { $count: 'uniqueAlbums' },
+      ])
+      .exec();
+
+    const uniqueAlbumsCount = result[0]?.uniqueAlbums || 0;
+    return { uniqueAlbumsCount };
+  }
 }

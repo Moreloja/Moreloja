@@ -19,6 +19,7 @@ import { DatabaseStructureModule } from './database-structure/database-structure
 import { ImageModule } from './image/image.module';
 import { SearchModule } from './search/search.module';
 import { SongsModule } from './songs/songs.module';
+import { StatisticsModule } from './statistics/statistics.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { SongsModule } from './songs/songs.module';
     ImageModule,
     SearchModule,
     SongsModule,
+    StatisticsModule,
     MongooseModule.forRootAsync({
       inject: [mongoConfiguration.KEY],
       useFactory: (config: MongoConfiguration) => {

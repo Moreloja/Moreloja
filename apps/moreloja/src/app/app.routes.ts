@@ -78,6 +78,11 @@ export const appRoutes: Route[] = [
     loadComponent: () => import('./search/search.component'),
   },
   {
+    path: 'statistics',
+    title: `${title} - Statistics`,
+    loadComponent: () => import('./statistics/statistics.component'),
+  },
+  {
     path: 'settings',
     title: `${title} - Settings`,
     loadComponent: () => import('./settings/settings.component'),
