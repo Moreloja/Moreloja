@@ -40,6 +40,10 @@
     </ng-container>
   </div>
 
+  @if (range$ | async; as range) {
+  <moreloja-range-display [range]="range"></moreloja-range-display>
+  }
+
   <moreloja-pagination
     *ngIf="page$ | async as page"
     [page]="page"

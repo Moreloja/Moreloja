@@ -3,6 +3,10 @@
 <div class="main-container">
   <moreloja-range-selection pagePath="top-songs"></moreloja-range-selection>
 
+  @if (range$ | async; as range) {
+  <moreloja-range-display [range]="range"></moreloja-range-display>
+  }
+
   <moreloja-pagination
     *ngIf="page$ | async as page"
     [page]="page"

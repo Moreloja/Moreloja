@@ -16,6 +16,7 @@ import { Range } from '@moreloja/shared/global-constants';
 import { TopSongCardComponent } from '../top-song-card/top-song-card.component';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { RangeSelectionComponent } from '../range-selection/range-selection.component';
+import { RangeDisplayComponent } from '../range-display/range-display.component';
 
 @Component({
   selector: 'moreloja-top-songs',
@@ -25,6 +26,7 @@ import { RangeSelectionComponent } from '../range-selection/range-selection.comp
     NgIf,
     TopSongCardComponent,
     PaginationComponent,
+    RangeDisplayComponent,
     RangeSelectionComponent,
     RouterModule,
   ],

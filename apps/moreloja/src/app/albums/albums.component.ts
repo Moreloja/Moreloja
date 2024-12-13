@@ -16,6 +16,7 @@ import { Order, Range, Sort } from '@moreloja/shared/global-constants';
 import { AlbumsContainerComponent } from '../albums-container/albums-container.component';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { RangeSelectionComponent } from '../range-selection/range-selection.component';
+import { RangeDisplayComponent } from '../range-display/range-display.component';
 
 @Component({
   selector: 'moreloja-albums',
@@ -26,6 +27,7 @@ import { RangeSelectionComponent } from '../range-selection/range-selection.comp
     AlbumsContainerComponent,
     PaginationComponent,
     RangeSelectionComponent,
+    RangeDisplayComponent,
     RouterModule,
   ],
   templateUrl: './albums.component.html',
