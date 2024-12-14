@@ -4,18 +4,10 @@
   gap: 1rem;
   border-width: 1px;
   border-style: solid;
-}
-
-@media (prefers-color-scheme: dark) {
-  .song-card-container {
-    border-color: var(--background-color-brighter);
-  }
-}
-
-@media (prefers-color-scheme: light) {
-  .song-card-container {
-    border-color: var(--light-background-color-brighter);
-  }
+  border-color: light-dark(
+    var(--light-background-color-brighter),
+    var(--background-color-brighter)
+  );
 }
 
 .info-container {

@@ -1,6 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 
 :root {
+  /* enable support for the light-dark() color function */
+  color-scheme: light dark;
+
   /* dark colors */
   --font-color: #c9d1d9;
   --background-color: #0d1117;
@@ -22,20 +25,11 @@
 
 body {
   margin: 1rem;
-}
-
-@media (prefers-color-scheme: dark) {
-  body {
-    color: var(--font-color);
-    background-color: var(--background-color);
-  }
-}
-
-@media (prefers-color-scheme: light) {
-  body {
-    color: var(--light-font-color);
-    background-color: var(--light-background-color);
-  }
+  color: light-dark(var(--light-font-color), var(--font-color));
+  background-color: light-dark(
+    var(--light-background-color),
+    var(--background-color)
+  );
 }
 
 a {
