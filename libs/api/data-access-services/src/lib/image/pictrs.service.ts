@@ -45,7 +45,7 @@ export class PictrsService {
 
   async uploadImageBuffer(image: Buffer): Promise<UploadImageResponse> {
     const formData = new FormData();
-    const blob = new Blob([image.buffer]);
+    const blob = new Blob([new Uint8Array(image.buffer)]);
     formData.append('images[]', blob);
     return await this.postAlbumCover(formData);
   }
