@@ -5,5 +5,7 @@ export class GetStatisticsDto {
     public TotalPlayTime: number | undefined,
     public TotalArtists: number | undefined,
     public TotalAlbums: number | undefined,
+    public AverageSongDuration: number | undefined,
+    public AverageTracksPerAlbum: number | undefined,
   ) {}
 }

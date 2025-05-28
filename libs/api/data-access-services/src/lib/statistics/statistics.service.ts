@@ -8,18 +8,23 @@ export class StatisticsService {
   constructor(private songRepository: SongRepository) {}
 
   async getStatistics(): Promise<GetStatisticsDto> {
-    const { uniqueSongsCount } =
-      await this.songRepository.getUniqueSongsCount();
-
-    const { totalPlayCount } = await this.songRepository.getTotalPlayCount();
-
-    const { totalPlayTime } = await this.songRepository.getTotalPlayTime();
-
-    const { uniqueArtistsCount } =
-      await this.songRepository.getUniqueArtistsCount();
-
-    const { uniqueAlbumsCount } =
-      await this.songRepository.getUniqueAlbumsCount();
+    const [
+      { uniqueSongsCount },
+      { totalPlayCount },
+      { totalPlayTime },
+      { uniqueArtistsCount },
+      { uniqueAlbumsCount },
+      { averageDuration },
+      { averageTracks },
+    ] = await Promise.all([
+      this.songRepository.getUniqueSongsCount(),
+      this.songRepository.getTotalPlayCount(),
+      this.songRepository.getTotalPlayTime(),
+      this.songRepository.getUniqueArtistsCount(),
+      this.songRepository.getUniqueAlbumsCount(),
+      this.songRepository.getAverageSongDuration(),
+      this.songRepository.getAverageTracksPerAlbum(),
+    ]);
 
     return {
       TotalSongs: uniqueSongsCount,
@@ -27,6 +32,8 @@ export class StatisticsService {
       TotalPlayTime: totalPlayTime,
       TotalArtists: uniqueArtistsCount,
       TotalAlbums: uniqueAlbumsCount,
+      AverageSongDuration: averageDuration,
+      AverageTracksPerAlbum: averageTracks,
     };
   }
 }

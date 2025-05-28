@@ -11,3 +11,13 @@
 <div>Total Artists: {{ statistics.value().TotalArtists || '-' }}</div>
 
 <div>Total Albums: {{ statistics.value().TotalAlbums || '-' }}</div>
+
+<div>
+  Average song duration:
+  {{ statistics.value().AverageSongDuration | secondsToString }}
+</div>
+
+<div>
+  Average tracks per album:
+  {{ statistics.value().AverageTracksPerAlbum || '-' }}
+</div>
