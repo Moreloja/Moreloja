@@ -1,9 +1,9 @@
 export class GetStatisticsDto {
   constructor(
-    public TotalSongs: number,
-    public TotalPlays: number,
-    public TotalPlayTime: number,
-    public TotalArtists: number,
-    public TotalAlbums: number,
+    public TotalSongs: number | undefined,
+    public TotalPlays: number | undefined,
+    public TotalPlayTime: number | undefined,
+    public TotalArtists: number | undefined,
+    public TotalAlbums: number | undefined,
   ) {}
 }

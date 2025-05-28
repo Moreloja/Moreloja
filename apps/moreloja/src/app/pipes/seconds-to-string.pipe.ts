@@ -5,7 +5,11 @@ import { Pipe, PipeTransform } from '@angular/core';
   standalone: true,
 })
 export class SecondsToStringPipe implements PipeTransform {
-  public transform(totalSeconds: number): string {
+  public transform(totalSeconds: number | undefined): string {
+    if (totalSeconds === undefined) {
+      return '-';
+    }
+
     // Round totalSeconds to the nearest whole number
     totalSeconds = Math.round(totalSeconds);
 

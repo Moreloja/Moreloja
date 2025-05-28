@@ -1,13 +1,13 @@
 <h2>Statistics</h2>
 
-<div>Total Songs: {{ statistics.value().TotalSongs }}</div>
+<div>Total Songs: {{ statistics.value().TotalSongs || '-' }}</div>
 
-<div>Total Plays: {{ statistics.value().TotalPlays }}</div>
+<div>Total Plays: {{ statistics.value().TotalPlays || '-' }}</div>
 
 <div>
   Time spend listening: {{ statistics.value().TotalPlayTime | secondsToString }}
 </div>
 
-<div>Total Artists: {{ statistics.value().TotalArtists }}</div>
+<div>Total Artists: {{ statistics.value().TotalArtists || '-' }}</div>
 
-<div>Total Albums: {{ statistics.value().TotalAlbums }}</div>
+<div>Total Albums: {{ statistics.value().TotalAlbums || '-' }}</div>

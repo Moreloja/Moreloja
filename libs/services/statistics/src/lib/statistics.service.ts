@@ -13,7 +13,13 @@ export class StatisticsService {
         url: '/api/statistics',
       }),
       {
-        defaultValue: new GetStatisticsDto(0, 0, 0, 0, 0),
+        defaultValue: new GetStatisticsDto(
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+        ),
       },
     );
   }

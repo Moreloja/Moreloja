@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { DatePipe, NgIf } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { SongDto } from '@moreloja/api/data-access-dtos';
@@ -15,7 +15,6 @@ import { JsonModalBoxComponent } from '../modal-box/json-modal-box';
   selector: 'moreloja-song-card',
   imports: [
     DatePipe,
-    NgIf,
     RouterModule,
     StringToDatePipe,
     AlbumCoverCardComponent,
