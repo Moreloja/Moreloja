@@ -1,9 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
-import { Observable } from 'rxjs';
 
 import { StatisticsService } from '@moreloja/services/statistics';
-import { GetStatisticsDto } from '@moreloja/api/data-access-dtos';
 
 import { SecondsToStringPipe } from '../pipes/seconds-to-string.pipe';
 
@@ -15,11 +13,7 @@ import { SecondsToStringPipe } from '../pipes/seconds-to-string.pipe';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class StatisticsComponent {
-  statistics$!: Observable<GetStatisticsDto>;
-
   statisticsService = inject(StatisticsService);
 
-  ngOnInit(): void {
-    this.statistics$ = this.statisticsService.getStatistics();
-  }
+  statistics = this.statisticsService.getStatistics();
 }

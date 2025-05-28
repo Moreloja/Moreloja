@@ -1,6 +1,5 @@
-import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpResourceRef, httpResource } from '@angular/common/http';
 
 import { GetStatisticsDto } from '@moreloja/api/data-access-dtos';
 
@@ -8,9 +7,14 @@ import { GetStatisticsDto } from '@moreloja/api/data-access-dtos';
   providedIn: 'root',
 })
 export class StatisticsService {
-  private http = inject(HttpClient);
-
-  getStatistics(): Observable<GetStatisticsDto> {
-    return this.http.get<GetStatisticsDto>(`/api/statistics`);
+  getStatistics(): HttpResourceRef<GetStatisticsDto> {
+    return httpResource(
+      () => ({
+        url: '/api/statistics',
+      }),
+      {
+        defaultValue: new GetStatisticsDto(0, 0, 0, 0, 0),
+      },
+    );
   }
 }
