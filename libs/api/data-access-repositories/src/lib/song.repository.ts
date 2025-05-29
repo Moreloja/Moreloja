@@ -417,26 +417,4 @@ export class SongRepository {
     const averageDuration = result[0]?.averageDuration || 0;
     return { averageDuration };
   }
-
-  async getAverageTracksPerAlbum(): Promise<{ averageTracks: number }> {
-    const result = await this.songModel
-      .aggregate([
-        {
-          $group: {
-            _id: '$Provider_musicbrainzalbum',
-            trackCount: { $sum: 1 },
-          },
-        },
-        {
-          $group: {
-            _id: null,
-            averageTracks: { $avg: '$trackCount' },
-          },
-        },
-      ])
-      .exec();
-
-    const averageTracks = result[0]?.averageTracks || 0;
-    return { averageTracks };
-  }
 }

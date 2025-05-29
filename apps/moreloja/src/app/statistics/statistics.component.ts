@@ -15,4 +15,15 @@ export default class StatisticsComponent {
   statisticsService = inject(StatisticsService);
 
   statistics = this.statisticsService.getStatistics();
+
+  get averageTracksPerAlbum(): string {
+    const totalSongs = this.statistics.value().TotalSongs;
+    const totalAlbums = this.statistics.value().TotalAlbums;
+
+    if (totalSongs === undefined || totalAlbums === undefined) {
+      return '-';
+    }
+
+    return (totalSongs / totalAlbums).toFixed(2);
+  }
 }

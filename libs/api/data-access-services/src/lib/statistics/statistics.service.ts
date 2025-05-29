@@ -15,7 +15,6 @@ export class StatisticsService {
       { uniqueArtistsCount },
       { uniqueAlbumsCount },
       { averageDuration },
-      { averageTracks },
     ] = await Promise.all([
       this.songRepository.getUniqueSongsCount(),
       this.songRepository.getTotalPlayCount(),
@@ -23,7 +22,6 @@ export class StatisticsService {
       this.songRepository.getUniqueArtistsCount(),
       this.songRepository.getUniqueAlbumsCount(),
       this.songRepository.getAverageSongDuration(),
-      this.songRepository.getAverageTracksPerAlbum(),
     ]);
 
     return {
@@ -33,7 +31,6 @@ export class StatisticsService {
       TotalArtists: uniqueArtistsCount,
       TotalAlbums: uniqueAlbumsCount,
       AverageSongDuration: averageDuration,
-      AverageTracksPerAlbum: averageTracks,
     };
   }
 }

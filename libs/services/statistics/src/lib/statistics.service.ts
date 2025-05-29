@@ -20,7 +20,6 @@ export class StatisticsService {
           undefined,
           undefined,
           undefined,
-          undefined,
         ),
       },
     );

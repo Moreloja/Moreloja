@@ -17,7 +17,4 @@
   {{ statistics.value().AverageSongDuration | secondsToString }}
 </div>
 
-<div>
-  Average tracks per album:
-  {{ statistics.value().AverageTracksPerAlbum || '-' }}
-</div>
+<div>Average tracks per album: {{ averageTracksPerAlbum }}</div>
