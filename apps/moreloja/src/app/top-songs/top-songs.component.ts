@@ -1,16 +1,13 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  OnInit,
   inject,
+  computed,
 } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { Title } from '@angular/platform-browser';
-import { Observable, distinctUntilChanged, map, switchMap, tap } from 'rxjs';
-
+import { Observable, distinctUntilChanged, map } from 'rxjs';
 import { SongsService } from '@moreloja/services/songs';
-import { GetTopSongsResponseDto } from '@moreloja/api/data-access-dtos';
 import { Range } from '@moreloja/shared/global-constants';
 
 import { TopSongCardComponent } from '../top-song-card/top-song-card.component';
@@ -21,7 +18,6 @@ import { RangeDisplayComponent } from '../range-display/range-display.component'
 @Component({
   selector: 'moreloja-top-songs',
   imports: [
-    AsyncPipe,
     TopSongCardComponent,
     PaginationComponent,
     RangeDisplayComponent,
@@ -32,35 +28,23 @@ import { RangeDisplayComponent } from '../range-display/range-display.component'
   styleUrls: ['./top-songs.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class TopSongsComponent implements OnInit {
-  songs$!: Observable<GetTopSongsResponseDto>;
-  range$!: Observable<string>;
-  page$!: Observable<number>;
-
+export default class TopSongsComponent {
   private router = inject(Router);
   private route: ActivatedRoute = inject(ActivatedRoute);
   private songsService = inject(SongsService);
-  private titleService = inject(Title);
 
-  ngOnInit(): void {
-    this.range$ = this.route.params.pipe(
-      map((param) => param['range'] ?? Range.All),
-      distinctUntilChanged(),
-    );
-    this.page$ = this.route.params.pipe(map((param) => Number(param['page'])));
-    this.songs$ = this.range$.pipe(
-      switchMap((range) =>
-        this.page$.pipe(
-          tap((page) => {
-            this.titleService.setTitle(`Moreloja - Top Songs - Page ${page}`);
-          }),
-          switchMap((page) => {
-            return this.songsService.getTopSongs(range, page);
-          }),
-        ),
-      ),
-    );
-  }
+  range$: Observable<string> = this.route.params.pipe(
+    map((param) => param['range'] ?? Range.All),
+    distinctUntilChanged(),
+  );
+  rangeOrUndefined = toSignal(this.range$);
+  range = computed(() => this.rangeOrUndefined() ?? Range.All);
+  page$: Observable<number> = this.route.params.pipe(
+    map((param) => Number(param['page'])),
+  );
+  pageOrUndefined = toSignal(this.page$);
+  page = computed(() => this.pageOrUndefined() ?? 1);
+  songs = this.songsService.getTopSongs(this.range(), this.page());
 
   onPageChange(page: number): void {
     this.router.navigate(['../', page], { relativeTo: this.route });

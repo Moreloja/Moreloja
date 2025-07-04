@@ -3,6 +3,7 @@ import {
   Component,
   OnInit,
   inject,
+  computed,
 } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -27,11 +28,18 @@ import { AlbumCoverCardViewModel } from '../album-cover-card/album-cover-card.co
 export default class TopSongsComponent implements OnInit {
   artists$!: Observable<ArtistDto[]>;
   albums$!: Observable<AlbumCoverCardViewModel[]>;
-  songs$!: Observable<AlbumCoverCardViewModel[]>;
+
+  topSongs = inject(SongsService).getTopSongs(Range.All, 1);
+  songs = computed(() =>
+    this.topSongs.value().topSongs.map((song) => ({
+      mbidAlbum: song.Provider_musicbrainzalbum,
+      name: song.Name,
+      mbidTrack: song.Provider_musicbrainztrack,
+    })),
+  );
 
   private artistsService = inject(ArtistsService);
   private albumsService = inject(AlbumsService);
-  private songsService = inject(SongsService);
 
   ngOnInit(): void {
     this.artists$ = this.artistsService.getArtists(Range.All, 1);
@@ -45,14 +53,5 @@ export default class TopSongsComponent implements OnInit {
           })),
         ),
       );
-    this.songs$ = this.songsService.getTopSongs(Range.All, 1).pipe(
-      map((songs) =>
-        songs.topSongs.map((song) => ({
-          mbidAlbum: song.Provider_musicbrainzalbum,
-          name: song.Name,
-          mbidTrack: song.Provider_musicbrainztrack,
-        })),
-      ),
-    );
   }
 }

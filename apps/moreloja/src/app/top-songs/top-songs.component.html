@@ -3,28 +3,26 @@
 <div class="main-container">
   <moreloja-range-selection pagePath="top-songs"></moreloja-range-selection>
 
-  @if (range$ | async; as range) {
-  <moreloja-range-display [range]="range"></moreloja-range-display>
-  } @if (page$ | async; as page) {
+  <moreloja-range-display [range]="range()"></moreloja-range-display>
+
   <moreloja-pagination
-    [page]="page"
+    [page]="page()"
     (pageChange)="onPageChange($event)"
   ></moreloja-pagination>
-  } @if (songs$ | async; as songs) {
+
   <div>
-    @for (song of songs.topSongs; track song) {
+    @for (song of songs.value()?.topSongs; track song) {
     <div>
       <moreloja-top-song-card
         [topSong]="song"
-        [maxPlayCount]="songs.topSongs[0].playCount"
+        [maxPlayCount]="songs.value()?.topSongs?.[0]?.playCount ?? 0"
       ></moreloja-top-song-card>
     </div>
     }
   </div>
-  } @if (page$ | async; as page) {
+
   <moreloja-pagination
-    [page]="page"
+    [page]="page()"
     (pageChange)="onPageChange($event)"
   ></moreloja-pagination>
-  }
 </div>
