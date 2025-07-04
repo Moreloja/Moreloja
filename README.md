@@ -57,11 +57,15 @@ npm install
 
 ### Start the frontend
 
-To start the development server run `nx serve moreloja`. Open your browser and navigate to http://localhost:4200/.
+To start the development server run `yarn nx serve moreloja`. Open your browser and navigate to http://localhost:4200/.
 
 ### Start the nestjs backend
 
-To start the development nestjs server run `nx serve api`.
+To start the development nestjs server run `yarn nx serve api`.
+
+### Run tests
+
+To run all tests run `yarn nx run-many --all --target=test`.
 
 ## Admin user
 
