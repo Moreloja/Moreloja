@@ -1,5 +1,6 @@
 .angular/
 .git/
+.github/
 .nx/
 .vscode/
 dist/
