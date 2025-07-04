@@ -12,7 +12,7 @@ export class ImageRepository {
     musicbrainzid: string,
   ): Promise<string | undefined> {
     const query = { musicbrainzid };
-    const projection = { _id: 0, image: 1 };
+    const projection = { _id: false, image: true };
 
     const result = await this.imageModel.findOne(query, projection).exec();
 
