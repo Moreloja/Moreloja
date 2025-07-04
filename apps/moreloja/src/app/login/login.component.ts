@@ -4,7 +4,7 @@ import {
   OnInit,
   inject,
 } from '@angular/core';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 
@@ -12,7 +12,7 @@ import { AuthService } from '@moreloja/services/authentication';
 
 @Component({
   selector: 'moreloja-login',
-  imports: [AsyncPipe, NgIf, ReactiveFormsModule],
+  imports: [AsyncPipe, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

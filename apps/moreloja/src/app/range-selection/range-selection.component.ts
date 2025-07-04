@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { NgFor, NgIf } from '@angular/common';
+
 import { RouterModule } from '@angular/router';
 import { format, startOfWeek } from 'date-fns';
 
@@ -7,7 +7,7 @@ import { Order, Range, Sort } from '@moreloja/shared/global-constants';
 
 @Component({
   selector: 'moreloja-range-selection',
-  imports: [NgIf, NgFor, RouterModule],
+  imports: [RouterModule],
   templateUrl: './range-selection.component.html',
   styleUrls: ['./range-selection.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

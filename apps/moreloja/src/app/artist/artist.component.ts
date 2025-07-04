@@ -5,7 +5,7 @@ import {
   OnInit,
   inject,
 } from '@angular/core';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -22,8 +22,6 @@ import { ArtistTopWeeksComponent } from '../artist-top-weeks/artist-top-weeks.co
   selector: 'moreloja-artist',
   imports: [
     AsyncPipe,
-    NgFor,
-    NgIf,
     AlbumCardComponent,
     ArtistTopWeeksComponent,
     EditableImageComponent,

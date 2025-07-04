@@ -1,62 +1,55 @@
 <h2>Albums</h2>
 
 <div class="main-container">
-  <ng-container *ngIf="order$ | async as order">
-    <ng-container *ngIf="sortBy$ | async as sortBy">
-      <moreloja-range-selection
-        pagePath="albums"
-        [sortBy]="sortBy"
-        [order]="order"
-      ></moreloja-range-selection>
-    </ng-container>
-  </ng-container>
+  @if (order$ | async; as order) { @if (sortBy$ | async; as sortBy) {
+  <moreloja-range-selection
+    pagePath="albums"
+    [sortBy]="sortBy"
+    [order]="order"
+  ></moreloja-range-selection>
+  } }
 
   <div>
-    <ng-container *ngIf="range$ | async as range">
-      <ng-container *ngIf="order$ | async as order">
-        <span *ngFor="let sort of sortings">
-          <a
-            routerLink="/albums/{{ range }}/sort/{{ sort.sort }}/{{
-              order
-            }}/page/1"
-            routerLinkActive="router-link-active"
-            >{{ sort.label }}</a
-          >
-          |
-        </span>
-      </ng-container>
-      <ng-container *ngIf="sortBy$ | async as sortBy">
-        <span *ngFor="let ordering of orderings; last as last">
-          <a
-            routerLink="/albums/{{ range }}/sort/{{ sortBy }}/{{
-              ordering.order
-            }}/page/1"
-            routerLinkActive="router-link-active"
-            >{{ ordering.label }}</a
-          >
-          <ng-container *ngIf="!last"> | </ng-container>
-        </span>
-      </ng-container>
-    </ng-container>
+    @if (range$ | async; as range) { @if (order$ | async; as order) { @for (sort
+    of sortings; track sort) {
+    <span>
+      <a
+        routerLink="/albums/{{ range }}/sort/{{ sort.sort }}/{{ order }}/page/1"
+        routerLinkActive="router-link-active"
+        >{{ sort.label }}</a
+      >
+      |
+    </span>
+    } } @if (sortBy$ | async; as sortBy) { @for (ordering of orderings; track
+    ordering; let last = $last) {
+    <span>
+      <a
+        routerLink="/albums/{{ range }}/sort/{{ sortBy }}/{{
+          ordering.order
+        }}/page/1"
+        routerLinkActive="router-link-active"
+        >{{ ordering.label }}</a
+      >
+      @if (!last) { | }
+    </span>
+    } } }
   </div>
 
   @if (range$ | async; as range) {
   <moreloja-range-display [range]="range"></moreloja-range-display>
-  }
-
+  } @if (page$ | async; as page) {
   <moreloja-pagination
-    *ngIf="page$ | async as page"
     [page]="page"
     (pageChange)="onPageChange($event)"
   ></moreloja-pagination>
-
-  <div *ngIf="albums$ | async as albums">
+  } @if (albums$ | async; as albums) {
+  <div>
     <moreloja-albums-container [albums]="albums"></moreloja-albums-container>
   </div>
-
+  } @if (page$ | async; as page) {
   <moreloja-pagination
-    *ngIf="page$ | async as page"
     [page]="page"
     (pageChange)="onPageChange($event)"
   ></moreloja-pagination>
+  }
 </div>

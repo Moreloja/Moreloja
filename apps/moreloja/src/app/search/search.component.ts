@@ -1,4 +1,4 @@
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import {
   ChangeDetectionStrategy,
@@ -28,8 +28,6 @@ import {
   selector: 'moreloja-search',
   imports: [
     AsyncPipe,
-    NgFor,
-    NgIf,
     AlbumCoverCardComponent,
     AlbumsContainerComponent,
     ReactiveFormsModule,

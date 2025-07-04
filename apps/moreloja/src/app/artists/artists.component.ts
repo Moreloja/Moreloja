@@ -4,7 +4,7 @@ import {
   inject,
   OnInit,
 } from '@angular/core';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { distinctUntilChanged, map, Observable, switchMap, tap } from 'rxjs';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -23,8 +23,6 @@ import { RangeDisplayComponent } from '../range-display/range-display.component'
   imports: [
     AsyncPipe,
     SecondsToStringPipe,
-    NgFor,
-    NgIf,
     PaginationComponent,
     RangeDisplayComponent,
     RangeSelectionComponent,

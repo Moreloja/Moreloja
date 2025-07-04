@@ -1,30 +1,40 @@
 <div class="cover-container">
-  <div *ngFor="let vm of viewModels | slice: 0 : 1">
+  @for (vm of viewModels | slice: 0 : 1; track vm) {
+  <div>
     <moreloja-album-cover-card
       [viewModel]="vm"
       [size]="400"
     ></moreloja-album-cover-card>
   </div>
+  }
 
   <div class="cover-container-inner">
-    <div *ngFor="let row of [0, 1]">
-      <div *ngFor="let vm of viewModels | slice: row * 2 + 1 : row * 2 + 3">
+    @for (row of [0, 1]; track row) {
+    <div>
+      @for (vm of viewModels | slice: row * 2 + 1 : row * 2 + 3; track vm) {
+      <div>
         <moreloja-album-cover-card
           [viewModel]="vm"
           [size]="200"
         ></moreloja-album-cover-card>
       </div>
+      }
     </div>
+    }
   </div>
 
   <div class="cover-container-inner">
-    <div *ngFor="let row of [0, 1, 2]">
-      <div *ngFor="let vm of viewModels | slice: row * 3 + 5 : row * 3 + 8">
+    @for (row of [0, 1, 2]; track row) {
+    <div>
+      @for (vm of viewModels | slice: row * 3 + 5 : row * 3 + 8; track vm) {
+      <div>
         <moreloja-album-cover-card
           [viewModel]="vm"
           [size]="133"
         ></moreloja-album-cover-card>
       </div>
+      }
     </div>
+    }
   </div>
 </div>

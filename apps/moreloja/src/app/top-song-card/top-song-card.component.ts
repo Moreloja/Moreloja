@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NgFor, NgIf } from '@angular/common';
+
 import { RouterModule } from '@angular/router';
 
 import { TopSongDto } from '@moreloja/api/data-access-dtos';
@@ -11,7 +11,7 @@ import {
 
 @Component({
   selector: 'moreloja-top-song-card',
-  imports: [NgFor, NgIf, AlbumCoverCardComponent, RouterModule],
+  imports: [AlbumCoverCardComponent, RouterModule],
   templateUrl: './top-song-card.component.html',
   styleUrls: ['./top-song-card.component.css'],
 })

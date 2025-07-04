@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { JsonPipe, NgIf } from '@angular/common';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'moreloja-json-modal-box',
-  imports: [JsonPipe, NgIf],
+  imports: [JsonPipe],
   templateUrl: './json-modal-box.component.html',
   styleUrls: ['./json-modal-box.component.css'],
 })

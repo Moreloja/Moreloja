@@ -1,36 +1,36 @@
-<ng-container *ngIf="(isLoggedIn$ | async) === false">
-  <h2>Login</h2>
-
-  <div class="main-container">
-    <label for="password">Password</label>
-    <input
-      id="password"
-      name="password"
-      type="password"
-      [formControl]="passwordControl"
-    />
-    <label for="twoFactorToken">Two Factor Token</label>
-    <input
-      id="twoFactorToken"
-      name="twoFactorToken"
-      type="text"
-      [formControl]="twoFactorTokenControl"
-    />
-    <button (click)="login()">Login</button>
-    <div *ngIf="error$ | async as error" class="error-hint">
-      {{ error }}
-    </div>
+@if ((isLoggedIn$ | async) === false) {
+<h2>Login</h2>
+<div class="main-container">
+  <label for="password">Password</label>
+  <input
+    id="password"
+    name="password"
+    type="password"
+    [formControl]="passwordControl"
+  />
+  <label for="twoFactorToken">Two Factor Token</label>
+  <input
+    id="twoFactorToken"
+    name="twoFactorToken"
+    type="text"
+    [formControl]="twoFactorTokenControl"
+  />
+  <button (click)="login()">Login</button>
+  @if (error$ | async; as error) {
+  <div class="error-hint">
+    {{ error }}
   </div>
-</ng-container>
-
-<ng-container *ngIf="isLoggedIn$ | async">
-  <h2>Logout</h2>
-
-  <div class="main-container">
-    <div>You are logged in.</div>
-    <button (click)="logout()">Logout</button>
-    <div *ngIf="error$ | async as error" class="error-hint">
-      {{ error }}
-    </div>
+  }
+</div>
+} @if (isLoggedIn$ | async) {
+<h2>Logout</h2>
+<div class="main-container">
+  <div>You are logged in.</div>
+  <button (click)="logout()">Logout</button>
+  @if (error$ | async; as error) {
+  <div class="error-hint">
+    {{ error }}
   </div>
-</ng-container>
+  }
+</div>
+}

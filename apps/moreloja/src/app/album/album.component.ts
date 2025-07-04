@@ -5,7 +5,7 @@ import {
   OnInit,
   inject,
 } from '@angular/core';
-import { AsyncPipe, JsonPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, JsonPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { RouterModule } from '@angular/router';
 
@@ -21,8 +21,6 @@ import { EditableImageComponent } from '../editable-image/editable-image.compone
   imports: [
     AsyncPipe,
     JsonPipe,
-    NgFor,
-    NgIf,
     RouterModule,
     EditableImageComponent,
     SongCardComponent,

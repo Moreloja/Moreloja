@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { NgFor } from '@angular/common';
+
 import { RouterLink } from '@angular/router';
 
 import { ArtistTopWeeksDto } from '@moreloja/api/data-access-dtos';
 
 @Component({
   selector: 'moreloja-artist-top-weeks',
-  imports: [NgFor, RouterLink],
+  imports: [RouterLink],
   templateUrl: './artist-top-weeks.component.html',
   styleUrls: ['./artist-top-weeks.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

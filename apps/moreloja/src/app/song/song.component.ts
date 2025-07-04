@@ -4,7 +4,7 @@ import {
   inject,
   OnInit,
 } from '@angular/core';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Observable, distinctUntilChanged, map, switchMap, tap } from 'rxjs';
@@ -17,7 +17,7 @@ import { SongCardComponent } from '../song-card/song-card.component';
 
 @Component({
   selector: 'moreloja-song',
-  imports: [AsyncPipe, NgIf, NgFor, PaginationComponent, SongCardComponent],
+  imports: [AsyncPipe, PaginationComponent, SongCardComponent],
   templateUrl: './song.component.html',
   styleUrls: ['./song.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

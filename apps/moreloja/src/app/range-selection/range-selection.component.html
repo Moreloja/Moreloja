@@ -1,19 +1,21 @@
 <div>
-  <span *ngFor="let range of ranges; last as last">
+  @for (range of ranges; track range; let last = $last) {
+  <span>
+    @if (sortBy && order) {
     <a
-      *ngIf="sortBy && order"
       routerLink="/{{ pagePath }}/{{ range.range }}/sort/{{ sortBy }}/{{
         order
       }}/page/1"
       routerLinkActive="router-link-active"
       >{{ range.label }}</a
     >
+    } @if (!sortBy && !order) {
     <a
-      *ngIf="!sortBy && !order"
       routerLink="/{{ pagePath }}/{{ range.range }}/page/1"
       routerLinkActive="router-link-active"
       >{{ range.label }}</a
     >
-    <ng-container *ngIf="!last"> | </ng-container>
+    } @if (!last) { | }
   </span>
+  }
 </div>

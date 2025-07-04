@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { AsyncPipe, NgIf, SlicePipe } from '@angular/common';
+import { AsyncPipe, SlicePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { AlbumDto } from '@moreloja/api/data-access-dtos';
@@ -11,7 +11,7 @@ import {
 
 @Component({
   selector: 'moreloja-album-card',
-  imports: [AsyncPipe, SlicePipe, NgIf, AlbumCoverCardComponent, RouterModule],
+  imports: [AsyncPipe, SlicePipe, AlbumCoverCardComponent, RouterModule],
   templateUrl: './album-card.component.html',
   styleUrls: ['./album-card.component.css'],
 })

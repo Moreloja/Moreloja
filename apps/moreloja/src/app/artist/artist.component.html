@@ -1,4 +1,5 @@
-<div *ngIf="artist$ | async as artist">
+@if (artist$ | async; as artist) {
+<div>
   <div class="artist-title">
     <h2>{{ artist.name }}</h2>
     <div>
@@ -15,48 +16,55 @@
       [artistTopWeeks]="artist.artistTopWeeks"
     ></moreloja-artist-top-weeks>
   </div>
-
   <moreloja-editable-image
     [mbidArtist]="mbidAlbumArtist"
     [size]="400"
   ></moreloja-editable-image>
-
-  <div *ngIf="artist.albums.length">
+  @if (artist.albums.length) {
+  <div>
     <h3>Albums</h3>
     <div class="album-container">
-      <div *ngFor="let album of artist.albums">
+      @for (album of artist.albums; track album) {
+      <div>
         <moreloja-album-card [album]="album"></moreloja-album-card>
       </div>
+      }
     </div>
   </div>
-
-  <div *ngIf="artist.appearsOnAlbums.length">
+  } @if (artist.appearsOnAlbums.length) {
+  <div>
     <h3>Appears on</h3>
     <div class="album-container">
-      <div *ngFor="let album of artist.appearsOnAlbums">
+      @for (album of artist.appearsOnAlbums; track album) {
+      <div>
         <moreloja-album-card [album]="album"></moreloja-album-card>
       </div>
+      }
     </div>
   </div>
-
+  }
   <div>
     <h3>Top Songs</h3>
     <div>
-      <div *ngFor="let song of artist.topSongs">
+      @for (song of artist.topSongs; track song) {
+      <div>
         <moreloja-top-song-card
           [topSong]="song"
           [maxPlayCount]="artist.topSongs[0].playCount"
         ></moreloja-top-song-card>
       </div>
+      }
     </div>
   </div>
-
   <div>
     <a routerLink="/songs/artist/{{ mbidAlbumArtist }}/page/1">
       <h3>Last Songs</h3>
     </a>
-    <div *ngFor="let song of artist.songs">
+    @for (song of artist.songs; track song) {
+    <div>
       <moreloja-song-card [song]="song"></moreloja-song-card>
     </div>
+    }
   </div>
 </div>
+}

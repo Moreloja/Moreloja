@@ -2,36 +2,35 @@
 
 <input id="search" name="search" type="text" [formControl]="searchControl" />
 
-<div *ngIf="searchResult$ | async as searchResult">
-  <h3 *ngIf="searchResult.Albums.length">Albums</h3>
-
+@if (searchResult$ | async; as searchResult) {
+<div>
+  @if (searchResult.Albums.length) {
+  <h3>Albums</h3>
+  }
   <moreloja-albums-container
     [albums]="searchResult.Albums"
   ></moreloja-albums-container>
-
-  <h3 *ngIf="searchResult.Artists.length">Artists</h3>
-
-  <div
-    *ngFor="let artist of searchResult.artistsForList"
-    class="list-container"
-  >
+  @if (searchResult.Artists.length) {
+  <h3>Artists</h3>
+  } @for (artist of searchResult.artistsForList; track artist) {
+  <div class="list-container">
     <moreloja-album-cover-card
       [viewModel]="artist"
       [size]="50"
     ></moreloja-album-cover-card>
-
     <a routerLink="/artist/{{ artist.mbidArtist }}">{{ artist.name }}</a>
   </div>
-
-  <h3 *ngIf="searchResult.Songs.length">Songs</h3>
-
-  <div *ngFor="let song of searchResult.songsForList" class="list-container">
+  } @if (searchResult.Songs.length) {
+  <h3>Songs</h3>
+  } @for (song of searchResult.songsForList; track song) {
+  <div class="list-container">
     <moreloja-album-cover-card
       [viewModel]="song"
       [size]="25"
       [linkToAlbum]="true"
     ></moreloja-album-cover-card>
-
     <a routerLink="/song/{{ song.mbidTrack }}/page/1">{{ song.name }}</a>
   </div>
+  }
 </div>
+}

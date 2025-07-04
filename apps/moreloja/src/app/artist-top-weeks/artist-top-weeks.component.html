@@ -1,26 +1,22 @@
-<ng-container *ngFor="let week of artistTopWeeks.GoldWeeks">
-  <a routerLink="/artists/{{ week.Year }}-W{{ week.Week }}/page/1">
-    <img
-      src="/assets/disc-gold.png"
-      title="{{ week.Year }} - Week {{ week.Week }}"
-    />
-  </a>
-</ng-container>
-
-<ng-container *ngFor="let week of artistTopWeeks.SilverWeeks">
-  <a routerLink="/artists/{{ week.Year }}-W{{ week.Week }}/page/1">
-    <img
-      src="/assets/disc-silver.png"
-      title="{{ week.Year }} - Week {{ week.Week }}"
-    />
-  </a>
-</ng-container>
-
-<ng-container *ngFor="let week of artistTopWeeks.BronzeWeeks">
-  <a routerLink="/artists/{{ week.Year }}-W{{ week.Week }}/page/1">
-    <img
-      src="/assets/disc-bronze.png"
-      title="{{ week.Year }} - Week {{ week.Week }}"
-    />
-  </a>
-</ng-container>
+@for (week of artistTopWeeks.GoldWeeks; track week) {
+<a routerLink="/artists/{{ week.Year }}-W{{ week.Week }}/page/1">
+  <img
+    src="/assets/disc-gold.png"
+    title="{{ week.Year }} - Week {{ week.Week }}"
+  />
+</a>
+} @for (week of artistTopWeeks.SilverWeeks; track week) {
+<a routerLink="/artists/{{ week.Year }}-W{{ week.Week }}/page/1">
+  <img
+    src="/assets/disc-silver.png"
+    title="{{ week.Year }} - Week {{ week.Week }}"
+  />
+</a>
+} @for (week of artistTopWeeks.BronzeWeeks; track week) {
+<a routerLink="/artists/{{ week.Year }}-W{{ week.Week }}/page/1">
+  <img
+    src="/assets/disc-bronze.png"
+    title="{{ week.Year }} - Week {{ week.Week }}"
+  />
+</a>
+}

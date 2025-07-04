@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NgFor, SlicePipe } from '@angular/common';
+import { SlicePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import {
@@ -9,7 +9,7 @@ import {
 
 @Component({
   selector: 'moreloja-cover-banner',
-  imports: [SlicePipe, AlbumCoverCardComponent, NgFor, RouterModule],
+  imports: [SlicePipe, AlbumCoverCardComponent, RouterModule],
   templateUrl: './cover-banner.component.html',
   styleUrls: ['./cover-banner.component.css'],
 })

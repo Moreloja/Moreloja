@@ -4,7 +4,7 @@ import {
   OnInit,
   inject,
 } from '@angular/core';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Observable, map } from 'rxjs';
 
@@ -19,7 +19,7 @@ import { AlbumCoverCardViewModel } from '../album-cover-card/album-cover-card.co
 
 @Component({
   selector: 'moreloja-home',
-  imports: [AsyncPipe, NgFor, NgIf, CoverBannerComponent, RouterModule],
+  imports: [AsyncPipe, CoverBannerComponent, RouterModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

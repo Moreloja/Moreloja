@@ -4,7 +4,7 @@ import {
   OnInit,
   inject,
 } from '@angular/core';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Observable, distinctUntilChanged, map, switchMap, tap } from 'rxjs';
@@ -22,8 +22,6 @@ import { RangeDisplayComponent } from '../range-display/range-display.component'
   selector: 'moreloja-top-songs',
   imports: [
     AsyncPipe,
-    NgFor,
-    NgIf,
     TopSongCardComponent,
     PaginationComponent,
     RangeDisplayComponent,

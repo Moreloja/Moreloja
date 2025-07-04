@@ -5,7 +5,7 @@ import {
   OnInit,
   inject,
 } from '@angular/core';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 
 import { AuthService } from '@moreloja/services/authentication';
@@ -16,7 +16,7 @@ import { TopSongCardComponent } from '../top-song-card/top-song-card.component';
 
 @Component({
   selector: 'moreloja-editable-image',
-  imports: [AsyncPipe, NgIf, SongCardComponent, TopSongCardComponent],
+  imports: [AsyncPipe, SongCardComponent, TopSongCardComponent],
   templateUrl: './editable-image.component.html',
   styleUrls: ['./editable-image.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,20 +1,17 @@
 <h2>Top Artists</h2>
 
-<moreloja-cover-banner
-  *ngIf="artists$ | async as artists"
-  [viewModels]="artists"
-></moreloja-cover-banner>
+@if (artists$ | async; as artists) {
+<moreloja-cover-banner [viewModels]="artists"></moreloja-cover-banner>
+}
 
 <h2>Top Albums</h2>
 
-<moreloja-cover-banner
-  *ngIf="albums$ | async as albums"
-  [viewModels]="albums"
-></moreloja-cover-banner>
+@if (albums$ | async; as albums) {
+<moreloja-cover-banner [viewModels]="albums"></moreloja-cover-banner>
+}
 
 <h2>Top Songs</h2>
 
-<moreloja-cover-banner
-  *ngIf="songs$ | async as songs"
-  [viewModels]="songs"
-></moreloja-cover-banner>
+@if (songs$ | async; as songs) {
+<moreloja-cover-banner [viewModels]="songs"></moreloja-cover-banner>
+}
