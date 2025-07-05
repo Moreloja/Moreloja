@@ -1,7 +1,6 @@
-@if (artist$ | async; as artist) {
 <div>
   <div class="artist-title">
-    <h2>{{ artist.name }}</h2>
+    <h2>{{ artist.value().name }}</h2>
     <div>
       <a
         href="https://musicbrainz.org/artist/{{ mbidAlbumArtist }}"
@@ -13,29 +12,29 @@
       </a>
     </div>
     <moreloja-artist-top-weeks
-      [artistTopWeeks]="artist.artistTopWeeks"
+      [artistTopWeeks]="artist.value().artistTopWeeks"
     ></moreloja-artist-top-weeks>
   </div>
   <moreloja-editable-image
-    [mbidArtist]="mbidAlbumArtist"
+    [mbidArtist]="mbidAlbumArtistSignal()"
     [size]="400"
   ></moreloja-editable-image>
-  @if (artist.albums.length) {
+  @if (artist.value().albums.length) {
   <div>
     <h3>Albums</h3>
     <div class="album-container">
-      @for (album of artist.albums; track album) {
+      @for (album of artist.value().albums; track album) {
       <div>
         <moreloja-album-card [album]="album"></moreloja-album-card>
       </div>
       }
     </div>
   </div>
-  } @if (artist.appearsOnAlbums.length) {
+  } @if (artist.value().appearsOnAlbums.length) {
   <div>
     <h3>Appears on</h3>
     <div class="album-container">
-      @for (album of artist.appearsOnAlbums; track album) {
+      @for (album of artist.value().appearsOnAlbums; track album) {
       <div>
         <moreloja-album-card [album]="album"></moreloja-album-card>
       </div>
@@ -46,25 +45,24 @@
   <div>
     <h3>Top Songs</h3>
     <div>
-      @for (song of artist.topSongs; track song) {
+      @for (song of artist.value().topSongs; track song) {
       <div>
         <moreloja-top-song-card
           [topSong]="song"
-          [maxPlayCount]="artist.topSongs[0].playCount"
+          [maxPlayCount]="artist.value().topSongs[0].playCount"
         ></moreloja-top-song-card>
       </div>
       }
     </div>
   </div>
   <div>
-    <a routerLink="/songs/artist/{{ mbidAlbumArtist }}/page/1">
+    <a routerLink="/songs/artist/{{ mbidAlbumArtistSignal() }}/page/1">
       <h3>Last Songs</h3>
     </a>
-    @for (song of artist.songs; track song) {
+    @for (song of artist.value().songs; track song) {
     <div>
       <moreloja-song-card [song]="song"></moreloja-song-card>
     </div>
     }
   </div>
 </div>
-}

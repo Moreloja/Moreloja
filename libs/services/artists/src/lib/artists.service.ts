@@ -4,22 +4,36 @@ import {
   httpResource,
   HttpResourceRef,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
 
 import {
   ArtistDto,
   GetArtistResponse,
   GetArtistsResponse,
+  ArtistTopWeeksDto,
 } from '@moreloja/api/data-access-dtos';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ArtistsService {
-  private http = inject(HttpClient);
-
-  getArtist(mbidAlbumArtist: string): Observable<GetArtistResponse> {
-    return this.http.get<GetArtistResponse>(`/api/artist/${mbidAlbumArtist}`);
+  getArtist(
+    mbidAlbumArtist: Signal<string>,
+  ): HttpResourceRef<GetArtistResponse> {
+    return httpResource(
+      () => ({
+        url: `/api/artist/${mbidAlbumArtist()}`,
+      }),
+      {
+        defaultValue: new GetArtistResponse(
+          'Loading Artist',
+          new ArtistTopWeeksDto([], [], []),
+          [],
+          [],
+          [],
+          [],
+        ),
+      },
+    );
   }
 
   getArtists(

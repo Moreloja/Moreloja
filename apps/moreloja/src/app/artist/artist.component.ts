@@ -2,14 +2,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   Input,
-  OnInit,
   inject,
+  signal,
 } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { Observable } from 'rxjs';
 
-import { GetArtistResponse } from '@moreloja/api/data-access-dtos';
 import { ArtistsService } from '@moreloja/services/artists';
 
 import { AlbumCardComponent } from '../album-card/album-card.component';
@@ -21,7 +18,6 @@ import { ArtistTopWeeksComponent } from '../artist-top-weeks/artist-top-weeks.co
 @Component({
   selector: 'moreloja-artist',
   imports: [
-    AsyncPipe,
     AlbumCardComponent,
     ArtistTopWeeksComponent,
     EditableImageComponent,
@@ -33,15 +29,12 @@ import { ArtistTopWeeksComponent } from '../artist-top-weeks/artist-top-weeks.co
   styleUrls: ['./artist.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class ArtistComponent implements OnInit {
+export default class ArtistComponent {
   @Input()
-  mbidAlbumArtist!: string;
-
-  artist$!: Observable<GetArtistResponse>;
-
-  private artistsService = inject(ArtistsService);
-
-  ngOnInit(): void {
-    this.artist$ = this.artistsService.getArtist(this.mbidAlbumArtist);
+  set mbidAlbumArtist(mbidAlbumArtist: string) {
+    this.mbidAlbumArtistSignal.set(mbidAlbumArtist);
   }
+
+  mbidAlbumArtistSignal = signal('');
+  artist = inject(ArtistsService).getArtist(this.mbidAlbumArtistSignal);
 }
