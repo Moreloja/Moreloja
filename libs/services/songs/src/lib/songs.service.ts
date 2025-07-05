@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, Signal, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { HttpResourceRef, httpResource } from '@angular/common/http';
@@ -24,12 +24,12 @@ export class SongsService {
   }
 
   getTopSongs(
-    range: string,
-    page: number,
+    range: Signal<string>,
+    page: Signal<number>,
   ): HttpResourceRef<GetTopSongsResponseDto> {
     return httpResource(
       () => ({
-        url: `/api/top-songs/${range}/page/${page}`,
+        url: `/api/top-songs/${range()}/page/${page()}`,
       }),
       {
         defaultValue: new GetTopSongsResponseDto([]),

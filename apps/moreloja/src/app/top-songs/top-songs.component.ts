@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  computed,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Observable, distinctUntilChanged, map } from 'rxjs';
@@ -33,18 +28,18 @@ export default class TopSongsComponent {
   private route: ActivatedRoute = inject(ActivatedRoute);
   private songsService = inject(SongsService);
 
-  range$: Observable<string> = this.route.params.pipe(
-    map((param) => param['range'] ?? Range.All),
-    distinctUntilChanged(),
+  range = toSignal(
+    this.route.params.pipe(
+      map((param) => param['range'] ?? Range.All),
+      distinctUntilChanged(),
+    ),
+    { initialValue: Range.All },
   );
-  rangeOrUndefined = toSignal(this.range$);
-  range = computed(() => this.rangeOrUndefined() ?? Range.All);
-  page$: Observable<number> = this.route.params.pipe(
-    map((param) => Number(param['page'])),
+  page = toSignal(
+    this.route.params.pipe(map((param) => Number(param['page']))),
+    { initialValue: 1 },
   );
-  pageOrUndefined = toSignal(this.page$);
-  page = computed(() => this.pageOrUndefined() ?? 1);
-  songs = this.songsService.getTopSongs(this.range(), this.page());
+  songs = this.songsService.getTopSongs(this.range, this.page);
 
   onPageChange(page: number): void {
     this.router.navigate(['../', page], { relativeTo: this.route });

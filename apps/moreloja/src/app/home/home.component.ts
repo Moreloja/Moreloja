@@ -4,6 +4,7 @@ import {
   OnInit,
   inject,
   computed,
+  signal,
 } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -29,7 +30,9 @@ export default class TopSongsComponent implements OnInit {
   artists$!: Observable<ArtistDto[]>;
   albums$!: Observable<AlbumCoverCardViewModel[]>;
 
-  topSongs = inject(SongsService).getTopSongs(Range.All, 1);
+  range = signal(Range.All);
+  page = signal(1);
+  topSongs = inject(SongsService).getTopSongs(this.range, this.page);
   songs = computed(() =>
     this.topSongs.value().topSongs.map((song) => ({
       mbidAlbum: song.Provider_musicbrainzalbum,
