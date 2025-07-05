@@ -5,7 +5,7 @@ import {
   OnInit,
   inject,
 } from '@angular/core';
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { RouterModule } from '@angular/router';
 
@@ -20,7 +20,6 @@ import { EditableImageComponent } from '../editable-image/editable-image.compone
   selector: 'moreloja-album',
   imports: [
     AsyncPipe,
-    JsonPipe,
     RouterModule,
     EditableImageComponent,
     SongCardComponent,

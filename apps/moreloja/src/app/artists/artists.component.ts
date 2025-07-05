@@ -5,13 +5,11 @@ import {
   inject,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { AsyncPipe } from '@angular/common';
-import { distinctUntilChanged, map, Observable, switchMap, tap } from 'rxjs';
+import { distinctUntilChanged, map } from 'rxjs';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 import { ArtistsService } from '@moreloja/services/artists';
-import { ArtistDto } from '@moreloja/api/data-access-dtos';
 import { Range } from '@moreloja/shared/global-constants';
 
 import { PaginationComponent } from '../pagination/pagination.component';
@@ -22,7 +20,6 @@ import { RangeDisplayComponent } from '../range-display/range-display.component'
 @Component({
   selector: 'moreloja-artists',
   imports: [
-    AsyncPipe,
     SecondsToStringPipe,
     PaginationComponent,
     RangeDisplayComponent,

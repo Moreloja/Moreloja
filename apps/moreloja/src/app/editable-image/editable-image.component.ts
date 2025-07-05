@@ -11,12 +11,9 @@ import { Observable } from 'rxjs';
 import { AuthService } from '@moreloja/services/authentication';
 import { ImageService } from '@moreloja/services/image';
 
-import { SongCardComponent } from '../song-card/song-card.component';
-import { TopSongCardComponent } from '../top-song-card/top-song-card.component';
-
 @Component({
   selector: 'moreloja-editable-image',
-  imports: [AsyncPipe, SongCardComponent, TopSongCardComponent],
+  imports: [AsyncPipe],
   templateUrl: './editable-image.component.html',
   styleUrls: ['./editable-image.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

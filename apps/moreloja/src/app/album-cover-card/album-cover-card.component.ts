@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
-import { AsyncPipe, SlicePipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -15,7 +15,7 @@ export type AlbumCoverCardViewModel = {
 
 @Component({
   selector: 'moreloja-album-cover-card',
-  imports: [AsyncPipe, SlicePipe, RouterModule],
+  imports: [AsyncPipe, RouterModule],
   templateUrl: './album-cover-card.component.html',
   styleUrls: ['./album-cover-card.component.css'],
 })

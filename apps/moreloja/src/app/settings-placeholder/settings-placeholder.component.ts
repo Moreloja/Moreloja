@@ -1,4 +1,3 @@
-import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import {
@@ -10,7 +9,7 @@ import { EditableImageComponent } from '../editable-image/editable-image.compone
 
 @Component({
   selector: 'moreloja-settings-placeholder',
-  imports: [AsyncPipe, EditableImageComponent],
+  imports: [EditableImageComponent],
   templateUrl: './settings-placeholder.component.html',
   styleUrls: ['./settings-placeholder.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
