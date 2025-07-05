@@ -1,6 +1,10 @@
-import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Injectable, Signal, inject } from '@angular/core';
+import {
+  HttpClient,
+  HttpResourceRef,
+  httpResource,
+} from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 import {
   AlbumDto,
@@ -20,15 +24,23 @@ export class AlbumsService {
   }
 
   getAlbums(
-    range: string,
-    sortBy: Sort,
-    order: Order,
-    page: number,
-  ): Observable<AlbumDto[]> {
-    return this.http
-      .get<GetAlbumsResponseDto>(
-        `/api/albums/${range}/sort/${sortBy}/${order}/page/${page}`,
-      )
-      .pipe(map((response) => response.albums));
+    range: Signal<string>,
+    sortBy: Signal<Sort>,
+    order: Signal<Order>,
+    page: Signal<number>,
+  ): HttpResourceRef<AlbumDto[]> {
+    return httpResource(
+      () => ({
+        url: `/api/albums/${range()}/sort/${sortBy()}/${order()}/page/${page()}`,
+      }),
+      {
+        defaultValue: [],
+        parse: (response: unknown) => {
+          // TODO Use zod to check for GetAlbumsResponseDto
+          // For now cast to GetAlbumsResponseDto
+          return (response as GetAlbumsResponseDto).albums;
+        },
+      },
+    );
   }
 }

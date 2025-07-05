@@ -1,30 +1,28 @@
 <h2>Albums</h2>
 
 <div class="main-container">
-  @if (order$ | async; as order) { @if (sortBy$ | async; as sortBy) {
   <moreloja-range-selection
     pagePath="albums"
-    [sortBy]="sortBy"
-    [order]="order"
+    [sortBy]="sortBy()"
+    [order]="order()"
   ></moreloja-range-selection>
-  } }
 
   <div>
-    @if (range$ | async; as range) { @if (order$ | async; as order) { @for (sort
-    of sortings; track sort) {
+    @for (sort of sortings; track sort) {
     <span>
       <a
-        routerLink="/albums/{{ range }}/sort/{{ sort.sort }}/{{ order }}/page/1"
+        routerLink="/albums/{{ range() }}/sort/{{ sort.sort }}/{{
+          order()
+        }}/page/1"
         routerLinkActive="router-link-active"
         >{{ sort.label }}</a
       >
       |
     </span>
-    } } @if (sortBy$ | async; as sortBy) { @for (ordering of orderings; track
-    ordering; let last = $last) {
+    } @for (ordering of orderings; track ordering; let last = $last) {
     <span>
       <a
-        routerLink="/albums/{{ range }}/sort/{{ sortBy }}/{{
+        routerLink="/albums/{{ range() }}/sort/{{ sortBy() }}/{{
           ordering.order
         }}/page/1"
         routerLinkActive="router-link-active"
@@ -32,24 +30,24 @@
       >
       @if (!last) { | }
     </span>
-    } } }
+    }
   </div>
 
-  @if (range$ | async; as range) {
-  <moreloja-range-display [range]="range"></moreloja-range-display>
-  } @if (page$ | async; as page) {
+  <moreloja-range-display [range]="range()"></moreloja-range-display>
+
   <moreloja-pagination
-    [page]="page"
+    [page]="page()"
     (pageChange)="onPageChange($event)"
   ></moreloja-pagination>
-  } @if (albums$ | async; as albums) {
+
   <div>
-    <moreloja-albums-container [albums]="albums"></moreloja-albums-container>
+    <moreloja-albums-container
+      [albums]="albums.value()"
+    ></moreloja-albums-container>
   </div>
-  } @if (page$ | async; as page) {
+
   <moreloja-pagination
-    [page]="page"
+    [page]="page()"
     (pageChange)="onPageChange($event)"
   ></moreloja-pagination>
-  }
 </div>
