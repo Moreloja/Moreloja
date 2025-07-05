@@ -1,7 +1,13 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  effect,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { Observable, distinctUntilChanged, map } from 'rxjs';
+import { Title } from '@angular/platform-browser';
+import { distinctUntilChanged, map } from 'rxjs';
 import { SongsService } from '@moreloja/services/songs';
 import { Range } from '@moreloja/shared/global-constants';
 
@@ -27,6 +33,7 @@ export default class TopSongsComponent {
   private router = inject(Router);
   private route: ActivatedRoute = inject(ActivatedRoute);
   private songsService = inject(SongsService);
+  private titleService = inject(Title);
 
   range = toSignal(
     this.route.params.pipe(
@@ -44,4 +51,8 @@ export default class TopSongsComponent {
   onPageChange(page: number): void {
     this.router.navigate(['../', page], { relativeTo: this.route });
   }
+
+  updateTitleEffect = effect(() => {
+    this.titleService.setTitle(`Moreloja - Top Songs - Page ${this.page()}`);
+  });
 }
