@@ -1,6 +1,10 @@
-import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Injectable, inject, Signal } from '@angular/core';
+import {
+  HttpClient,
+  httpResource,
+  HttpResourceRef,
+} from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 import {
   ArtistDto,
@@ -18,9 +22,22 @@ export class ArtistsService {
     return this.http.get<GetArtistResponse>(`/api/artist/${mbidAlbumArtist}`);
   }
 
-  getArtists(range: string, page: number): Observable<ArtistDto[]> {
-    return this.http
-      .get<GetArtistsResponse>(`/api/artists/${range}/page/${page}`)
-      .pipe(map((response) => response.artists));
+  getArtists(
+    range: Signal<string>,
+    page: Signal<number>,
+  ): HttpResourceRef<ArtistDto[]> {
+    return httpResource(
+      () => ({
+        url: `/api/artists/${range()}/page/${page()}`,
+      }),
+      {
+        defaultValue: [],
+        parse: (response: unknown) => {
+          // TODO Use zod to check for GetArtistsResponse
+          // For now cast to GetArtistsResponse
+          return (response as GetArtistsResponse).artists;
+        },
+      },
+    );
   }
 }

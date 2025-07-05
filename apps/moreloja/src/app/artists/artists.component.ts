@@ -1,9 +1,10 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  effect,
   inject,
-  OnInit,
 } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
 import { distinctUntilChanged, map, Observable, switchMap, tap } from 'rxjs';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -32,35 +33,24 @@ import { RangeDisplayComponent } from '../range-display/range-display.component'
   styleUrls: ['./artists.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class ArtistsComponent implements OnInit {
-  artists$!: Observable<ArtistDto[]>;
-  range$!: Observable<string>;
-  page$!: Observable<number>;
-
+export default class ArtistsComponent {
   private router = inject(Router);
   private route: ActivatedRoute = inject(ActivatedRoute);
   private artistsService = inject(ArtistsService);
   private titleService = inject(Title);
 
-  ngOnInit(): void {
-    this.range$ = this.route.params.pipe(
+  range = toSignal(
+    this.route.params.pipe(
       map((param) => param['range'] ?? Range.All),
       distinctUntilChanged(),
-    );
-    this.page$ = this.route.params.pipe(map((param) => Number(param['page'])));
-    this.artists$ = this.range$.pipe(
-      switchMap((range) =>
-        this.page$.pipe(
-          tap((page) => {
-            this.titleService.setTitle(`Moreloja - Artists - Page ${page}`);
-          }),
-          switchMap((page) => {
-            return this.artistsService.getArtists(range, page);
-          }),
-        ),
-      ),
-    );
-  }
+    ),
+    { initialValue: Range.All },
+  );
+  page = toSignal(
+    this.route.params.pipe(map((param) => Number(param['page']))),
+    { initialValue: 1 },
+  );
+  artists = this.artistsService.getArtists(this.range, this.page);
 
   onPageChange(page: number): void {
     this.router.navigate(['../', page], { relativeTo: this.route });
@@ -70,4 +60,8 @@ export default class ArtistsComponent implements OnInit {
     const percentage = (playCount / maxPlayCount) * 100;
     return percentage + '%';
   }
+
+  updateTitleEffect = effect(() => {
+    this.titleService.setTitle(`Moreloja - Artists - Page ${this.page()}`);
+  });
 }

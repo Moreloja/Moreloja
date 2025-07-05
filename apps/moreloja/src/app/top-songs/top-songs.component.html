@@ -11,11 +11,11 @@
   ></moreloja-pagination>
 
   <div>
-    @for (song of songs.value()?.topSongs; track song) {
+    @for (song of songs.value().topSongs; track song) {
     <div>
       <moreloja-top-song-card
         [topSong]="song"
-        [maxPlayCount]="songs.value()?.topSongs?.[0]?.playCount ?? 0"
+        [maxPlayCount]="songs.value().topSongs[0].playCount"
       ></moreloja-top-song-card>
     </div>
     }

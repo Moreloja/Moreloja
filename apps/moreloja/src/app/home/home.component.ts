@@ -27,11 +27,11 @@ import { AlbumCoverCardViewModel } from '../album-cover-card/album-cover-card.co
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class TopSongsComponent implements OnInit {
-  artists$!: Observable<ArtistDto[]>;
   albums$!: Observable<AlbumCoverCardViewModel[]>;
 
   range = signal(Range.All);
   page = signal(1);
+  artists = inject(ArtistsService).getArtists(this.range, this.page);
   topSongs = inject(SongsService).getTopSongs(this.range, this.page);
   songs = computed(() =>
     this.topSongs.value().topSongs.map((song) => ({
@@ -41,11 +41,9 @@ export default class TopSongsComponent implements OnInit {
     })),
   );
 
-  private artistsService = inject(ArtistsService);
   private albumsService = inject(AlbumsService);
 
   ngOnInit(): void {
-    this.artists$ = this.artistsService.getArtists(Range.All, 1);
     this.albums$ = this.albumsService
       .getAlbums(Range.All, Sort.PlayTime, Order.Descending, 1)
       .pipe(

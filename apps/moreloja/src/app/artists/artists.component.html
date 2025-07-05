@@ -3,18 +3,15 @@
 <div class="main-container">
   <moreloja-range-selection pagePath="artists"></moreloja-range-selection>
 
-  @if (range$ | async; as range) {
-  <moreloja-range-display [range]="range"></moreloja-range-display>
-  } @if (page$ | async; as page) {
+  <moreloja-range-display [range]="range()"></moreloja-range-display>
+
   <moreloja-pagination
-    [page]="page"
+    [page]="page()"
     (pageChange)="onPageChange($event)"
   ></moreloja-pagination>
-  }
 
   <div class="artist-container">
-    @if (artists$ | async; as artists) { @for (artist of artists; track
-    artist.mbidArtist) {
+    @for (artist of artists.value(); track artist.mbidArtist) {
     <a routerLink="/artist/{{ artist.mbidArtist }}">
       {{ artist.name }}
     </a>
@@ -26,15 +23,15 @@
     </div>
     <div
       class="play-count-bar-fill"
-      [style.width]="getPlayCountBarWidth(artist.playTime, artists[0].playTime)"
+      [style.width]="
+        getPlayCountBarWidth(artist.playTime, artists.value()[0].playTime)
+      "
     ></div>
-    } }
+    }
   </div>
 
-  @if (page$ | async; as page) {
   <moreloja-pagination
-    [page]="page"
+    [page]="page()"
     (pageChange)="onPageChange($event)"
   ></moreloja-pagination>
-  }
 </div>

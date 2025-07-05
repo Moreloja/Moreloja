@@ -1,8 +1,6 @@
 <h2>Top Artists</h2>
 
-@if (artists$ | async; as artists) {
-<moreloja-cover-banner [viewModels]="artists"></moreloja-cover-banner>
-}
+<moreloja-cover-banner [viewModels]="artists.value()"></moreloja-cover-banner>
 
 <h2>Top Albums</h2>
 
@@ -12,6 +10,4 @@
 
 <h2>Top Songs</h2>
 
-@if (songs()) {
 <moreloja-cover-banner [viewModels]="songs()"></moreloja-cover-banner>
-}
