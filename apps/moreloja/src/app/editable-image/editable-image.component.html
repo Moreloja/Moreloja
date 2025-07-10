@@ -10,7 +10,7 @@
   (click)="file.click()"
   class="cover-image"
   loading="lazy"
-  src="pictrs/image/process.webp?src={{ url }}&resize={{ size }}"
+  src="pictrs/image/process.webp?src={{ url }}&resize={{ size() }}"
 />
 } @if (error$ | async; as error) {
 <div class="error-hint">
@@ -20,6 +20,6 @@
 <img
   class="cover-image"
   loading="lazy"
-  src="pictrs/image/process.webp?src={{ url }}&resize={{ size }}"
+  src="pictrs/image/process.webp?src={{ url }}&resize={{ size() }}"
 />
 } }

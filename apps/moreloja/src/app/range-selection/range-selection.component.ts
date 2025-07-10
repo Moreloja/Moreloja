@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  input,
+} from '@angular/core';
 
 import { RouterModule } from '@angular/router';
 import { format, startOfWeek } from 'date-fns';
@@ -27,7 +32,7 @@ export class RangeSelectionComponent {
     { label: 'All Time', range: Range.All },
   ];
 
-  @Input() pagePath!: string;
+  readonly pagePath = input.required<string>();
   @Input() sortBy?: Sort;
   @Input() order?: Order;
 }

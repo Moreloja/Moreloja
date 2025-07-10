@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 import { AlbumDto } from '@moreloja/api/data-access-dtos';
 
@@ -11,6 +11,5 @@ import { AlbumCardComponent } from '../album-card/album-card.component';
   styleUrls: ['./albums-container.component.css'],
 })
 export class AlbumsContainerComponent {
-  @Input()
-  albums!: AlbumDto[];
+  readonly albums = input.required<AlbumDto[]>();
 }

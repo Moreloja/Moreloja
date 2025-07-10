@@ -1,9 +1,9 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   Output,
   EventEmitter,
+  input,
 } from '@angular/core';
 
 @Component({
@@ -14,15 +14,15 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaginationComponent {
-  @Input() page!: number;
+  readonly page = input.required<number>();
 
   @Output() pageChange = new EventEmitter<number>();
 
   previousPage(): void {
-    this.pageChange.emit(this.page - 1);
+    this.pageChange.emit(this.page() - 1);
   }
 
   nextPage(): void {
-    this.pageChange.emit(this.page + 1);
+    this.pageChange.emit(this.page() + 1);
   }
 }

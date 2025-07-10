@@ -2,8 +2,8 @@ import { DatePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   inject,
+  input,
 } from '@angular/core';
 
 import { RangeFilterCreatorWrapper } from './range-filter-creator.wrapper';
@@ -16,23 +16,23 @@ import { RangeFilterCreatorWrapper } from './range-filter-creator.wrapper';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RangeDisplayComponent {
-  @Input() range!: string;
+  readonly range = input.required<string>();
 
   private rangeFilterCreatorWrapper = inject(RangeFilterCreatorWrapper);
 
   startDate(): Date | undefined {
-    console.log(this.range);
-    const rangeFilter = this.rangeFilterCreatorWrapper.constructRangeFilter(
-      this.range,
-    );
+    const range = this.range();
+    console.log(range);
+    const rangeFilter =
+      this.rangeFilterCreatorWrapper.constructRangeFilter(range);
     return rangeFilter?.searchFrom;
   }
 
   endDate(): Date | undefined {
-    console.log(this.range);
-    const rangeFilter = this.rangeFilterCreatorWrapper.constructRangeFilter(
-      this.range,
-    );
+    const range = this.range();
+    console.log(range);
+    const rangeFilter =
+      this.rangeFilterCreatorWrapper.constructRangeFilter(range);
     return rangeFilter?.searchTo;
   }
 }

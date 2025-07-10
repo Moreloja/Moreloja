@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { JsonPipe } from '@angular/common';
 
 @Component({
@@ -8,11 +8,9 @@ import { JsonPipe } from '@angular/common';
   styleUrls: ['./json-modal-box.component.css'],
 })
 export class JsonModalBoxComponent {
-  @Input()
-  header!: string;
+  readonly header = input.required<string>();
 
-  @Input()
-  content!: any;
+  readonly content = input.required<any>();
 
   showModal = false;
 

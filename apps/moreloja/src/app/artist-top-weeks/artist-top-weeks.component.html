@@ -1,18 +1,18 @@
-@for (week of artistTopWeeks.GoldWeeks; track week) {
+@for (week of artistTopWeeks().GoldWeeks; track week) {
 <a routerLink="/artists/{{ week.Year }}-W{{ week.Week }}/page/1">
   <img
     src="/assets/disc-gold.png"
     title="{{ week.Year }} - Week {{ week.Week }}"
   />
 </a>
-} @for (week of artistTopWeeks.SilverWeeks; track week) {
+} @for (week of artistTopWeeks().SilverWeeks; track week) {
 <a routerLink="/artists/{{ week.Year }}-W{{ week.Week }}/page/1">
   <img
     src="/assets/disc-silver.png"
     title="{{ week.Year }} - Week {{ week.Week }}"
   />
 </a>
-} @for (week of artistTopWeeks.BronzeWeeks; track week) {
+} @for (week of artistTopWeeks().BronzeWeeks; track week) {
 <a routerLink="/artists/{{ week.Year }}-W{{ week.Week }}/page/1">
   <img
     src="/assets/disc-bronze.png"

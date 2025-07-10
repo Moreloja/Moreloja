@@ -3,7 +3,7 @@
   <span>
     @if (sortBy && order) {
     <a
-      routerLink="/{{ pagePath }}/{{ range.range }}/sort/{{ sortBy }}/{{
+      routerLink="/{{ pagePath() }}/{{ range.range }}/sort/{{ sortBy }}/{{
         order
       }}/page/1"
       routerLinkActive="router-link-active"
@@ -11,7 +11,7 @@
     >
     } @if (!sortBy && !order) {
     <a
-      routerLink="/{{ pagePath }}/{{ range.range }}/page/1"
+      routerLink="/{{ pagePath() }}/{{ range.range }}/page/1"
       routerLinkActive="router-link-active"
       >{{ range.label }}</a
     >

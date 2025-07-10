@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, input } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -20,30 +20,26 @@ export type AlbumCoverCardViewModel = {
   styleUrls: ['./album-cover-card.component.css'],
 })
 export class AlbumCoverCardComponent implements OnInit {
-  @Input()
-  viewModel!: AlbumCoverCardViewModel;
+  readonly viewModel = input.required<AlbumCoverCardViewModel>();
 
-  @Input()
-  size!: number;
+  readonly size = input.required<number>();
 
-  @Input()
-  linkToAlbum = false;
+  readonly linkToAlbum = input(false);
 
   coverUrl$!: Observable<string>;
 
   private imageService = inject(ImageService);
 
   ngOnInit(): void {
-    if (this.viewModel.mbidAlbum) {
+    const viewModel = this.viewModel();
+    if (viewModel.mbidAlbum) {
       console.log('mbidAlbum');
-      this.coverUrl$ = this.imageService.getAlbumCover(
-        this.viewModel.mbidAlbum,
-      );
+      this.coverUrl$ = this.imageService.getAlbumCover(viewModel.mbidAlbum);
     } else {
-      if (this.viewModel.mbidArtist) {
+      if (viewModel.mbidArtist) {
         console.log('mbidArtist');
         this.coverUrl$ = this.imageService.getArtistPicture(
-          this.viewModel.mbidArtist,
+          viewModel.mbidArtist,
         );
       } else {
         // Neither album nor artist is set
@@ -54,12 +50,13 @@ export class AlbumCoverCardComponent implements OnInit {
   }
 
   getLink(): string {
-    if (this.viewModel.mbidTrack && !this.linkToAlbum) {
-      return `/song/${this.viewModel.mbidTrack}/page/1`;
+    const viewModel = this.viewModel();
+    if (viewModel.mbidTrack && !this.linkToAlbum()) {
+      return `/song/${viewModel.mbidTrack}/page/1`;
     }
-    if (this.viewModel.mbidArtist) {
-      return `/artist/${this.viewModel.mbidArtist}`;
+    if (viewModel.mbidArtist) {
+      return `/artist/${viewModel.mbidArtist}`;
     }
-    return `/album/${this.viewModel.mbidAlbum}`;
+    return `/album/${viewModel.mbidAlbum}`;
   }
 }

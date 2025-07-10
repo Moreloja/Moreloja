@@ -2,11 +2,11 @@
   @if (coverUrl$ | async; as coverUrl) {
   <img
     class="cover-image"
-    [style.width]="size + 'px'"
+    [style.width]="size() + 'px'"
     loading="lazy"
-    src="pictrs/image/process.webp?src={{ coverUrl }}&resize={{ size }}"
-    alt="{{ viewModel.name }}"
-    title="{{ viewModel.name }}"
+    src="pictrs/image/process.webp?src={{ coverUrl }}&resize={{ size() }}"
+    alt="{{ viewModel().name }}"
+    title="{{ viewModel().name }}"
   />
   }
 </a>

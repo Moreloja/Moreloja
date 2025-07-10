@@ -5,19 +5,19 @@
     [linkToAlbum]="true"
   ></moreloja-album-cover-card>
 
-  <a routerLink="/song/{{ topSong.Provider_musicbrainztrack }}/page/1">{{
-    topSong.Name
+  <a routerLink="/song/{{ topSong().Provider_musicbrainztrack }}/page/1">{{
+    topSong().Name
   }}</a>
 
   <div class="play-count-bar-container">
     <div class="play-count-value">
-      {{ topSong.playCount }}
+      {{ topSong().playCount }}
     </div>
 
     <div class="play-count-bar">
       <div
         class="play-count-bar-fill"
-        [style.width]="getPlayCountBarWidth(topSong.playCount)"
+        [style.width]="getPlayCountBarWidth(topSong().playCount)"
       ></div>
     </div>
   </div>

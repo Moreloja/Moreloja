@@ -1,9 +1,9 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   OnInit,
   inject,
+  input,
 } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { Observable } from 'rxjs';
@@ -30,14 +30,13 @@ import { EditableImageComponent } from '../editable-image/editable-image.compone
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class AlbumComponent implements OnInit {
-  @Input()
-  mbidAlbum!: string;
+  readonly mbidAlbum = input.required<string>();
 
   album$!: Observable<GetAlbumResponseDto>;
 
   private albumsService = inject(AlbumsService);
 
   ngOnInit(): void {
-    this.album$ = this.albumsService.getAlbum(this.mbidAlbum);
+    this.album$ = this.albumsService.getAlbum(this.mbidAlbum());
   }
 }

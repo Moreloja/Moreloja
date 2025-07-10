@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { SlicePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -16,13 +16,12 @@ import {
   styleUrls: ['./album-card.component.css'],
 })
 export class AlbumCardComponent {
-  @Input()
-  album!: AlbumDto;
+  readonly album = input.required<AlbumDto>();
 
   getAlbumCoverCardViewModel(): AlbumCoverCardViewModel {
     return {
-      mbidAlbum: this.album.Provider_musicbrainzalbum,
-      name: this.album.Album,
+      mbidAlbum: this.album().Provider_musicbrainzalbum,
+      name: this.album().Album,
     };
   }
 }

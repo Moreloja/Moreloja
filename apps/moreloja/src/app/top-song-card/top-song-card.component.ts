@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 import { RouterModule } from '@angular/router';
 
@@ -16,22 +16,20 @@ import {
   styleUrls: ['./top-song-card.component.css'],
 })
 export class TopSongCardComponent {
-  @Input()
-  topSong!: TopSongDto;
+  readonly topSong = input.required<TopSongDto>();
 
-  @Input()
-  maxPlayCount!: number;
+  readonly maxPlayCount = input.required<number>();
 
   getPlayCountBarWidth(playCount: number): string {
-    const percentage = (playCount / this.maxPlayCount) * 100;
+    const percentage = (playCount / this.maxPlayCount()) * 100;
     return percentage + '%';
   }
 
   getAlbumCoverCardViewModel(): AlbumCoverCardViewModel {
     return {
-      mbidAlbum: this.topSong.Provider_musicbrainzalbum,
-      name: this.topSong.Name,
-      mbidTrack: this.topSong.Provider_musicbrainztrack,
+      mbidAlbum: this.topSong().Provider_musicbrainzalbum,
+      name: this.topSong().Name,
+      mbidTrack: this.topSong().Provider_musicbrainztrack,
     };
   }
 }

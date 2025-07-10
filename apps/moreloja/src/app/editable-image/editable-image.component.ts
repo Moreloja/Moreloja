@@ -1,9 +1,9 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   OnInit,
   inject,
+  input,
 } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { Observable } from 'rxjs';
@@ -19,14 +19,11 @@ import { ImageService } from '@moreloja/services/image';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditableImageComponent implements OnInit {
-  @Input()
-  mbidAlbum?: string;
+  readonly mbidAlbum = input<string>();
 
-  @Input()
-  mbidArtist?: string;
+  readonly mbidArtist = input<string>();
 
-  @Input()
-  size = 250;
+  readonly size = input(250);
 
   url$!: Observable<string>;
   error$!: Observable<string>;
@@ -36,11 +33,13 @@ export class EditableImageComponent implements OnInit {
   private imageService = inject(ImageService);
 
   ngOnInit(): void {
-    if (this.mbidAlbum) {
-      this.url$ = this.imageService.getAlbumCover(this.mbidAlbum);
+    const mbidAlbum = this.mbidAlbum();
+    if (mbidAlbum) {
+      this.url$ = this.imageService.getAlbumCover(mbidAlbum);
     }
-    if (this.mbidArtist) {
-      this.url$ = this.imageService.getArtistPicture(this.mbidArtist);
+    const mbidArtist = this.mbidArtist();
+    if (mbidArtist) {
+      this.url$ = this.imageService.getArtistPicture(mbidArtist);
     }
     this.error$ = this.imageService.getError();
     this.isLoggedIn$ = this.authService.isLoggedIn();
@@ -51,11 +50,13 @@ export class EditableImageComponent implements OnInit {
     const selectedFiles = input.files;
 
     if (selectedFiles && selectedFiles.length > 0) {
-      if (this.mbidAlbum) {
-        this.imageService.setImage(this.mbidAlbum, selectedFiles[0]);
+      const mbidAlbum = this.mbidAlbum();
+      if (mbidAlbum) {
+        this.imageService.setImage(mbidAlbum, selectedFiles[0]);
       }
-      if (this.mbidArtist) {
-        this.imageService.setImage(this.mbidArtist, selectedFiles[0]);
+      const mbidArtist = this.mbidArtist();
+      if (mbidArtist) {
+        this.imageService.setImage(mbidArtist, selectedFiles[0]);
       }
     }
   }
