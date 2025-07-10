@@ -1,9 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Output,
-  EventEmitter,
   input,
+  output,
 } from '@angular/core';
 
 @Component({
@@ -16,7 +15,7 @@ import {
 export class PaginationComponent {
   readonly page = input.required<number>();
 
-  @Output() pageChange = new EventEmitter<number>();
+  readonly pageChange = output<number>();
 
   previousPage(): void {
     this.pageChange.emit(this.page() - 1);
