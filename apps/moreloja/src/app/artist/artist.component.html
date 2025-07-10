@@ -3,7 +3,7 @@
     <h2>{{ artist.value().name }}</h2>
     <div>
       <a
-        href="https://musicbrainz.org/artist/{{ mbidAlbumArtist }}"
+        href="https://musicbrainz.org/artist/{{ mbidAlbumArtist() }}"
         target="_blank"
       >
         <img
@@ -16,7 +16,7 @@
     ></moreloja-artist-top-weeks>
   </div>
   <moreloja-editable-image
-    [mbidArtist]="mbidAlbumArtistSignal()"
+    [mbidArtist]="mbidAlbumArtist()"
     [size]="400"
   ></moreloja-editable-image>
   @if (artist.value().albums.length) {
@@ -56,7 +56,7 @@
     </div>
   </div>
   <div>
-    <a routerLink="/songs/artist/{{ mbidAlbumArtistSignal() }}/page/1">
+    <a routerLink="/songs/artist/{{ mbidAlbumArtist() }}/page/1">
       <h3>Last Songs</h3>
     </a>
     @for (song of artist.value().songs; track song) {

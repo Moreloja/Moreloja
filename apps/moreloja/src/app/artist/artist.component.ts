@@ -1,9 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
+  input,
   inject,
-  signal,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
@@ -30,11 +29,6 @@ import { ArtistTopWeeksComponent } from '../artist-top-weeks/artist-top-weeks.co
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class ArtistComponent {
-  @Input()
-  set mbidAlbumArtist(mbidAlbumArtist: string) {
-    this.mbidAlbumArtistSignal.set(mbidAlbumArtist);
-  }
-
-  mbidAlbumArtistSignal = signal('');
-  artist = inject(ArtistsService).getArtist(this.mbidAlbumArtistSignal);
+  mbidAlbumArtist = input<string>('');
+  artist = inject(ArtistsService).getArtist(this.mbidAlbumArtist);
 }
