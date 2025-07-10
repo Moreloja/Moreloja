@@ -1,10 +1,7 @@
 <h2>Last Songs</h2>
 
 @if (page$ | async; as page) {
-<moreloja-pagination
-  [page]="page"
-  (pageChange)="onPageChange($event)"
-></moreloja-pagination>
+<moreloja-pagination [page]="page" (pageChange)="onPageChange($event)" />
 } @if (songs$ | async; as songs) {
 <div class="songs-container">
   @for (song of songs.songs; track song) {
@@ -14,8 +11,5 @@
   }
 </div>
 } @if (page$ | async; as page) {
-<moreloja-pagination
-  [page]="page"
-  (pageChange)="onPageChange($event)"
-></moreloja-pagination>
+<moreloja-pagination [page]="page" (pageChange)="onPageChange($event)" />
 }
