@@ -1,5 +1,5 @@
 <div class="cover-container">
-  @for (vm of viewModels | slice: 0 : 1; track vm) {
+  @for (vm of viewModels() | slice: 0 : 1; track vm) {
   <div>
     <moreloja-album-cover-card
       [viewModel]="vm"
@@ -11,7 +11,7 @@
   <div class="cover-container-inner">
     @for (row of [0, 1]; track row) {
     <div>
-      @for (vm of viewModels | slice: row * 2 + 1 : row * 2 + 3; track vm) {
+      @for (vm of viewModels() | slice: row * 2 + 1 : row * 2 + 3; track vm) {
       <div>
         <moreloja-album-cover-card
           [viewModel]="vm"
@@ -26,7 +26,7 @@
   <div class="cover-container-inner">
     @for (row of [0, 1, 2]; track row) {
     <div>
-      @for (vm of viewModels | slice: row * 3 + 5 : row * 3 + 8; track vm) {
+      @for (vm of viewModels() | slice: row * 3 + 5 : row * 3 + 8; track vm) {
       <div>
         <moreloja-album-cover-card
           [viewModel]="vm"

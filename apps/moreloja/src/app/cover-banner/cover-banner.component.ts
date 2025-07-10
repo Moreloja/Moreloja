@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { SlicePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -14,14 +14,5 @@ import {
   styleUrls: ['./cover-banner.component.css'],
 })
 export class CoverBannerComponent {
-  _viewModels!: AlbumCoverCardViewModel[];
-
-  @Input()
-  set viewModels(viewModels: AlbumCoverCardViewModel[]) {
-    console.log('banner at input');
-    this._viewModels = viewModels;
-  }
-  get viewModels() {
-    return this._viewModels;
-  }
+  readonly viewModels = input.required<AlbumCoverCardViewModel[]>();
 }
