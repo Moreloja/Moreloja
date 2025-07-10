@@ -29,6 +29,6 @@ import { ArtistTopWeeksComponent } from '../artist-top-weeks/artist-top-weeks.co
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class ArtistComponent {
-  mbidAlbumArtist = input<string>('');
+  readonly mbidAlbumArtist = input.required<string>();
   artist = inject(ArtistsService).getArtist(this.mbidAlbumArtist);
 }
