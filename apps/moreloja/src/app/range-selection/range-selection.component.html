@@ -1,15 +1,15 @@
 <div>
   @for (range of ranges; track range; let last = $last) {
   <span>
-    @if (sortBy && order) {
+    @if (sortBy() && order()) {
     <a
-      routerLink="/{{ pagePath() }}/{{ range.range }}/sort/{{ sortBy }}/{{
-        order
+      routerLink="/{{ pagePath() }}/{{ range.range }}/sort/{{ sortBy() }}/{{
+        order()
       }}/page/1"
       routerLinkActive="router-link-active"
       >{{ range.label }}</a
     >
-    } @if (!sortBy && !order) {
+    } @if (!sortBy() && !order()) {
     <a
       routerLink="/{{ pagePath() }}/{{ range.range }}/page/1"
       routerLinkActive="router-link-active"

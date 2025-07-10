@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -25,14 +25,13 @@ import { JsonModalBoxComponent } from '../modal-box/json-modal-box';
   styleUrls: ['./song-card.component.css'],
 })
 export class SongCardComponent {
-  @Input()
-  song!: SongDto;
+  readonly song = input.required<SongDto>();
 
   getAlbumCoverCardViewModel(): AlbumCoverCardViewModel {
     return {
-      mbidAlbum: this.song.Provider_musicbrainzalbum,
-      name: this.song.Name,
-      mbidTrack: this.song.Provider_musicbrainztrack,
+      mbidAlbum: this.song().Provider_musicbrainzalbum,
+      name: this.song().Name,
+      mbidTrack: this.song().Provider_musicbrainztrack,
     };
   }
 }
