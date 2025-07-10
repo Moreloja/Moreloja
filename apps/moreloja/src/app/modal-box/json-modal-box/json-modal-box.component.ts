@@ -9,7 +9,6 @@ import { JsonPipe } from '@angular/common';
 })
 export class JsonModalBoxComponent {
   readonly header = input.required<string>();
-
   readonly content = input.required<any>();
 
   showModal = false;

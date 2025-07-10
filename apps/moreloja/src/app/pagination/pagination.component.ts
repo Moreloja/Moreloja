@@ -14,7 +14,6 @@ import {
 })
 export class PaginationComponent {
   readonly page = input.required<number>();
-
   readonly pageChange = output<number>();
 
   previousPage(): void {
