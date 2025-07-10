@@ -1,10 +1,5 @@
-import { Injectable, Signal, inject } from '@angular/core';
-import {
-  HttpClient,
-  HttpResourceRef,
-  httpResource,
-} from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable, Signal } from '@angular/core';
+import { HttpResourceRef, httpResource } from '@angular/common/http';
 
 import {
   AlbumDto,
@@ -17,10 +12,26 @@ import { Order, Sort } from '@moreloja/shared/global-constants';
   providedIn: 'root',
 })
 export class AlbumsService {
-  private http = inject(HttpClient);
-
-  getAlbum(mbidAlbum: string): Observable<GetAlbumResponseDto> {
-    return this.http.get<GetAlbumResponseDto>(`/api/album/${mbidAlbum}`);
+  getAlbum(mbidAlbum: Signal<string>): HttpResourceRef<GetAlbumResponseDto> {
+    return httpResource<GetAlbumResponseDto>(
+      () => ({
+        url: `/api/album/${mbidAlbum()}`,
+      }),
+      {
+        defaultValue: new GetAlbumResponseDto(
+          'Album',
+          'Artist',
+          'ArtistMbid',
+          [],
+          [],
+        ),
+        parse: (response: unknown) => {
+          // TODO Use zod to check for GetAlbumResponseDto
+          // For now cast to GetAlbumResponseDto
+          return response as GetAlbumResponseDto;
+        },
+      },
+    );
   }
 
   getAlbums(
@@ -29,7 +40,7 @@ export class AlbumsService {
     order: Signal<Order>,
     page: Signal<number>,
   ): HttpResourceRef<AlbumDto[]> {
-    return httpResource(
+    return httpResource<AlbumDto[]>(
       () => ({
         url: `/api/albums/${range()}/sort/${sortBy()}/${order()}/page/${page()}`,
       }),
