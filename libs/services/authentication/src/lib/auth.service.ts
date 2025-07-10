@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, Signal, signal } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, EMPTY, Observable, catchError, tap } from 'rxjs';
 
@@ -8,14 +8,14 @@ import { BehaviorSubject, EMPTY, Observable, catchError, tap } from 'rxjs';
 export class AuthService {
   private http = inject(HttpClient);
 
-  private isLoggedIn$: BehaviorSubject<boolean> | undefined;
+  private isLoggedInSignal = signal(false);
 
-  isLoggedIn(): Observable<boolean> {
-    if (this.isLoggedIn$ === undefined) {
-      this.isLoggedIn$ = new BehaviorSubject<boolean>(false);
+  isLoggedIn(): Signal<boolean> {
+    if (!this.isLoggedInSignal()) {
+      console.log('Refreshing');
       this.refresh();
     }
-    return this.isLoggedIn$.asObservable();
+    return this.isLoggedInSignal;
   }
 
   private error$ = new BehaviorSubject<string>('');
@@ -32,7 +32,7 @@ export class AuthService {
       })
       .pipe(
         tap(() => {
-          this.isLoggedIn$?.next(true);
+          this.isLoggedInSignal.set(true);
           this.error$.next('');
         }),
         catchError((err: HttpErrorResponse) => {
@@ -45,10 +45,10 @@ export class AuthService {
   private refresh(): void {
     this.http.get(`/api/auth/refresh`).subscribe({
       next: () => {
-        this.isLoggedIn$?.next(true);
+        this.isLoggedInSignal.set(true);
       },
       error: (error: HttpErrorResponse) => {
-        this.isLoggedIn$?.next(false);
+        this.isLoggedInSignal.set(false);
         this.error$.next(error.message);
       },
     });
@@ -57,7 +57,7 @@ export class AuthService {
   logout(): Observable<object> {
     return this.http.get(`/api/auth/logout`).pipe(
       tap(() => {
-        this.isLoggedIn$?.next(false);
+        this.isLoggedInSignal.set(false);
         this.error$.next('');
       }),
     );

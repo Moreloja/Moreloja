@@ -4,6 +4,7 @@ import {
   OnInit,
   inject,
   input,
+  Signal,
 } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { Observable } from 'rxjs';
@@ -20,17 +21,15 @@ import { ImageService } from '@moreloja/services/image';
 })
 export class EditableImageComponent implements OnInit {
   readonly mbidAlbum = input<string>();
-
   readonly mbidArtist = input<string>();
-
   readonly size = input(250);
-
-  url$!: Observable<string>;
-  error$!: Observable<string>;
-  isLoggedIn$!: Observable<boolean>;
 
   private authService = inject(AuthService);
   private imageService = inject(ImageService);
+
+  url$!: Observable<string>;
+  error$!: Observable<string>;
+  isLoggedIn = this.authService.isLoggedIn();
 
   ngOnInit(): void {
     const mbidAlbum = this.mbidAlbum();
@@ -42,7 +41,6 @@ export class EditableImageComponent implements OnInit {
       this.url$ = this.imageService.getArtistPicture(mbidArtist);
     }
     this.error$ = this.imageService.getError();
-    this.isLoggedIn$ = this.authService.isLoggedIn();
   }
 
   onFileSelected(event: Event) {

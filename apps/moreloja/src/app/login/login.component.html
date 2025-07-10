@@ -1,4 +1,4 @@
-@if ((isLoggedIn$ | async) === false) {
+@if (isLoggedIn() === false) {
 <h2>Login</h2>
 <div class="main-container">
   <label for="password">Password</label>
@@ -22,7 +22,7 @@
   </div>
   }
 </div>
-} @if (isLoggedIn$ | async) {
+} @else {
 <h2>Logout</h2>
 <div class="main-container">
   <div>You are logged in.</div>

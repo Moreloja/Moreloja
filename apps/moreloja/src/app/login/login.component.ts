@@ -25,13 +25,13 @@ export default class LoginComponent implements OnInit {
     nonNullable: true,
   });
 
-  isLoggedIn$!: Observable<boolean>;
   error$!: Observable<string>;
 
   authService = inject(AuthService);
 
+  isLoggedIn = this.authService.isLoggedIn();
+
   ngOnInit(): void {
-    this.isLoggedIn$ = this.authService.isLoggedIn();
     this.error$ = this.authService.getError();
   }
 
