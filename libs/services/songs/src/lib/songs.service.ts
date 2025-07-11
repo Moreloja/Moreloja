@@ -1,6 +1,4 @@
-import { Injectable, Signal, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable, Signal } from '@angular/core';
 import { HttpResourceRef, httpResource } from '@angular/common/http';
 
 import {
@@ -12,14 +10,17 @@ import {
   providedIn: 'root',
 })
 export class SongsService {
-  private http = inject(HttpClient);
-
   getAllSongs(
-    mbidArtist: string,
-    page: number,
-  ): Observable<GetAllSongsResponseDto> {
-    return this.http.get<GetAllSongsResponseDto>(
-      `/api/songs/artist/${mbidArtist}/page/${page}`,
+    mbidArtist: Signal<string>,
+    page: Signal<number>,
+  ): HttpResourceRef<GetAllSongsResponseDto> {
+    return httpResource(
+      () => ({
+        url: `/api/songs/artist/${mbidArtist()}/page/${page()}`,
+      }),
+      {
+        defaultValue: new GetAllSongsResponseDto([]),
+      },
     );
   }
 

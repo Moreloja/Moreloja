@@ -1,5 +1,4 @@
 import { Component, input } from '@angular/core';
-
 import { RouterModule } from '@angular/router';
 
 import { TopSongDto } from '@moreloja/api/data-access-dtos';
@@ -17,7 +16,6 @@ import {
 })
 export class TopSongCardComponent {
   readonly topSong = input.required<TopSongDto>();
-
   readonly maxPlayCount = input.required<number>();
 
   getPlayCountBarWidth(playCount: number): string {
