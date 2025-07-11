@@ -1,15 +1,13 @@
 <h2>Song</h2>
 
-@if (page$ | async; as page) {
-<moreloja-pagination [page]="page" (pageChange)="onPageChange($event)" />
-} @if (songs$ | async; as songs) {
+<moreloja-pagination [page]="page()" (pageChange)="onPageChange($event)" />
+
 <div>
-  @for (song of songs.songs; track song) {
+  @for (song of songs.value().songs; track song) {
   <div>
     <moreloja-song-card [song]="song"></moreloja-song-card>
   </div>
   }
 </div>
-} @if (page$ | async; as page) {
-<moreloja-pagination [page]="page" (pageChange)="onPageChange($event)" />
-}
+
+<moreloja-pagination [page]="page()" (pageChange)="onPageChange($event)" />

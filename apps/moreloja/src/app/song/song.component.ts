@@ -1,15 +1,15 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  effect,
   inject,
-  OnInit,
 } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { Observable, distinctUntilChanged, map, switchMap, tap } from 'rxjs';
+import { map } from 'rxjs';
 
-import { GetAllSongsResponseDto } from '@moreloja/api/data-access-dtos';
 import { SongsService } from '@moreloja/services/songs';
 
 import { PaginationComponent } from '../pagination/pagination.component';
@@ -22,35 +22,27 @@ import { SongCardComponent } from '../song-card/song-card.component';
   styleUrls: ['./song.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class SongComponent implements OnInit {
-  songs$!: Observable<GetAllSongsResponseDto>;
-  mbidTrack$!: Observable<string>;
-  page$!: Observable<number>;
-
+export default class SongComponent {
   private router = inject(Router);
   private route: ActivatedRoute = inject(ActivatedRoute);
   private songsService = inject(SongsService);
   private titleService = inject(Title);
 
-  ngOnInit(): void {
-    this.mbidTrack$ = this.route.params.pipe(
-      map((param) => param['mbidTrack']),
-      distinctUntilChanged(),
-    );
-    this.page$ = this.route.params.pipe(map((param) => Number(param['page'])));
-    this.songs$ = this.mbidTrack$.pipe(
-      //tap((mbidTrack) => console.log('mbidTrack: ' + mbidTrack)),
-      switchMap((mbidTrack) =>
-        this.page$.pipe(
-          tap((page) => {
-            this.titleService.setTitle(`Moreloja - Song - Page ${page}`);
-          }),
-          switchMap((page) => {
-            return this.songsService.getAllSongsByTrack(mbidTrack, page);
-          }),
-        ),
-      ),
-    );
+  mbidTrack = toSignal(
+    this.route.params.pipe(map((param) => param['mbidTrack'])),
+    { initialValue: '' },
+  );
+  page = toSignal(
+    this.route.params.pipe(map((param) => Number(param['page']))),
+    { initialValue: 1 },
+  );
+
+  songs = this.songsService.getAllSongsByTrack(this.mbidTrack, this.page);
+
+  constructor() {
+    effect(() => {
+      this.titleService.setTitle(`Moreloja - Song - Page ${this.page()}`);
+    });
   }
 
   onPageChange(page: number): void {

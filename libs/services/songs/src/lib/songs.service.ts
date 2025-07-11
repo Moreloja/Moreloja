@@ -38,11 +38,16 @@ export class SongsService {
   }
 
   getAllSongsByTrack(
-    mbidTrack: string,
-    page: number,
-  ): Observable<GetAllSongsResponseDto> {
-    return this.http.get<GetAllSongsResponseDto>(
-      `/api/song/${mbidTrack}/page/${page}`,
+    mbidTrack: Signal<string>,
+    page: Signal<number>,
+  ): HttpResourceRef<GetAllSongsResponseDto> {
+    return httpResource(
+      () => ({
+        url: `/api/song/${mbidTrack()}/page/${page()}`,
+      }),
+      {
+        defaultValue: new GetAllSongsResponseDto([]),
+      },
     );
   }
 }
