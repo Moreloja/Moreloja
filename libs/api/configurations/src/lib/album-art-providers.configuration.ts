@@ -1,30 +1,26 @@
 import { Inject, Logger } from '@nestjs/common';
 import { ConfigType, registerAs } from '@nestjs/config';
 
-export type AlbumArtProviderType = 'MusicBrainz' | 'Deezer';
-
-export interface AlbumArtProviders {
-  providers: AlbumArtProviderType[];
-}
+import { ArtProviders, ArtProviderSource } from './art-providers';
 
 export const albumArtProvidersConfiguration = registerAs(
   'album-art-providers',
-  (): AlbumArtProviders => {
+  (): ArtProviders => {
     const providersEnv = process.env['MORELOJA_ALBUM_ART_PROVIDERS'];
 
     Logger.debug('Album Art Providers: ' + providersEnv);
     if (providersEnv === undefined) {
       return {
-        providers: ['MusicBrainz', 'Deezer'] as AlbumArtProviderType[],
+        providers: ['MusicBrainz', 'Deezer'] as ArtProviderSource[],
       };
     } else if (providersEnv === '') {
       return {
-        providers: [] as AlbumArtProviderType[],
+        providers: [] as ArtProviderSource[],
       };
     } else {
       const providers = providersEnv.split(',').filter((p) => p);
       return {
-        providers: providers as AlbumArtProviderType[],
+        providers: providers as ArtProviderSource[],
       };
     }
   },

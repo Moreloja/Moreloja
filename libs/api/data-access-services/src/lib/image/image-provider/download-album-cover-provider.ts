@@ -3,7 +3,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import {
   InjectAlbumArtProvidersConfig,
   AlbumArtProvidersConfiguration,
-  AlbumArtProviderType,
+  ArtProviderSource,
 } from '@moreloja/api/configurations';
 
 import { UploadImageResponse } from '@moreloja/api/data-access-dtos';
@@ -54,7 +54,7 @@ export class DownloadAlbumCoverProvider {
     musicbrainzalbum: string,
   ): AsyncGenerator<string> {
     const providerMap: Record<
-      AlbumArtProviderType,
+      ArtProviderSource,
       { provideAlbumCover: (musicbrainzalbum: string) => Promise<string> }
     > = {
       MusicBrainz: this.musicBrainzAlbumCoverProvider,
@@ -63,7 +63,7 @@ export class DownloadAlbumCoverProvider {
 
     const albumCoverProviders =
       this.albumArtProvidersConfiguration.providers.map(
-        (providerName: AlbumArtProviderType) => providerMap[providerName],
+        (providerName: ArtProviderSource) => providerMap[providerName],
       );
     Logger.debug('Album cover providers: ' + albumCoverProviders);
     if (!albumCoverProviders) {
