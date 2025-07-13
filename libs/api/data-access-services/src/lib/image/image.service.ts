@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 
 // This is a hack to make Multer available in the Express namespace
 // See https://github.com/DefinitelyTyped/DefinitelyTyped/issues/47780
@@ -49,7 +49,7 @@ export class ImageService {
           await pictrsImageResponseCreator.provideImage(musicbrainzalbum);
         return new GetImageResponse(coverUrl);
       } catch (error) {
-        console.log('No cover found. Trying next provider...');
+        Logger.debug('No cover found. Trying next provider... Error: ' + error);
       }
     }
 
@@ -70,7 +70,7 @@ export class ImageService {
         const url = await pictrsImageResponseCreator.provideImage(mbidArtist);
         return new GetImageResponse(url);
       } catch (error) {
-        console.log('No image found. Trying next provider...');
+        Logger.debug('No image found. Trying next provider... Error: ' + error);
       }
     }
 
@@ -96,12 +96,12 @@ export class ImageService {
       return;
     }
 
-    console.log('Placeholder album cover not found in db. Creating...');
+    Logger.debug('Placeholder album cover not found in db. Creating...');
 
     // If placeholder does not exist: Upload placeholder image to pictrs
     readFile(join(process.cwd(), 'assets', imageName), async (err, data) => {
       if (err) {
-        console.error(err);
+        Logger.error(err);
       } else {
         const response = await this.pictrsService.uploadImageBuffer(data);
         await this.saveOrUpdateImageMetadata(placeholderId, response);

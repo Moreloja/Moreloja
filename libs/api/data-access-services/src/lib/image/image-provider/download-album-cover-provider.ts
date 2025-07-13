@@ -1,4 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
+
+import {
+  InjectAlbumArtProvidersConfig,
+  AlbumArtProvidersConfiguration,
+  AlbumArtProviderType,
+} from '@moreloja/api/configurations';
 
 import { UploadImageResponse } from '@moreloja/api/data-access-dtos';
 import { ImageRepository } from '@moreloja/api/data-access-repositories';
@@ -10,6 +16,8 @@ import { PictrsService } from '../pictrs.service';
 @Injectable()
 export class DownloadAlbumCoverProvider {
   constructor(
+    @InjectAlbumArtProvidersConfig()
+    private readonly albumArtProvidersConfiguration: AlbumArtProvidersConfiguration,
     private readonly pictrsService: PictrsService,
     private readonly imageRepository: ImageRepository,
     private readonly musicBrainzAlbumCoverProvider: MusicBrainzAlbumCoverProvider,
@@ -26,24 +34,10 @@ export class DownloadAlbumCoverProvider {
         await this.saveOrUpdateImageMetadata(musicbrainzalbum, response);
         return response.files[0].file;
       } catch (error) {
-        console.log('Failed to upload cover to pictrs. Error: ' + error);
+        Logger.debug('Failed to upload cover to pictrs. Error: ' + error);
       }
     }
     throw new Error('No cover found.');
-  }
-
-  private async *getAlbumCoverFromProvider(musicbrainzalbum: string) {
-    const albumCoverProviders: {
-      provideAlbumCover(musicbrainzalbum: string): Promise<string>;
-    }[] = [this.musicBrainzAlbumCoverProvider, this.deezerAlbumCoverProvider];
-
-    for (const provider of albumCoverProviders) {
-      try {
-        yield provider.provideAlbumCover(musicbrainzalbum);
-      } catch (error) {
-        console.log('No cover found. Trying next provider... Error: ' + error);
-      }
-    }
   }
 
   private async saveOrUpdateImageMetadata(
@@ -54,5 +48,36 @@ export class DownloadAlbumCoverProvider {
       musicbrainzalbum,
       response.files[0].file,
     );
+  }
+
+  private async *getAlbumCoverFromProvider(
+    musicbrainzalbum: string,
+  ): AsyncGenerator<string> {
+    const providerMap: Record<
+      AlbumArtProviderType,
+      { provideAlbumCover: (musicbrainzalbum: string) => Promise<string> }
+    > = {
+      MusicBrainz: this.musicBrainzAlbumCoverProvider,
+      Deezer: this.deezerAlbumCoverProvider,
+    };
+
+    const albumCoverProviders =
+      this.albumArtProvidersConfiguration.providers.map(
+        (providerName: AlbumArtProviderType) => providerMap[providerName],
+      );
+    Logger.debug('Album cover providers: ' + albumCoverProviders);
+    if (!albumCoverProviders) {
+      Logger.debug('No album cover providers configured.');
+      return;
+    }
+
+    for (const provider of albumCoverProviders) {
+      try {
+        Logger.debug('Trying provider: ' + provider);
+        yield await provider.provideAlbumCover(musicbrainzalbum);
+      } catch (error) {
+        Logger.debug('No cover found. Trying next provider... Error: ' + error);
+      }
+    }
   }
 }
