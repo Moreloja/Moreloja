@@ -1,6 +1,6 @@
 import { Injectable, inject, Signal, signal } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, EMPTY, Observable, catchError, tap } from 'rxjs';
+import { EMPTY, Observable, catchError, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -18,10 +18,10 @@ export class AuthService {
     return this.isLoggedInSignal;
   }
 
-  private error$ = new BehaviorSubject<string>('');
+  private error = signal<string>('');
 
-  getError(): Observable<string> {
-    return this.error$.asObservable();
+  getError(): Signal<string> {
+    return this.error;
   }
 
   login(password: string, twoFactorToken: string): Observable<object> {
@@ -33,10 +33,10 @@ export class AuthService {
       .pipe(
         tap(() => {
           this.isLoggedInSignal.set(true);
-          this.error$.next('');
+          this.error.set('');
         }),
         catchError((err: HttpErrorResponse) => {
-          this.error$.next(err.message);
+          this.error.set(err.message);
           return EMPTY;
         }),
       );
@@ -49,7 +49,7 @@ export class AuthService {
       },
       error: (error: HttpErrorResponse) => {
         this.isLoggedInSignal.set(false);
-        this.error$.next(error.message);
+        this.error.set(error.message);
       },
     });
   }
@@ -58,7 +58,7 @@ export class AuthService {
     return this.http.get(`/api/auth/logout`).pipe(
       tap(() => {
         this.isLoggedInSignal.set(false);
-        this.error$.next('');
+        this.error.set('');
       }),
     );
   }

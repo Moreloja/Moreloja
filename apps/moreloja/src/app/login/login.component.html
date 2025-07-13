@@ -16,9 +16,9 @@
     [formControl]="twoFactorTokenControl"
   />
   <button (click)="login()">Login</button>
-  @if (error$ | async; as error) {
+  @if (error()) {
   <div class="error-hint">
-    {{ error }}
+    {{ error() }}
   </div>
   }
 </div>
@@ -27,9 +27,9 @@
 <div class="main-container">
   <div>You are logged in.</div>
   <button (click)="logout()">Logout</button>
-  @if (error$ | async; as error) {
+  @if (error()) {
   <div class="error-hint">
-    {{ error }}
+    {{ error() }}
   </div>
   }
 </div>

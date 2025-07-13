@@ -1,23 +1,16 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-  inject,
-} from '@angular/core';
-import { AsyncPipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Observable } from 'rxjs';
 
 import { AuthService } from '@moreloja/services/authentication';
 
 @Component({
   selector: 'moreloja-login',
-  imports: [AsyncPipe, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class LoginComponent implements OnInit {
+export default class LoginComponent {
   passwordControl = new FormControl('', {
     nonNullable: true,
   });
@@ -25,15 +18,10 @@ export default class LoginComponent implements OnInit {
     nonNullable: true,
   });
 
-  error$!: Observable<string>;
-
   authService = inject(AuthService);
 
   isLoggedIn = this.authService.isLoggedIn();
-
-  ngOnInit(): void {
-    this.error$ = this.authService.getError();
-  }
+  error = this.authService.getError();
 
   login() {
     this.authService
