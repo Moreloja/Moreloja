@@ -5,7 +5,6 @@ import {
   AlbumArtProvidersConfiguration,
   ArtProviderSource,
 } from '@moreloja/api/configurations';
-
 import { UploadImageResponse } from '@moreloja/api/data-access-dtos';
 import { ImageRepository } from '@moreloja/api/data-access-repositories';
 

@@ -1,5 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 
+import {
+  InjectArtistArtProvidersConfig,
+  ArtistArtProvidersConfiguration,
+  ArtistArtProviderSource,
+} from '@moreloja/api/configurations';
 import { UploadImageResponse } from '@moreloja/api/data-access-dtos';
 import { ImageRepository } from '@moreloja/api/data-access-repositories';
 
@@ -9,6 +14,8 @@ import { DeezerArtistPictureProvider } from './deezer-artist-picture-provider';
 @Injectable()
 export class DownloadArtistPictureProvider {
   constructor(
+    @InjectArtistArtProvidersConfig()
+    private readonly artistArtProvidersConfiguration: ArtistArtProvidersConfiguration,
     private readonly pictrsService: PictrsService,
     private readonly imageRepository: ImageRepository,
     private readonly deezerArtistPictureProvider: DeezerArtistPictureProvider,
@@ -24,26 +31,10 @@ export class DownloadArtistPictureProvider {
         await this.saveOrUpdateImageMetadata(musicBrainzId, response);
         return response.files[0].file;
       } catch (error) {
-        console.log('Failed to upload cover to pictrs. Error: ' + error);
+        Logger.debug('Failed to upload cover to pictrs. Error: ' + error);
       }
     }
     throw new Error('No cover found.');
-  }
-
-  private async *getArtistPictureFromProvider(musicBrainzId: string) {
-    const artistPictureProviders: {
-      provideImage(musicbrainzalbum: string): Promise<string>;
-    }[] = [this.deezerArtistPictureProvider];
-
-    for (const provider of artistPictureProviders) {
-      try {
-        yield provider.provideImage(musicBrainzId);
-      } catch (error) {
-        console.log(
-          'No artist picture found. Trying next provider... Error: ' + error,
-        );
-      }
-    }
   }
 
   private async saveOrUpdateImageMetadata(
@@ -54,5 +45,37 @@ export class DownloadArtistPictureProvider {
       musicBrainzId,
       response.files[0].file,
     );
+  }
+
+  private async *getArtistPictureFromProvider(
+    musicBrainzId: string,
+  ): AsyncGenerator<string> {
+    const providerMap: Record<
+      ArtistArtProviderSource,
+      { provideImage(musicbrainzalbum: string): Promise<string> }
+    > = {
+      Deezer: this.deezerArtistPictureProvider,
+    };
+
+    const artistArtProviders =
+      this.artistArtProvidersConfiguration.providers.map(
+        (providerName: ArtistArtProviderSource) => providerMap[providerName],
+      );
+    Logger.debug('Artist art providers: ' + artistArtProviders);
+    if (!artistArtProviders) {
+      Logger.debug('No artist art providers configured.');
+      return;
+    }
+
+    for (const provider of artistArtProviders) {
+      try {
+        Logger.debug('Trying provider: ' + provider);
+        yield await provider.provideImage(musicBrainzId);
+      } catch (error) {
+        Logger.debug(
+          'No artist picture found. Trying next provider... Error: ' + error,
+        );
+      }
+    }
   }
 }

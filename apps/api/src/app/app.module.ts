@@ -9,6 +9,7 @@ import {
   jwtConfiguration,
   mongoConfiguration,
   albumArtProvidersConfiguration,
+  artistArtProvidersConfiguration,
   pictrsConfiguration,
   validationPipeConfiguration,
 } from '@moreloja/api/configurations';
@@ -32,6 +33,7 @@ import { StatisticsModule } from './statistics/statistics.module';
         jwtConfiguration,
         mongoConfiguration,
         albumArtProvidersConfiguration,
+        artistArtProvidersConfiguration,
         pictrsConfiguration,
         validationPipeConfiguration,
       ],
