@@ -47,6 +47,14 @@ Inspect the logs with:
 docker compose logs
 ```
 
+## Configuration
+
+Environment variables:
+
+- MORELOJA_ALBUM_ART_PROVIDERS with default: MusicBrainz, Deezer
+- MORELOJA_ARTIST_ART_PROVIDERS with default: Deezer
+  Set to "" to disable them.
+
 ## Development
 
 ### Install dependencies
