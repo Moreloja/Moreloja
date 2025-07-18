@@ -6,7 +6,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TimeAgoPipe implements PipeTransform {
   private static YEAR_MS: number = 1000 * 60 * 60 * 24 * 7 * 4 * 12;
-  private static MAPPER: any = [
+  private static MAPPER: Array<{
+    single: string;
+    many: string;
+    div: number;
+  }> = [
     { single: 'last year', many: 'years', div: 1 },
     { single: 'last month', many: 'months', div: 12 },
     { single: 'last week', many: 'weeks', div: 4 },
