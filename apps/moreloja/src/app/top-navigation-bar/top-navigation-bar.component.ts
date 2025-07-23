@@ -1,5 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+
+import { AuthService } from '@moreloja/services/authentication';
 
 @Component({
   selector: 'moreloja-top-navigation-bar',
@@ -8,4 +10,11 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./top-navigation-bar.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class TopNavigationBarComponent {}
+export default class TopNavigationBarComponent {
+  authService = inject(AuthService);
+  isLoggedIn = this.authService.isLoggedIn();
+
+  logout() {
+    this.authService.logout().subscribe();
+  }
+}

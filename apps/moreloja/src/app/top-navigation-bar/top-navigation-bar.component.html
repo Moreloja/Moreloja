@@ -40,5 +40,15 @@
     <li>
       <a routerLink="/about" routerLinkActive="router-link-active">About</a>
     </li>
+    @if (!isLoggedIn()) {
+      <li>
+        <a routerLink="/login" routerLinkActive="router-link-active">Login</a>
+      </li>
+    }
+    @if (isLoggedIn()) {
+      <li>
+        <a href="javascript:void(0);" (click)="logout()">Logout</a>
+      </li>
+    }
   </ul>
 </nav>
