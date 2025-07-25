@@ -166,4 +166,24 @@ export class ArtistsService {
       })
       .map((week) => new WeekDto(week.Year, week.Week));
   }
+
+  async getTotalPages(range: string): Promise<number> {
+    const rangeFilter = this.rangeFilterCreator.constructRangeFilter(range);
+    let rangeQuery = {};
+    if (rangeFilter) {
+      rangeQuery = {
+        timestamp: {
+          $gte: rangeFilter.searchFrom,
+          $lt: rangeFilter.searchTo,
+        },
+      };
+    }
+    // Count unique artists in the range
+    const artists = await this.songRepository.getArtists(rangeQuery);
+    const uniqueArtistsCount = Array.isArray(artists) ? artists.length : 0;
+    return Math.max(
+      1,
+      Math.ceil(uniqueArtistsCount / this.paginationService.itemsPerPage),
+    );
+  }
 }

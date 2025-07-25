@@ -24,4 +24,9 @@ export class ArtistsController {
   ): Promise<GetArtistsResponse> {
     return this.artistsService.getArtists(range, page);
   }
+
+  @Get('artists/:range/total-pages')
+  async getTotalPages(@Param('range') range: string): Promise<number> {
+    return this.artistsService.getTotalPages(range);
+  }
 }

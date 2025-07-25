@@ -35,6 +35,7 @@ export default class SongComponent {
     this.route.params.pipe(map((param) => Number(param['page']))),
     { initialValue: 1 },
   );
+  totalPages = this.songsService.getTotalPagesByTrack(this.mbidTrack);
 
   songs = this.songsService.getAllSongsByTrack(this.mbidTrack, this.page);
 

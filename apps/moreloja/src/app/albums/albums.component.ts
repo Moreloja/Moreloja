@@ -43,6 +43,7 @@ export default class AlbumsComponent {
   private router = inject(Router);
   private route: ActivatedRoute = inject(ActivatedRoute);
   private titleService = inject(Title);
+  private albumsService = inject(AlbumsService);
 
   sortBy = toSignal(
     this.route.params.pipe(
@@ -69,8 +70,9 @@ export default class AlbumsComponent {
     this.route.params.pipe(map((param) => Number(param['page'] ?? 1))),
     { initialValue: 1 },
   );
+  totalPages = this.albumsService.getTotalPages(this.range);
 
-  albums = inject(AlbumsService).getAlbums(
+  albums = this.albumsService.getAlbums(
     this.range,
     this.sortBy,
     this.order,

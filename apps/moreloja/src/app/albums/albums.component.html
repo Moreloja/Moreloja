@@ -9,27 +9,30 @@
 
   <div>
     @for (sort of sortings; track sort) {
-    <span>
-      <a
-        routerLink="/albums/{{ range() }}/sort/{{ sort.sort }}/{{
-          order()
-        }}/page/1"
-        routerLinkActive="router-link-active"
-        >{{ sort.label }}</a
-      >
-      |
-    </span>
-    } @for (ordering of orderings; track ordering; let last = $last) {
-    <span>
-      <a
-        routerLink="/albums/{{ range() }}/sort/{{ sortBy() }}/{{
-          ordering.order
-        }}/page/1"
-        routerLinkActive="router-link-active"
-        >{{ ordering.label }}</a
-      >
-      @if (!last) { | }
-    </span>
+      <span>
+        <a
+          routerLink="/albums/{{ range() }}/sort/{{ sort.sort }}/{{
+            order()
+          }}/page/1"
+          routerLinkActive="router-link-active"
+          >{{ sort.label }}</a
+        >
+        |
+      </span>
+    }
+    @for (ordering of orderings; track ordering; let last = $last) {
+      <span>
+        <a
+          routerLink="/albums/{{ range() }}/sort/{{ sortBy() }}/{{
+            ordering.order
+          }}/page/1"
+          routerLinkActive="router-link-active"
+          >{{ ordering.label }}</a
+        >
+        @if (!last) {
+          |
+        }
+      </span>
     }
   </div>
 
@@ -37,6 +40,7 @@
 
   <moreloja-pagination
     [page]="page()"
+    [totalPages]="totalPages.value()"
     (pageChange)="onPageChange($event)"
   ></moreloja-pagination>
 
@@ -48,6 +52,7 @@
 
   <moreloja-pagination
     [page]="page()"
+    [totalPages]="totalPages.value()"
     (pageChange)="onPageChange($event)"
   ></moreloja-pagination>
 </div>

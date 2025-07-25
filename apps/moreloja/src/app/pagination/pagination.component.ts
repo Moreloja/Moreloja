@@ -14,6 +14,7 @@ import {
 })
 export class PaginationComponent {
   readonly page = input.required<number>();
+  readonly totalPages = input.required<number>();
   readonly pageChange = output<number>();
 
   previousPage(): void {
@@ -22,5 +23,13 @@ export class PaginationComponent {
 
   nextPage(): void {
     this.pageChange.emit(this.page() + 1);
+  }
+
+  firstPage(): void {
+    this.pageChange.emit(1);
+  }
+
+  lastPage(): void {
+    this.pageChange.emit(this.totalPages());
   }
 }

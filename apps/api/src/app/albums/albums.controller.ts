@@ -26,4 +26,9 @@ export class AlbumsController {
   ): Promise<GetAlbumsResponseDto> {
     return this.albumsService.getAlbums(range, sortBy, order, page);
   }
+
+  @Get('albums/:range/total-pages')
+  async getTotalPages(@Param('range') range: string): Promise<number> {
+    return this.albumsService.getTotalPages(range);
+  }
 }

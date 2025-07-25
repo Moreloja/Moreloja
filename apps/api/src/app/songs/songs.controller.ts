@@ -30,4 +30,25 @@ export class SongsController {
   ) {
     return this.songsService.getAllSongsByTrack(mbidTrack, page);
   }
+
+  @Get('songs/artist/:mbidArtist/total-pages')
+  async getTotalPagesByArtist(
+    @Param('mbidArtist') mbidArtist: string,
+  ): Promise<number> {
+    return this.songsService.getTotalPagesByArtist(mbidArtist);
+  }
+
+  @Get('song/:mbidTrack/total-pages')
+  async getTotalPagesByTrack(
+    @Param('mbidTrack') mbidTrack: string,
+  ): Promise<number> {
+    return this.songsService.getTotalPagesByTrack(mbidTrack);
+  }
+
+  @Get('top-songs/:range/total-pages')
+  async getTotalPagesForTopSongs(
+    @Param('range') range: string,
+  ): Promise<number> {
+    return this.songsService.getTotalPagesForTopSongs(range);
+  }
 }

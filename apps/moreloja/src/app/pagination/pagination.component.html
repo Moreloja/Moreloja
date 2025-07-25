@@ -1,7 +1,25 @@
 <div class="pagination">
-  <button role="button" (click)="previousPage()">← Back</button>
+  <button role="button" (click)="firstPage()" [disabled]="page() === 1">
+    ⇤
+  </button>
+  <button role="button" (click)="previousPage()" [disabled]="page() === 1">
+    ← Back
+  </button>
   <div class="page">
-    <div>Page: {{ page() }}</div>
+    <div>Page {{ page() }}</div>
   </div>
-  <button role="button" (click)="nextPage()">Next →</button>
+  <button
+    role="button"
+    (click)="nextPage()"
+    [disabled]="page() === totalPages()"
+  >
+    Next →
+  </button>
+  <button
+    role="button"
+    (click)="lastPage()"
+    [disabled]="page() === totalPages()"
+  >
+    ⇥
+  </button>
 </div>

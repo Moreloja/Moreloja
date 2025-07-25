@@ -47,6 +47,7 @@ export default class ArtistsComponent {
     this.route.params.pipe(map((param) => Number(param['page']))),
     { initialValue: 1 },
   );
+  totalPages = this.artistsService.getTotalPages(this.range);
   artists = this.artistsService.getArtists(this.range, this.page);
 
   onPageChange(page: number): void {

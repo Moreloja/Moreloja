@@ -51,4 +51,37 @@ export class SongsService {
       },
     );
   }
+
+  getTotalPagesByArtist(mbidArtist: Signal<string>): HttpResourceRef<number> {
+    return httpResource(
+      () => ({
+        url: `/api/songs/artist/${mbidArtist()}/total-pages`,
+      }),
+      {
+        defaultValue: 1,
+      },
+    );
+  }
+
+  getTotalPagesByTrack(mbidTrack: Signal<string>): HttpResourceRef<number> {
+    return httpResource(
+      () => ({
+        url: `/api/song/${mbidTrack()}/total-pages`,
+      }),
+      {
+        defaultValue: 1,
+      },
+    );
+  }
+
+  getTotalPagesForTopSongs(range: Signal<string>): HttpResourceRef<number> {
+    return httpResource(
+      () => ({
+        url: `/api/top-songs/${range()}/total-pages`,
+      }),
+      {
+        defaultValue: 1,
+      },
+    );
+  }
 }

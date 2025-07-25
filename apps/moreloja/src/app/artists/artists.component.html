@@ -7,31 +7,33 @@
 
   <moreloja-pagination
     [page]="page()"
+    [totalPages]="totalPages.value()"
     (pageChange)="onPageChange($event)"
   ></moreloja-pagination>
 
   <div class="artist-container">
     @for (artist of artists.value(); track artist.mbidArtist) {
-    <a routerLink="/artist/{{ artist.mbidArtist }}">
-      {{ artist.name }}
-    </a>
-    <div>
-      {{ artist.playCount }}
-    </div>
-    <div>
-      {{ artist.playTime | secondsToString }}
-    </div>
-    <div
-      class="play-count-bar-fill"
-      [style.width]="
-        getPlayCountBarWidth(artist.playTime, artists.value()[0].playTime)
-      "
-    ></div>
+      <a routerLink="/artist/{{ artist.mbidArtist }}">
+        {{ artist.name }}
+      </a>
+      <div>
+        {{ artist.playCount }}
+      </div>
+      <div>
+        {{ artist.playTime | secondsToString }}
+      </div>
+      <div
+        class="play-count-bar-fill"
+        [style.width]="
+          getPlayCountBarWidth(artist.playTime, artists.value()[0].playTime)
+        "
+      ></div>
     }
   </div>
 
   <moreloja-pagination
     [page]="page()"
+    [totalPages]="totalPages.value()"
     (pageChange)="onPageChange($event)"
   ></moreloja-pagination>
 </div>

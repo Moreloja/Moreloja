@@ -13,6 +13,21 @@ import {
 export class SongRepository {
   constructor(@InjectModel(Song.name) private songModel: Model<Song>) {}
 
+  async countSongs(filter: any): Promise<number> {
+    return this.songModel.countDocuments(filter).exec();
+  }
+
+  async countUniqueSongs(filter: any): Promise<number> {
+    const result = await this.songModel
+      .aggregate([
+        { $match: filter },
+        { $group: { _id: '$Provider_musicbrainztrack' } },
+        { $count: 'uniqueSongs' },
+      ])
+      .exec();
+    return result[0]?.uniqueSongs || 0;
+  }
+
   async findLimitedSongs(albumArtistFilter: any, skip: number, limit: number) {
     return await this.songModel
       .find(albumArtistFilter)

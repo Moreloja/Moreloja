@@ -7,22 +7,24 @@
 
   <moreloja-pagination
     [page]="page()"
+    [totalPages]="totalPages.value()"
     (pageChange)="onPageChange($event)"
   ></moreloja-pagination>
 
   <div>
     @for (song of songs.value().topSongs; track song) {
-    <div>
-      <moreloja-top-song-card
-        [topSong]="song"
-        [maxPlayCount]="songs.value().topSongs[0].playCount"
-      ></moreloja-top-song-card>
-    </div>
+      <div>
+        <moreloja-top-song-card
+          [topSong]="song"
+          [maxPlayCount]="songs.value().topSongs[0].playCount"
+        ></moreloja-top-song-card>
+      </div>
     }
   </div>
 
   <moreloja-pagination
     [page]="page()"
+    [totalPages]="totalPages.value()"
     (pageChange)="onPageChange($event)"
   ></moreloja-pagination>
 </div>

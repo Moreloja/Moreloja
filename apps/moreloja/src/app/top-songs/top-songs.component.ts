@@ -46,6 +46,7 @@ export default class TopSongsComponent {
     this.route.params.pipe(map((param) => Number(param['page']))),
     { initialValue: 1 },
   );
+  totalPages = this.songsService.getTotalPagesForTopSongs(this.range);
   songs = this.songsService.getTopSongs(this.range, this.page);
 
   onPageChange(page: number): void {

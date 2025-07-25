@@ -86,6 +86,45 @@ export class SongsService {
     );
   }
 
+  async getTotalPagesByArtist(mbidArtist: string): Promise<number> {
+    let filter = {};
+    if (mbidArtist !== 'undefined') {
+      filter = { Provider_musicbrainzartist: mbidArtist };
+    }
+    const totalSongs = await this.songRepository.countSongs(filter);
+    return Math.max(
+      1,
+      Math.ceil(totalSongs / this.paginationService.itemsPerPage),
+    );
+  }
+
+  async getTotalPagesByTrack(mbidTrack: string): Promise<number> {
+    const filter = { Provider_musicbrainztrack: mbidTrack };
+    const totalSongs = await this.songRepository.countSongs(filter);
+    return Math.max(
+      1,
+      Math.ceil(totalSongs / this.paginationService.itemsPerPage),
+    );
+  }
+
+  async getTotalPagesForTopSongs(range: string): Promise<number> {
+    const rangeFilter = this.rangeFilterCreator.constructRangeFilter(range);
+    let rangeQuery = {};
+    if (rangeFilter) {
+      rangeQuery = {
+        timestamp: {
+          $gte: rangeFilter.searchFrom,
+          $lt: rangeFilter.searchTo,
+        },
+      };
+    }
+    const totalSongs = await this.songRepository.countUniqueSongs(rangeQuery);
+    return Math.max(
+      1,
+      Math.ceil(totalSongs / this.paginationService.itemsPerPage),
+    );
+  }
+
   private createGetAllSongsResponseDto(songs: Song[]): GetAllSongsResponseDto {
     return new GetAllSongsResponseDto(
       songs.map(

@@ -54,4 +54,15 @@ export class AlbumsService {
       },
     );
   }
+
+  getTotalPages(range: Signal<string>): HttpResourceRef<number> {
+    return httpResource<number>(
+      () => ({
+        url: `/api/albums/${range()}/total-pages`,
+      }),
+      {
+        defaultValue: 1,
+      },
+    );
+  }
 }

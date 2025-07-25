@@ -101,4 +101,24 @@ export class AlbumsService {
     );
     return new GetAlbumsResponseDto(albums);
   }
+
+  async getTotalPages(range: string): Promise<number> {
+    const rangeFilter = this.rangeFilterCreator.constructRangeFilter(range);
+    let rangeQuery = {};
+    if (rangeFilter) {
+      rangeQuery = {
+        timestamp: {
+          $gte: rangeFilter.searchFrom,
+          $lt: rangeFilter.searchTo,
+        },
+      };
+    }
+    // Count unique albums in the range
+    const result = await this.songRepository.getDistinctAlbums(rangeQuery);
+    const uniqueAlbumsCount = Array.isArray(result) ? result.length : 0;
+    return Math.max(
+      1,
+      Math.ceil(uniqueAlbumsCount / this.paginationService.itemsPerPage),
+    );
+  }
 }

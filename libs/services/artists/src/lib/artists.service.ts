@@ -54,4 +54,15 @@ export class ArtistsService {
       },
     );
   }
+
+  getTotalPages(range: Signal<string>): HttpResourceRef<number> {
+    return httpResource(
+      () => ({
+        url: `/api/artists/${range()}/total-pages`,
+      }),
+      {
+        defaultValue: 1,
+      },
+    );
+  }
 }
