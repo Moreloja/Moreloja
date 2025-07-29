@@ -1,0 +1,21 @@
+{
+  "name": "api-data-access-dtos",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/api/data-access/dtos/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/api/data-access/dtos",
+        "main": "libs/api/data-access/dtos/src/index.ts",
+        "tsConfig": "libs/api/data-access/dtos/tsconfig.lib.json",
+        "assets": [],
+        "format": ["cjs"],
+        "generatePackageJson": true
+      }
+    }
+  }
+}

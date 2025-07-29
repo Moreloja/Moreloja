@@ -10,7 +10,7 @@ import {
   GetArtistResponse,
   GetArtistsResponse,
   ArtistTopWeeksDto,
-} from '@moreloja/api/data-access-dtos';
+} from '@moreloja/api/data-access/dtos';
 
 @Injectable({
   providedIn: 'root',

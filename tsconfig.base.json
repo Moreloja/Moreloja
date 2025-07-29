@@ -10,23 +10,23 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["esnext", "dom"],
+    "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
       "@moreloja/api/configurations": ["libs/api/configurations/src/index.ts"],
-      "@moreloja/api/data-access-dtos": [
-        "libs/api/data-access-dtos/src/index.ts"
+      "@moreloja/api/data-access/dtos": [
+        "libs/api/data-access/dtos/src/index.ts"
       ],
-      "@moreloja/api/data-access-models": [
-        "libs/api/data-access-models/src/index.ts"
+      "@moreloja/api/data-access/models": [
+        "libs/api/data-access/models/src/index.ts"
       ],
-      "@moreloja/api/data-access-repositories": [
-        "libs/api/data-access-repositories/src/index.ts"
+      "@moreloja/api/data-access/repositories": [
+        "libs/api/data-access/repositories/src/index.ts"
       ],
-      "@moreloja/api/data-access-services": [
-        "libs/api/data-access-services/src/index.ts"
+      "@moreloja/api/data-access/services": [
+        "libs/api/data-access/services/src/index.ts"
       ],
       "@moreloja/services/albums": ["libs/services/albums/src/index.ts"],
       "@moreloja/services/artists": ["libs/services/artists/src/index.ts"],

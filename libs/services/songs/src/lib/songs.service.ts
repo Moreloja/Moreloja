@@ -4,7 +4,7 @@ import { HttpResourceRef, httpResource } from '@angular/common/http';
 import {
   GetAllSongsResponseDto,
   GetTopSongsResponseDto,
-} from '@moreloja/api/data-access-dtos';
+} from '@moreloja/api/data-access/dtos';
 
 @Injectable({
   providedIn: 'root',

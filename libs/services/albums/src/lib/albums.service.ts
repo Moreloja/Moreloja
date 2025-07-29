@@ -5,7 +5,7 @@ import {
   AlbumDto,
   GetAlbumResponseDto,
   GetAlbumsResponseDto,
-} from '@moreloja/api/data-access-dtos';
+} from '@moreloja/api/data-access/dtos';
 import { Order, Sort } from '@moreloja/shared/global-constants';
 
 @Injectable({

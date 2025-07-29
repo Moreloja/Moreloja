@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 import { RouterLink } from '@angular/router';
 
-import { ArtistTopWeeksDto } from '@moreloja/api/data-access-dtos';
+import { ArtistTopWeeksDto } from '@moreloja/api/data-access/dtos';
 
 @Component({
   selector: 'moreloja-artist-top-weeks',

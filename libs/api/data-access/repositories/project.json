@@ -1,0 +1,21 @@
+{
+  "name": "api-data-access-repositories",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/api/data-access/repositories/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/api/data-access/repositories",
+        "main": "libs/api/data-access/repositories/src/index.ts",
+        "tsConfig": "libs/api/data-access/repositories/tsconfig.lib.json",
+        "assets": [],
+        "format": ["cjs"],
+        "generatePackageJson": true
+      }
+    }
+  }
+}

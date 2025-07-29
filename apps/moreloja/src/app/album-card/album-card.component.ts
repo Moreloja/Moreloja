@@ -2,7 +2,7 @@ import { Component, input } from '@angular/core';
 import { SlicePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { AlbumDto } from '@moreloja/api/data-access-dtos';
+import { AlbumDto } from '@moreloja/api/data-access/dtos';
 
 import {
   AlbumCoverCardComponent,

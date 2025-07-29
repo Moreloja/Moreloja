@@ -15,7 +15,7 @@ import {
   switchMap,
 } from 'rxjs';
 
-import { SearchResultDto } from '@moreloja/api/data-access-dtos';
+import { SearchResultDto } from '@moreloja/api/data-access/dtos';
 import { SearchService } from '@moreloja/services/search';
 
 import { AlbumsContainerComponent } from '../albums-container/albums-container.component';

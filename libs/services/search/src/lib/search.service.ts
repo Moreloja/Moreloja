@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { SearchResultDto } from '@moreloja/api/data-access-dtos';
+import { SearchResultDto } from '@moreloja/api/data-access/dtos';
 
 @Injectable({
   providedIn: 'root',

@@ -3,21 +3,19 @@
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/shared/global-constants/src",
   "projectType": "library",
+  "tags": ["shared"],
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
+      "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/shared/global-constants",
         "main": "libs/shared/global-constants/src/index.ts",
         "tsConfig": "libs/shared/global-constants/tsconfig.lib.json",
-        "assets": []
+        "assets": [],
+        "format": ["cjs"],
+        "generatePackageJson": true
       }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
     }
-  },
-  "tags": ["shared"]
+  }
 }

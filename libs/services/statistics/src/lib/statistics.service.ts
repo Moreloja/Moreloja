@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpResourceRef, httpResource } from '@angular/common/http';
 
-import { GetStatisticsDto } from '@moreloja/api/data-access-dtos';
+import { GetStatisticsDto } from '@moreloja/api/data-access/dtos';
 
 @Injectable({
   providedIn: 'root',

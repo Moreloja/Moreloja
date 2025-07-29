@@ -6,7 +6,7 @@ import {
   PlaceholderAlbumCover,
   PlaceholderArtistCover,
 } from '@moreloja/shared/global-constants';
-import { GetImageResponse } from '@moreloja/api/data-access-dtos';
+import { GetImageResponse } from '@moreloja/api/data-access/dtos';
 
 @Injectable({
   providedIn: 'root',

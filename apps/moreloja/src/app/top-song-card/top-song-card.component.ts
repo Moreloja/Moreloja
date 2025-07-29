@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { TopSongDto } from '@moreloja/api/data-access-dtos';
+import { TopSongDto } from '@moreloja/api/data-access/dtos';
 
 import {
   AlbumCoverCardComponent,

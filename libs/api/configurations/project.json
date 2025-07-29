@@ -3,27 +3,18 @@
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/api/configurations/src",
   "projectType": "library",
-  "tags": ["api", ""],
+  "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
+      "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/api/configurations",
         "main": "libs/api/configurations/src/index.ts",
         "tsConfig": "libs/api/configurations/tsconfig.lib.json",
-        "assets": []
-      }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "options": {
-        "jestConfig": "libs/api/configurations/jest.config.ts"
+        "assets": [],
+        "format": ["cjs"],
+        "generatePackageJson": true
       }
     }
   }

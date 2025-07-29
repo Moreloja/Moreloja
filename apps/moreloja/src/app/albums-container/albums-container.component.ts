@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 
-import { AlbumDto } from '@moreloja/api/data-access-dtos';
+import { AlbumDto } from '@moreloja/api/data-access/dtos';
 
 import { AlbumCardComponent } from '../album-card/album-card.component';
 

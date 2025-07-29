@@ -2,7 +2,7 @@ import { Component, input } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { SongDto } from '@moreloja/api/data-access-dtos';
+import { SongDto } from '@moreloja/api/data-access/dtos';
 
 import { StringToDatePipe, TimeAgoPipe } from '../pipes';
 import {
