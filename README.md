@@ -73,7 +73,9 @@ To start the development nestjs server run `yarn nx serve api`.
 
 ### Run tests
 
-To run all tests run `yarn nx run-many --all --target=test`.
+To run all tests run `yarn nx run-many --all --target=vite:test`.
+
+To get test coverage run `yarn nx vite:test moreloja --coverage`.
 
 ## Admin user
 
