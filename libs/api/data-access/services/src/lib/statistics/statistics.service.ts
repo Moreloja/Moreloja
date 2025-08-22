@@ -8,6 +8,8 @@ export class StatisticsService {
   constructor(private songRepository: SongRepository) {}
 
   async getStatistics(): Promise<GetStatisticsDto> {
+    const noFilter = {};
+
     const [
       { uniqueSongsCount },
       { totalPlayCount },
@@ -16,9 +18,9 @@ export class StatisticsService {
       { uniqueAlbumsCount },
       { averageDuration },
     ] = await Promise.all([
-      this.songRepository.getUniqueSongsCount(),
-      this.songRepository.getTotalPlayCount(),
-      this.songRepository.getTotalPlayTime(),
+      this.songRepository.getUniqueSongsCount(noFilter),
+      this.songRepository.getTotalPlayCount(noFilter),
+      this.songRepository.getTotalPlayTime(noFilter),
       this.songRepository.getUniqueArtistsCount(),
       this.songRepository.getUniqueAlbumsCount(),
       this.songRepository.getAverageSongDuration(),

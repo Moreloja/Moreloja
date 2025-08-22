@@ -360,15 +360,16 @@ export class SongRepository {
       .exec();
   }
 
-  async getTotalPlayCount(): Promise<{ totalPlayCount: number }> {
-    const result = await this.songModel.countDocuments().exec();
+  async getTotalPlayCount(filter: any): Promise<{ totalPlayCount: number }> {
+    const result = await this.songModel.countDocuments(filter).exec();
 
     return { totalPlayCount: result };
   }
 
-  async getTotalPlayTime(): Promise<{ totalPlayTime: number }> {
+  async getTotalPlayTime(filter: any): Promise<{ totalPlayTime: number }> {
     const result = await this.songModel
       .aggregate([
+        { $match: filter },
         {
           $group: {
             _id: null, // No grouping key needed
@@ -381,9 +382,12 @@ export class SongRepository {
     return { totalPlayTime: result[0]?.totalPlayTime || 0 };
   }
 
-  async getUniqueSongsCount(): Promise<{ uniqueSongsCount: number }> {
+  async getUniqueSongsCount(
+    filter: any,
+  ): Promise<{ uniqueSongsCount: number }> {
     const result = await this.songModel
       .aggregate([
+        { $match: filter },
         { $group: { _id: '$Provider_musicbrainztrack' } },
         { $count: 'uniqueSongs' },
       ])

@@ -15,43 +15,63 @@
       [artistTopWeeks]="artist.value().artistTopWeeks"
     ></moreloja-artist-top-weeks>
   </div>
+
   <moreloja-editable-image
     [mbidArtist]="mbidAlbumArtist()"
     [size]="400"
   ></moreloja-editable-image>
+
+  <div class="artist-stats">
+    <div class="stat-item">
+      <span class="stat-label">Unique songs</span>
+      <span class="stat-value">{{ artist.value().uniqueSongs }}</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Total plays</span>
+      <span class="stat-value">{{ artist.value().playCount }}</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Total play time</span>
+      <span class="stat-value">{{
+        artist.value().playTime | secondsToString
+      }}</span>
+    </div>
+  </div>
+
   @if (artist.value().albums.length) {
-  <div>
-    <h3>Albums</h3>
-    <div class="album-container">
-      @for (album of artist.value().albums; track album) {
-      <div>
-        <moreloja-album-card [album]="album"></moreloja-album-card>
+    <div>
+      <h3>Albums</h3>
+      <div class="album-container">
+        @for (album of artist.value().albums; track album) {
+          <div>
+            <moreloja-album-card [album]="album"></moreloja-album-card>
+          </div>
+        }
       </div>
-      }
     </div>
-  </div>
-  } @if (artist.value().appearsOnAlbums.length) {
-  <div>
-    <h3>Appears on</h3>
-    <div class="album-container">
-      @for (album of artist.value().appearsOnAlbums; track album) {
-      <div>
-        <moreloja-album-card [album]="album"></moreloja-album-card>
+  }
+  @if (artist.value().appearsOnAlbums.length) {
+    <div>
+      <h3>Appears on</h3>
+      <div class="album-container">
+        @for (album of artist.value().appearsOnAlbums; track album) {
+          <div>
+            <moreloja-album-card [album]="album"></moreloja-album-card>
+          </div>
+        }
       </div>
-      }
     </div>
-  </div>
   }
   <div>
     <h3>Top Songs</h3>
     <div>
       @for (song of artist.value().topSongs; track song) {
-      <div>
-        <moreloja-top-song-card
-          [topSong]="song"
-          [maxPlayCount]="artist.value().topSongs[0].playCount"
-        ></moreloja-top-song-card>
-      </div>
+        <div>
+          <moreloja-top-song-card
+            [topSong]="song"
+            [maxPlayCount]="artist.value().topSongs[0].playCount"
+          ></moreloja-top-song-card>
+        </div>
       }
     </div>
   </div>
@@ -60,9 +80,9 @@
       <h3>Last Songs</h3>
     </a>
     @for (song of artist.value().songs; track song) {
-    <div>
-      <moreloja-song-card [song]="song"></moreloja-song-card>
-    </div>
+      <div>
+        <moreloja-song-card [song]="song"></moreloja-song-card>
+      </div>
     }
   </div>
 </div>

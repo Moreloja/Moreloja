@@ -5,6 +5,9 @@ import { ArtistTopWeeksDto } from './artist-top-weeks.dto';
 export class GetArtistResponse {
   constructor(
     public name: string,
+    public uniqueSongs: number,
+    public playCount: number,
+    public playTime: number,
     public artistTopWeeks: ArtistTopWeeksDto,
     public albums: AlbumDto[],
     public appearsOnAlbums: AlbumDto[],

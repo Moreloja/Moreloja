@@ -26,6 +26,9 @@ export class ArtistsService {
       {
         defaultValue: new GetArtistResponse(
           'Loading Artist',
+          0,
+          0,
+          0,
           new ArtistTopWeeksDto([], [], []),
           [],
           [],

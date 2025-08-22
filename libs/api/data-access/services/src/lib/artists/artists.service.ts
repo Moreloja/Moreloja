@@ -43,6 +43,13 @@ export class ArtistsService {
     const artistName =
       await this.songRepository.findArtistName(mbidAlbumArtist);
 
+    const { uniqueSongsCount } =
+      await this.songRepository.getUniqueSongsCount(artistFilter);
+    const { totalPlayCount } =
+      await this.songRepository.getTotalPlayCount(artistFilter);
+    const { totalPlayTime } =
+      await this.songRepository.getTotalPlayTime(artistFilter);
+
     const artistTopWeeks = await this.getArtistTopWeeks(mbidAlbumArtist);
 
     const topSongs = await this.songRepository.getTopSongs(artistFilter, 0, 10);
@@ -64,6 +71,9 @@ export class ArtistsService {
 
     return new GetArtistResponse(
       artistName,
+      uniqueSongsCount,
+      totalPlayCount,
+      totalPlayTime,
       artistTopWeeks,
       distinctAlbums.map(
         (album) =>

@@ -13,6 +13,7 @@ import { SongCardComponent } from '../song-card/song-card.component';
 import { TopSongCardComponent } from '../top-song-card/top-song-card.component';
 import { EditableImageComponent } from '../editable-image/editable-image.component';
 import { ArtistTopWeeksComponent } from '../artist-top-weeks/artist-top-weeks.component';
+import { SecondsToStringPipe } from '../pipes/seconds-to-string.pipe';
 
 @Component({
   selector: 'moreloja-artist',
@@ -23,6 +24,7 @@ import { ArtistTopWeeksComponent } from '../artist-top-weeks/artist-top-weeks.co
     SongCardComponent,
     TopSongCardComponent,
     RouterLink,
+    SecondsToStringPipe,
   ],
   templateUrl: './artist.component.html',
   styleUrls: ['./artist.component.css'],
