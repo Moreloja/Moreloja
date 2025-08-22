@@ -5,6 +5,7 @@ import {
   inject,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 import { ArtistsService } from '@moreloja/services/artists';
 
@@ -25,6 +26,7 @@ import { SecondsToStringPipe } from '../pipes/seconds-to-string.pipe';
     TopSongCardComponent,
     RouterLink,
     SecondsToStringPipe,
+    DatePipe,
   ],
   templateUrl: './artist.component.html',
   styleUrls: ['./artist.component.css'],

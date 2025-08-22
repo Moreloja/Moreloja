@@ -50,6 +50,11 @@ export class ArtistsService {
     const { totalPlayTime } =
       await this.songRepository.getTotalPlayTime(artistFilter);
 
+    const firstSongDate =
+      await this.songRepository.getFirstSongDate(artistFilter);
+    const lastSongDate =
+      await this.songRepository.getLastSongDate(artistFilter);
+
     const artistTopWeeks = await this.getArtistTopWeeks(mbidAlbumArtist);
 
     const topSongs = await this.songRepository.getTopSongs(artistFilter, 0, 10);
@@ -74,6 +79,8 @@ export class ArtistsService {
       uniqueSongsCount,
       totalPlayCount,
       totalPlayTime,
+      firstSongDate,
+      lastSongDate,
       artistTopWeeks,
       distinctAlbums.map(
         (album) =>

@@ -36,6 +36,18 @@
         artist.value().playTime | secondsToString
       }}</span>
     </div>
+    <div class="stat-item">
+      <span class="stat-label">First song listened</span>
+      <span class="stat-value">{{
+        artist.value().firstSongDate | date: 'shortDate'
+      }}</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Last song listened</span>
+      <span class="stat-value">{{
+        artist.value().lastSongDate | date: 'shortDate'
+      }}</span>
+    </div>
   </div>
 
   @if (artist.value().albums.length) {

@@ -8,6 +8,8 @@ export class GetArtistResponse {
     public uniqueSongs: number,
     public playCount: number,
     public playTime: number,
+    public firstSongDate: string,
+    public lastSongDate: string,
     public artistTopWeeks: ArtistTopWeeksDto,
     public albums: AlbumDto[],
     public appearsOnAlbums: AlbumDto[],

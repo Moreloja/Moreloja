@@ -37,6 +37,32 @@ export class SongRepository {
       .exec();
   }
 
+  async getFirstSongDate(filter: any): Promise<string> {
+    const result = await this.songModel
+      .aggregate([
+        { $match: filter },
+        { $sort: { timestamp: 1 } }, // Sort by timestamp in ascending order
+        { $limit: 1 },
+        { $project: { timestamp: 1, _id: 0 } },
+      ])
+      .exec();
+
+    return result[0]?.timestamp || '';
+  }
+
+  async getLastSongDate(filter: any): Promise<string> {
+    const result = await this.songModel
+      .aggregate([
+        { $match: filter },
+        { $sort: { timestamp: -1 } }, // Sort by timestamp in descending order
+        { $limit: 1 },
+        { $project: { timestamp: 1, _id: 0 } },
+      ])
+      .exec();
+
+    return result[0]?.timestamp || '';
+  }
+
   async findArtistName(mbidAlbumArtist: string): Promise<string> {
     const unknownArtist = 'Unknown Artist';
     const song = await this.songModel

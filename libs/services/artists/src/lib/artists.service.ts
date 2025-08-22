@@ -29,6 +29,8 @@ export class ArtistsService {
           0,
           0,
           0,
+          '-',
+          '-',
           new ArtistTopWeeksDto([], [], []),
           [],
           [],
