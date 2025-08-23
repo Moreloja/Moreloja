@@ -1,7 +1,10 @@
 import { Controller, Get, Param } from '@nestjs/common';
 
 import { SongsService } from '@moreloja/api/data-access/services';
-import { GetTopSongsResponseDto } from '@moreloja/api/data-access/dtos';
+import {
+  GetTopSongsResponseDto,
+  GetSongDetailsResponseDto,
+} from '@moreloja/api/data-access/dtos';
 
 @Controller()
 export class SongsController {
@@ -29,6 +32,14 @@ export class SongsController {
     @Param('page') page: number,
   ) {
     return this.songsService.getAllSongsByTrack(mbidTrack, page);
+  }
+
+  @Get('song/:mbidTrack/details/page/:page')
+  getSongDetails(
+    @Param('mbidTrack') mbidTrack: string,
+    @Param('page') page: number,
+  ): Promise<GetSongDetailsResponseDto> {
+    return this.songsService.getSongDetails(mbidTrack, page);
   }
 
   @Get('songs/artist/:mbidArtist/total-pages')

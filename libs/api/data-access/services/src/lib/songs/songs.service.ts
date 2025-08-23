@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import {
   GetAllSongsResponseDto,
   GetTopSongsResponseDto,
+  GetSongDetailsResponseDto,
   SongDto,
   TopSongDto,
 } from '@moreloja/api/data-access/dtos';
@@ -48,6 +49,48 @@ export class SongsService {
       this.paginationService.itemsPerPage,
     );
     return this.createGetAllSongsResponseDto(songs);
+  }
+
+  async getSongDetails(
+    mbidTrack: string,
+    page: number,
+  ): Promise<GetSongDetailsResponseDto> {
+    const filter = { Provider_musicbrainztrack: mbidTrack };
+
+    // Get song details (playcount and dates)
+    const songDetails = await this.songRepository.getSongDetails(mbidTrack);
+
+    // Get paginated songs
+    const songs = await this.songRepository.findLimitedSongs(
+      filter,
+      this.paginationService.pagesToSkip(page),
+      this.paginationService.itemsPerPage,
+    );
+
+    // Get song name from the first song (they should all have the same name for the same track)
+    const songName =
+      songs.length > 0 ? songs[0].Name || 'Unknown Song' : 'Unknown Song';
+
+    return new GetSongDetailsResponseDto(
+      songName,
+      songDetails.playCount,
+      songDetails.firstListenDate,
+      songDetails.lastListenDate,
+      songs.map(
+        (song) =>
+          new SongDto(
+            song.Album ?? '',
+            song.Artist ?? '',
+            song.Name ?? '',
+            song.timestamp ?? '',
+            song.Provider_musicbrainzalbum ?? '',
+            song.Provider_musicbrainzalbumartist ?? '',
+            song.Provider_musicbrainzartist ?? '',
+            song.Provider_musicbrainztrack ?? '',
+            song.run_time ?? 0,
+          ),
+      ),
+    );
   }
 
   async getTopSongs(

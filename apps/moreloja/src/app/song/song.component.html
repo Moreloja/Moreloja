@@ -1,4 +1,6 @@
-<h2>Song</h2>
+<h2>{{ songDetails.value().songName }}</h2>
+
+<moreloja-statistics-display [stats]="stats()"></moreloja-statistics-display>
 
 <moreloja-pagination
   [page]="page()"
@@ -7,7 +9,7 @@
 />
 
 <div>
-  @for (song of songs.value().songs; track song) {
+  @for (song of songDetails.value().songs; track song) {
     <div>
       <moreloja-song-card [song]="song"></moreloja-song-card>
     </div>

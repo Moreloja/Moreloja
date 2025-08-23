@@ -1,0 +1,18 @@
+<div class="statistics-display">
+  @for (stat of stats(); track stat.label) {
+    <div class="stat-item">
+      <span class="stat-label">{{ stat.label }}</span>
+      <span class="stat-value">
+        @if (stat.pipe === 'date') {
+          {{ stat.value | date: stat.pipeFormat || 'shortDate' }}
+        } @else if (
+          stat.pipe === 'secondsToString' && typeof stat.value === 'number'
+        ) {
+          {{ stat.value | secondsToString }}
+        } @else {
+          {{ stat.value }}
+        }
+      </span>
+    </div>
+  }
+</div>

@@ -21,34 +21,7 @@
     [size]="400"
   ></moreloja-editable-image>
 
-  <div class="artist-stats">
-    <div class="stat-item">
-      <span class="stat-label">Unique songs</span>
-      <span class="stat-value">{{ artist.value().uniqueSongs }}</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-label">Total plays</span>
-      <span class="stat-value">{{ artist.value().playCount }}</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-label">Total play time</span>
-      <span class="stat-value">{{
-        artist.value().playTime | secondsToString
-      }}</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-label">First song listened</span>
-      <span class="stat-value">{{
-        artist.value().firstSongDate | date: 'shortDate'
-      }}</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-label">Last song listened</span>
-      <span class="stat-value">{{
-        artist.value().lastSongDate | date: 'shortDate'
-      }}</span>
-    </div>
-  </div>
+  <moreloja-statistics-display [stats]="stats()"></moreloja-statistics-display>
 
   @if (artist.value().albums.length) {
     <div>

@@ -3,9 +3,9 @@ import {
   Component,
   input,
   inject,
+  computed,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 import { ArtistsService } from '@moreloja/services/artists';
 
@@ -14,7 +14,10 @@ import { SongCardComponent } from '../song-card/song-card.component';
 import { TopSongCardComponent } from '../top-song-card/top-song-card.component';
 import { EditableImageComponent } from '../editable-image/editable-image.component';
 import { ArtistTopWeeksComponent } from '../artist-top-weeks/artist-top-weeks.component';
-import { SecondsToStringPipe } from '../pipes/seconds-to-string.pipe';
+import {
+  StatisticsDisplayComponent,
+  StatItem,
+} from '../statistics-display/statistics-display.component';
 
 @Component({
   selector: 'moreloja-artist',
@@ -25,8 +28,7 @@ import { SecondsToStringPipe } from '../pipes/seconds-to-string.pipe';
     SongCardComponent,
     TopSongCardComponent,
     RouterLink,
-    SecondsToStringPipe,
-    DatePipe,
+    StatisticsDisplayComponent,
   ],
   templateUrl: './artist.component.html',
   styleUrls: ['./artist.component.css'],
@@ -35,4 +37,40 @@ import { SecondsToStringPipe } from '../pipes/seconds-to-string.pipe';
 export default class ArtistComponent {
   readonly mbidAlbumArtist = input.required<string>();
   artist = inject(ArtistsService).getArtist(this.mbidAlbumArtist);
+
+  readonly stats = computed((): StatItem[] => {
+    const artistData = this.artist.value();
+    return [
+      {
+        label: 'Unique songs',
+        value: artistData.uniqueSongs,
+        valueType: 'number',
+      },
+      {
+        label: 'Total plays',
+        value: artistData.playCount,
+        valueType: 'number',
+      },
+      {
+        label: 'Total play time',
+        value: artistData.playTime,
+        pipe: 'secondsToString',
+        valueType: 'number',
+      },
+      {
+        label: 'First listen',
+        value: artistData.firstSongDate,
+        pipe: 'date',
+        pipeFormat: 'shortDate',
+        valueType: 'string',
+      },
+      {
+        label: 'Last listen',
+        value: artistData.lastSongDate,
+        pipe: 'date',
+        pipeFormat: 'shortDate',
+        valueType: 'string',
+      },
+    ];
+  });
 }

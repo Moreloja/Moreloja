@@ -63,6 +63,24 @@ export class SongRepository {
     return result[0]?.timestamp || '';
   }
 
+  async getSongDetails(mbidTrack: string): Promise<{
+    playCount: number;
+    firstListenDate: string;
+    lastListenDate: string;
+  }> {
+    const filter = { Provider_musicbrainztrack: mbidTrack };
+
+    const playCount = await this.songModel.countDocuments(filter);
+    const firstListenDate = await this.getFirstSongDate(filter);
+    const lastListenDate = await this.getLastSongDate(filter);
+
+    return {
+      playCount,
+      firstListenDate,
+      lastListenDate,
+    };
+  }
+
   async findArtistName(mbidAlbumArtist: string): Promise<string> {
     const unknownArtist = 'Unknown Artist';
     const song = await this.songModel

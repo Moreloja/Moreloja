@@ -3,6 +3,7 @@ import {
   Component,
   effect,
   inject,
+  computed,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,10 +14,14 @@ import { SongsService } from '@moreloja/services/songs';
 
 import { PaginationComponent } from '../pagination/pagination.component';
 import { SongCardComponent } from '../song-card/song-card.component';
+import {
+  StatisticsDisplayComponent,
+  StatItem,
+} from '../statistics-display/statistics-display.component';
 
 @Component({
   selector: 'moreloja-song',
-  imports: [PaginationComponent, SongCardComponent],
+  imports: [PaginationComponent, SongCardComponent, StatisticsDisplayComponent],
   templateUrl: './song.component.html',
   styleUrls: ['./song.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -37,7 +42,32 @@ export default class SongComponent {
   );
   totalPages = this.songsService.getTotalPagesByTrack(this.mbidTrack);
 
-  songs = this.songsService.getAllSongsByTrack(this.mbidTrack, this.page);
+  songDetails = this.songsService.getSongDetails(this.mbidTrack, this.page);
+
+  readonly stats = computed((): StatItem[] => {
+    const songData = this.songDetails.value();
+    return [
+      {
+        label: 'Total plays',
+        value: songData.playCount,
+        valueType: 'number',
+      },
+      {
+        label: 'First listen',
+        value: songData.firstListenDate,
+        pipe: 'date',
+        pipeFormat: 'shortDate',
+        valueType: 'string',
+      },
+      {
+        label: 'Last listen',
+        value: songData.lastListenDate,
+        pipe: 'date',
+        pipeFormat: 'shortDate',
+        valueType: 'string',
+      },
+    ];
+  });
 
   constructor() {
     effect(() => {

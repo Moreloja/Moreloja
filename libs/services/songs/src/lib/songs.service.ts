@@ -4,6 +4,7 @@ import { HttpResourceRef, httpResource } from '@angular/common/http';
 import {
   GetAllSongsResponseDto,
   GetTopSongsResponseDto,
+  GetSongDetailsResponseDto,
 } from '@moreloja/api/data-access/dtos';
 
 @Injectable({
@@ -48,6 +49,26 @@ export class SongsService {
       }),
       {
         defaultValue: new GetAllSongsResponseDto([]),
+      },
+    );
+  }
+
+  getSongDetails(
+    mbidTrack: Signal<string>,
+    page: Signal<number>,
+  ): HttpResourceRef<GetSongDetailsResponseDto> {
+    return httpResource(
+      () => ({
+        url: `/api/song/${mbidTrack()}/details/page/${page()}`,
+      }),
+      {
+        defaultValue: new GetSongDetailsResponseDto(
+          'Unknown Song',
+          0,
+          '',
+          '',
+          [],
+        ),
       },
     );
   }
